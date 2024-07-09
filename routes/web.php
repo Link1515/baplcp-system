@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,7 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('test');
 });
+
+
+Route::get('/login/line', [LoginController::class, 'redirectToProvider']);
+Route::get('/login/line/callback', [LoginController::class, 'handleProviderCallback']);

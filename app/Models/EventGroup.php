@@ -17,7 +17,27 @@ class EventGroup extends Model
         'price',
         'register_start_datetime',
         'register_end_datetime',
-        'max_capacity',
+        'max_participants',
         'previous_event_group_id'
     ];
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function registrations()
+    {
+        return $this->hasMany(EventGroupRegistration::class);
+    }
+
+    public function previous()
+    {
+        return $this->belongsTo(EventGroup::class, 'previous_event_group_id');
+    }
+
+    public function next()
+    {
+        return $this->hasOne(EventGroup::class, 'previous_event_group_id');
+    }
 }

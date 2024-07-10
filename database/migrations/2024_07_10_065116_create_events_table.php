@@ -15,7 +15,11 @@ return new class extends Migration {
             $table->foreignId('event_group_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->string('sub_title');
+            $table->integer('price');
+            $table->timestamp('register_start_datetime');
+            $table->timestamp('register_end_datetime');
             $table->integer('max_participants');
+            $table->boolean('enabled');
             $table->timestamps();
         });
     }

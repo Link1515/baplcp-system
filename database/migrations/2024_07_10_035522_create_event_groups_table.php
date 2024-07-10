@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->integer('price');
             $table->timestamp('register_start_datetime')->nullable();
             $table->timestamp('register_end_datetime')->nullable();
-            $table->integer('max_capacity');
+            $table->integer('max_participants');
             $table->foreignId('previous_event_group_id')->nullable()->constrained('event_groups');
             $table->timestamps();
         });

@@ -12,15 +12,15 @@ class Dates implements ValidationRule
      *
      * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
-    public function validate(string $attribute, mixed $dates, Closure $fail): void
+    public function validate(string $attribute, mixed $eventDates, Closure $fail): void
     {
         $format = 'Y-m-d';
 
-        foreach ($dates as $date) {
+        foreach ($eventDates as $date) {
             $d = \DateTime::createFromFormat($format, $date);
             if (!($d && $d->format($format) === $date)) {
                 // $fail('The :attribute must be a valid date string in the format "Y-m-d, Y-m-d, ..."');
-                $fail('validation.dates')->translate();
+                $fail('validation.eventDates')->translate();
             }
         }
     }

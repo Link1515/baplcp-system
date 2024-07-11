@@ -14,12 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('sub_title');
-            $table->boolean('enabled');
-            $table->boolean('can_register_all');
-            $table->integer('price');
-            $table->timestamp('register_start_datetime')->nullable();
-            $table->timestamp('register_end_datetime')->nullable();
-            $table->integer('max_participants');
+            $table->boolean('enabled')->default(true);
+            $table->boolean('can_register_all_event');
+            $table->integer('price')->nullable();
+            $table->timestamp('register_start_at')->nullable();
+            $table->timestamp('register_end_at')->nullable();
+            $table->integer('max_participants')->nullable();
             $table->foreignId('previous_event_group_id')->nullable()->constrained('event_groups');
             $table->timestamps();
         });

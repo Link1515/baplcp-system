@@ -3,7 +3,7 @@ import { MandarinTraditional } from "flatpickr/dist/l10n/zh-tw";
 import "flatpickr/dist/flatpickr.min.css";
 import { format, subDays } from "date-fns";
 
-flatpickr("#dates", {
+flatpickr("#eventDates", {
     mode: "multiple",
     dateFormat: "Y-m-d",
     locale: MandarinTraditional,
@@ -16,7 +16,7 @@ flatpickr("#eventTime", {
 });
 
 const registerEndDateForEventGroupFlatpickr = flatpickr(
-    "#registerEndDateForEventGroup",
+    "#eventGroupRegisterEndAt",
     {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
@@ -31,7 +31,7 @@ const registerEndDateForEventGroupFlatpickr = flatpickr(
 );
 
 const registerStartDateForEventGroupFlatpickr = flatpickr(
-    "#registerStartDateForEventGroup",
+    "#eventGroupRegisterStartAt",
     {
         enableTime: true,
         dateFormat: "Y-m-d H:i",

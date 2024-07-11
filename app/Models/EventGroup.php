@@ -13,10 +13,10 @@ class EventGroup extends Model
         'title',
         'sub_title',
         'enabled',
-        'can_register_all',
+        'can_register_all_event',
         'price',
-        'register_start_datetime',
-        'register_end_datetime',
+        'register_start_at',
+        'register_end_at',
         'max_participants',
         'previous_event_group_id'
     ];

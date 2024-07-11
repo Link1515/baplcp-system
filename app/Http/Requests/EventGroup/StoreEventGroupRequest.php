@@ -18,7 +18,8 @@ class StoreEventGroupRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'dates' => explode(', ', $this->input('dates')),
+            'eventDates' => explode(', ', $this->input('eventDates')),
+            'canRegisterAllEvent' => (bool) $this->input('canRegisterAllEvent'),
         ]);
     }
 
@@ -32,18 +33,24 @@ class StoreEventGroupRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'subTitle' => 'required|max:255',
-            'priceForEvent' => 'required|integer',
-            'maxParticipantsForEvent' => 'required|integer',
+            'eventPrice' => 'required|integer',
+            'eventMaxParticipants' => 'required|integer',
             'eventTime' => 'required',
-            'dates' => ['required', new Dates],
+            'eventDates' => ['required', new Dates],
             'eventStartRegisterDayBefore' => 'required|integer',
             'eventEndRegisterDayBefore' => 'required|integer',
 
-            'canRegisterAll' => 'accepted',
-            'priceForEventGroup' => 'required_with:canRegisterAll|nullable|integer',
-            'maxParticipantsForEventGroup' => 'required_with:canRegisterAll|nullable|integer',
-            'registerStartDateForEventGroup' => 'required_with:canRegisterAll|nullable|after:now',
-            'registerEndDateForEventGroup' => 'required_with:canRegisterAll|nullable|after:registerStartDateForEventGroup',
+            'canRegisterAllEvent' => 'boolean|nullable',
+            'eventGroupPrice' => 'required_if:canRegisterAllEvent,true|nullable|integer',
+            'eventGroupMaxParticipants' => 'required_if:canRegisterAllEvent,true|nullable|integer',
+            'eventGroupRegisterStartAt' => 'required_if:canRegisterAllEvent,true|nullable|after:now',
+            'eventGroupRegisterEndAt' => 'required_if:canRegisterAllEvent,true|nullable|after:eventGroupRegisterStartAt',
         ];
     }
+
+    // protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    // {
+    //     dd($validator->errors());
+    //     parent::failedValidation($validator);
+    // }
 }

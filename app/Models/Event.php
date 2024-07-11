@@ -15,8 +15,8 @@ class Event extends Model
         'sub_title',
         'enabled',
         'price',
-        'register_start_datetime',
-        'register_end_datetime',
+        'register_start_at',
+        'register_end_at',
         'max_participants',
     ];
 

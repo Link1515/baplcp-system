@@ -15,7 +15,7 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::view('/', 'index');
+Route::view('/', 'index')->name('home');
 
 Route::get('/login/line', [LoginController::class, 'redirectToProvider']);
 Route::get('/login/line/callback', [LoginController::class, 'handleProviderCallback']);

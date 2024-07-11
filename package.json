@@ -14,6 +14,10 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
+        "@alpinejs/collapse": "^3.14.1",
+        "alpinejs": "^3.14.1",
+        "date-fns": "^3.6.0",
+        "flatpickr": "^4.6.13",
         "laravel-precognition-alpine": "^0.5.6"
     }
 }

@@ -11,3 +11,21 @@
         font-style: normal;
     }
 }
+
+@layer components {
+    .btn {
+        @apply border-neutral-500 py-2 text-center border rounded;
+    }
+
+    .btn-submit {
+        @apply py-2 text-white bg-blue-800 rounded;
+    }
+
+    .input {
+        @apply border-neutral-500 w-full px-3 py-1.5 border rounded outline-none;
+    }
+
+    .input.is-invalid {
+        @apply border-red-600;
+    }
+}

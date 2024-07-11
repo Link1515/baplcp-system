@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventGroupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 
@@ -14,9 +15,12 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::view('/', 'index');
 
 Route::get('/login/line', [LoginController::class, 'redirectToProvider']);
 Route::get('/login/line/callback', [LoginController::class, 'handleProviderCallback']);
+
+Route::prefix('admin')->group(function () {
+    Route::view('/', 'admin.index')->name('admin.index');
+    Route::resource('eventGroups', EventGroupController::class);
+});

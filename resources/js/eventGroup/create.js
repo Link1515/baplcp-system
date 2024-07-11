@@ -7,6 +7,12 @@ flatpickr("#eventDates", {
     mode: "multiple",
     dateFormat: "Y-m-d",
     locale: MandarinTraditional,
+    disable: [
+        {
+            from: "1970-01-01",
+            to: format(subDays(new Date(), 1), "yyyy-MM-dd"),
+        },
+    ],
 });
 
 flatpickr("#eventTime", {

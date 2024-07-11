@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventGroup;
 use Illuminate\Http\Request;
 use App\Http\Requests\EventGroup\StoreEventGroupRequest;
 
@@ -19,7 +20,17 @@ class EventGroupController extends Controller
 
     public function store(StoreEventGroupRequest $request)
     {
-        $result = $request->validated();
+        $validated = $request->validated();
+
+        $eventGroup = new EventGroup();
+        $eventGroup->title = $validated['title'];
+        $eventGroup->sub_title = $validated['subTitle'];
+        $eventGroup->can_register_all_event = $validated['canRegisterAllEvent'];
+        if ($eventGroup->can_register_all_event) {
+            $eventGroup->price = $validated['eventGroupPrice'];
+            $eventGroup->max_participants = $validated['eventGroupMaxParticipants'];
+        }
+        $eventGroup->save();
 
         return view('admin.eventGroup.index');
     }

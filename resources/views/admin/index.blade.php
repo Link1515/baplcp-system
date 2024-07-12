@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="grid gap-4">
-        <a href="{{ route('eventGroups.index') }}" class="btn">季打管理</a>
+        <a href="{{ route('admin.eventGroups.index') }}" class="btn">季打管理</a>
         <a href="#" class="btn">會員管理</a>
     </div>
 @endsection

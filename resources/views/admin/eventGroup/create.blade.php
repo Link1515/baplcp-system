@@ -12,7 +12,7 @@
 
 @section('content')
     <form x-data="{
-        form: $form('post', '{{ route('eventGroups.store') }}', {
+        form: $form('post', '{{ route('admin.eventGroups.store') }}', {
             title: '',
             subTitle: '',
             singlePrice: '',
@@ -26,7 +26,7 @@
             eventEndRegisterDayBefore: '',
             eventEndRegisterDayBeforeTime: '',
     
-            canRegisterAllEvent: '{{ old('formSubmitted') }}' ? Boolean({{ old('canRegisterAllEvent') }}) : true,
+            canRegisterAllEvent: '',
             registerAllPrice: '',
             registerAllParticipants: '',
             eventGroupRegisterStartAt: '',
@@ -136,8 +136,9 @@
         </label>
 
         <label class="flex items-center gap-2 text-lg">
-            <input x-model="form.canRegisterAllEvent" id="canRegisterAllEvent" value="true" type="checkbox"
-                name="canRegisterAllEvent">
+            <input x-model.fill="form.canRegisterAllEvent" id="canRegisterAllEvent" value="true"
+                {{ old('formSubmitted') ? (old('canRegisterAllEvent') ? 'checked' : '') : 'checked' }} type="checkbox"
+                name="canRegisterAllEvent" />
             開放報名季打
         </label>
         <div x-show="form.canRegisterAllEvent" class="flex flex-col gap-4" x-collapse>

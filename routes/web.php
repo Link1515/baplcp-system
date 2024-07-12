@@ -20,7 +20,7 @@ Route::view('/', 'index')->name('home');
 Route::get('/login/line', [LoginController::class, 'redirectToProvider']);
 Route::get('/login/line/callback', [LoginController::class, 'handleProviderCallback']);
 
-Route::prefix('admin')->group(function () {
-    Route::view('/', 'admin.index')->name('admin.index');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::view('/', 'admin.index')->name('index');
     Route::resource('eventGroups', EventGroupController::class);
 });

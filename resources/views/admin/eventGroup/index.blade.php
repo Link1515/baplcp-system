@@ -7,6 +7,9 @@
 
 @section('content')
     <div class="grid gap-4">
+        @foreach ($eventGroups as $eventGroup)
+            <a href="" class="btn">{{ $eventGroup->title }}</a>
+        @endforeach
         <a href="{{ route('eventGroups.create') }}" class="btn">+</a>
     </div>
 @endsection

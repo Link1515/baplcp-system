@@ -15,19 +15,20 @@
         form: $form('post', '{{ route('eventGroups.store') }}', {
             title: '',
             subTitle: '',
-            eventPrice: '',
-            eventMemberParticipants: '', // new
-            eventNonMemberParticipants: '', // new
+            singlePrice: '',
+            memberParticipants: '',
+            nonMemberParticipants: '',
+    
             eventTime: '',
             eventDates: '',
             eventStartRegisterDayBefore: '',
-            eventStartRegisterDayBeforeTime: '', // new
+            eventStartRegisterDayBeforeTime: '',
             eventEndRegisterDayBefore: '',
-            eventEndRegisterDayBeforeTime: '', // new
+            eventEndRegisterDayBeforeTime: '',
     
             canRegisterAllEvent: '{{ old('formSubmitted') }}' ? Boolean({{ old('canRegisterAllEvent') }}) : true,
-            eventGroupPrice: '',
-            eventGroupMaxParticipants: '',
+            registerAllPrice: '',
+            registerAllParticipants: '',
             eventGroupRegisterStartAt: '',
             eventGroupRegisterEndAt: '',
         }),
@@ -52,27 +53,26 @@
         </label>
         <label class="flex flex-col gap-1 text-lg">
             單次費用
-            <input id="eventPrice" x-model.fill="form.eventPrice" type="number" name="eventPrice"
-                value="{{ old('eventPrice') }}" class="input @error('eventPrice') is-invalid @enderror">
-            @error('eventPrice')
+            <input id="singlePrice" x-model.fill="form.singlePrice" type="number" name="singlePrice"
+                value="{{ old('singlePrice') }}" class="input @error('singlePrice') is-invalid @enderror">
+            @error('singlePrice')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
         </label>
         <label class="flex flex-col gap-1 text-lg">
             群內人數
-            <input id="eventMemberParticipants" x-model.fill="form.eventMemberParticipants" type="number"
-                name="eventMemberParticipants" value="{{ old('eventMemberParticipants') }}"
-                class="input @error('eventMemberParticipants') is-invalid @enderror">
-            @error('eventMemberParticipants')
+            <input id="memberParticipants" x-model.fill="form.memberParticipants" type="number" name="memberParticipants"
+                value="{{ old('memberParticipants') }}" class="input @error('memberParticipants') is-invalid @enderror">
+            @error('memberParticipants')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
         </label>
         <label class="flex flex-col gap-1 text-lg">
             群外人數
-            <input id="eventNonMemberParticipants" x-model.fill="form.eventNonMemberParticipants" type="number"
-                name="eventNonMemberParticipants" value="{{ old('eventNonMemberParticipants') }}"
-                class="input @error('eventNonMemberParticipants') is-invalid @enderror">
-            @error('eventNonMemberParticipants')
+            <input id="nonMemberParticipants" x-model.fill="form.nonMemberParticipants" type="number"
+                name="nonMemberParticipants" value="{{ old('nonMemberParticipants') }}"
+                class="input @error('nonMemberParticipants') is-invalid @enderror">
+            @error('nonMemberParticipants')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
         </label>
@@ -143,18 +143,18 @@
         <div x-show="form.canRegisterAllEvent" class="flex flex-col gap-4" x-collapse>
             <label class="flex flex-col gap-1 text-lg">
                 季打費用
-                <input id="eventGroupPrice" x-model.fill="form.eventGroupPrice" type="number" name="eventGroupPrice"
-                    value="{{ old('eventGroupPrice') }}" class="input @error('eventGroupPrice') is-invalid @enderror">
-                @error('eventGroupPrice')
+                <input id="registerAllPrice" x-model.fill="form.registerAllPrice" type="number" name="registerAllPrice"
+                    value="{{ old('registerAllPrice') }}" class="input @error('registerAllPrice') is-invalid @enderror">
+                @error('registerAllPrice')
                     <div class="text-red-600">{{ $message }}</div>
                 @enderror
             </label>
             <label class="flex flex-col gap-1 text-lg">
                 季打名額
-                <input id="eventGroupMaxParticipants" x-model.fill="form.eventGroupMaxParticipants" type="number"
-                    name="eventGroupMaxParticipants" value="{{ old('eventGroupMaxParticipants') }}"
-                    class="input @error('eventGroupMaxParticipants') is-invalid @enderror">
-                @error('eventGroupMaxParticipants')
+                <input id="registerAllParticipants" x-model.fill="form.registerAllParticipants" type="number"
+                    name="registerAllParticipants" value="{{ old('registerAllParticipants') }}"
+                    class="input @error('registerAllParticipants') is-invalid @enderror">
+                @error('registerAllParticipants')
                     <div class="text-red-600">{{ $message }}</div>
                 @enderror
             </label>

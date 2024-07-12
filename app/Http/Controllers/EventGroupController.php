@@ -13,7 +13,8 @@ class EventGroupController extends Controller
 {
     public function index()
     {
-        return view('admin.eventGroup.index');
+        $eventGroups = EventGroup::all();
+        return view('admin.eventGroup.index', compact('eventGroups'));
     }
 
     public function create()
@@ -29,12 +30,16 @@ class EventGroupController extends Controller
             $eventGroup = new EventGroup();
             $eventGroup->title = $validated['title'];
             $eventGroup->sub_title = $validated['subTitle'];
+            $eventGroup->price = $validated['singlePrice'];
+            $eventGroup->member_participants = $validated['memberParticipants'];
+            $eventGroup->non_member_participants = $validated['nonMemberParticipants'];
+
             $eventGroup->can_register_all_event = $validated['canRegisterAllEvent'];
             if ($eventGroup->can_register_all_event) {
-                $eventGroup->price = $validated['eventGroupPrice'];
                 $eventGroup->register_start_at = $validated['eventGroupRegisterStartAt'];
                 $eventGroup->register_end_at = $validated['eventGroupRegisterEndAt'];
-                $eventGroup->max_participants = $validated['eventGroupMaxParticipants'];
+                $eventGroup->register_all_participants = $validated['registerAllParticipants'];
+                $eventGroup->register_all_price = $validated['registerAllParticipants'];
             }
             $eventGroup->save();
 
@@ -51,14 +56,9 @@ class EventGroupController extends Controller
                         ->setTimeFromTimeString($validated['eventEndRegisterDayBeforeTime']);
 
                 $events[] = new Event([
-                    'title' => $validated['title'],
-                    'sub_title' => $eventDate,
-                    'price' => $validated['eventPrice'],
                     'start_at' => $eventStartAt,
                     'register_start_at' => $eventRegisterStartAt,
                     'register_end_at' => $eventRegisterEndAt,
-                    'member_participants' => $validated['eventMemberParticipants'],
-                    'non_member_participants' => $validated['eventNonMemberParticipants'],
                 ]);
             }
 

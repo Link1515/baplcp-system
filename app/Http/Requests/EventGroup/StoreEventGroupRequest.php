@@ -33,21 +33,22 @@ class StoreEventGroupRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'subTitle' => 'required|max:255',
-            'eventPrice' => 'required|integer|max:20000',
-            'eventMemberParticipants' => 'required|integer|max:200',
-            'eventNonMemberParticipants' => 'required|integer|max:200',
+            'singlePrice' => 'required|integer|max:20000|gt:0',
+            'memberParticipants' => 'required|integer|max:200|gt:0',
+            'nonMemberParticipants' => 'required|integer|max:200|gt:0',
+
             'eventTime' => 'required|max:255',
-            'eventDates' => ['required', new Dates, 'max:20'],
-            'eventStartRegisterDayBefore' => 'required|integer|max:20',
+            'eventDates' => ['required', new Dates, 'max:30'],
+            'eventStartRegisterDayBefore' => 'required|integer|max:20|gt:0',
             'eventStartRegisterDayBeforeTime' => 'required|max:255',
-            'eventEndRegisterDayBefore' => 'required|integer|lt:eventStartRegisterDayBefore|max:255',
+            'eventEndRegisterDayBefore' => 'required|integer|lt:eventStartRegisterDayBefore|max:255|gt:0',
             'eventEndRegisterDayBeforeTime' => 'required|max:255',
 
             'canRegisterAllEvent' => 'boolean|nullable',
-            'eventGroupPrice' => 'required_if:canRegisterAllEvent,true|nullable|integer|max:20000',
-            'eventGroupMaxParticipants' => 'required_if:canRegisterAllEvent,true|nullable|integer|max:20',
             'eventGroupRegisterStartAt' => 'required_if:canRegisterAllEvent,true|nullable|after:now|max:255',
             'eventGroupRegisterEndAt' => 'required_if:canRegisterAllEvent,true|nullable|after:eventGroupRegisterStartAt|max:255',
+            'registerAllPrice' => 'required_if:canRegisterAllEvent,true|nullable|integer|max:20000|gt:0',
+            'registerAllParticipants' => 'required_if:canRegisterAllEvent,true|nullable|integer|max:200|gt:0',
         ];
     }
 

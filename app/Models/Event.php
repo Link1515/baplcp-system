@@ -11,11 +11,7 @@ class Event extends Model
 
     protected $fillable = [
         'event_group_id',
-        'title',
-        'sub_title',
-        'enabled',
         'start_at',
-        'price',
         'register_start_at',
         'register_end_at',
         'member_participants',

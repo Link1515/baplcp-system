@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EventGroup\StoreEventGroupRequest;
+use App\Http\Requests\EventGroup\UpdateEventGroupRequest;
 
 class EventGroupController extends Controller
 {
@@ -64,7 +65,7 @@ class EventGroupController extends Controller
 
             $eventGroup->events()->saveMany($events);
         }, 5);
-        return redirect()->route('eventGroups.index');
+        return redirect()->route('admin.eventGroups.index');
     }
 
     public function show(string $id)
@@ -74,12 +75,31 @@ class EventGroupController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $eventGroup = EventGroup::with('events')->find($id);
+        $events = $eventGroup->events;
+
+        return view('admin.eventGroup.edit', compact('eventGroup', 'events'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateEventGroupRequest $request, string $id)
     {
-        //
+        $validated = $request->validated();
+        $eventGroup = EventGroup::find($id);
+
+        $eventGroup->title = $validated['title'];
+        $eventGroup->sub_title = $validated['subTitle'];
+        $eventGroup->price = $validated['singlePrice'];
+        $eventGroup->member_participants = $validated['memberParticipants'];
+        $eventGroup->non_member_participants = $validated['nonMemberParticipants'];
+
+        $eventGroup->can_register_all_event = $validated['canRegisterAllEvent'];
+        $eventGroup->register_start_at = $validated['eventGroupRegisterStartAt'];
+        $eventGroup->register_end_at = $validated['eventGroupRegisterEndAt'];
+        $eventGroup->register_all_participants = $validated['registerAllParticipants'];
+        $eventGroup->register_all_price = $validated['registerAllParticipants'];
+        $eventGroup->save();
+
+        return redirect()->route('admin.eventGroups.index');
     }
 
     public function destroy(string $id)

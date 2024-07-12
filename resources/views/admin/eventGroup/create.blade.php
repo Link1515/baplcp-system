@@ -33,8 +33,8 @@
             eventGroupRegisterEndAt: '',
         }),
     }" class="grid gap-4">
-        <input type="hidden" name="formSubmitted" value="true">
         @csrf
+        <input type="hidden" name="formSubmitted" value="true">
         <label class="flex flex-col gap-1 text-lg">
             標題
             <input id="title" x-model.fill="form.title" type="text" name="title" value="{{ old('title') }}"

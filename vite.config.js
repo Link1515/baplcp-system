@@ -8,6 +8,7 @@ export default defineConfig({
                 "resources/css/app.css",
                 "resources/js/app.js",
                 "resources/js/eventGroup/create.js",
+                "resources/js/eventGroup/edit.js",
             ],
             refresh: true,
         }),

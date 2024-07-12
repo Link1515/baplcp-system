@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@alpinejs/collapse':
     specifier: ^3.14.1
@@ -20,6 +16,9 @@ dependencies:
   laravel-precognition-alpine:
     specifier: ^0.5.6
     version: 0.5.6(alpinejs@3.14.1)
+  sweetalert2:
+    specifier: ^11.12.2
+    version: 11.12.2
 
 devDependencies:
   autoprefixer:
@@ -1242,6 +1241,10 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  /sweetalert2@11.12.2:
+    resolution: {integrity: sha512-Rwv5iRYlApkDSXeX22aLhhWMlWPzFxnNBVLZajkFKYhaVEfQkMOPQQRhBtSFxKBPCoko9U3SccWm9hI4o3Id0Q==}
+    dev: false
+
   /tailwindcss@3.4.4:
     resolution: {integrity: sha512-ZoyXOdJjISB7/BcLTR6SEsLgKtDStYyYZVLsUtWChO4Ps20CBad7lfJKVDiejocV4ME1hLmyY0WJE3hSDcmQ2A==}
     engines: {node: '>=14.0.0'}
@@ -1385,3 +1388,7 @@ packages:
     engines: {node: '>= 14'}
     hasBin: true
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

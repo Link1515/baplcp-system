@@ -37,6 +37,20 @@
 
         @vite('resources/js/app.js')
         @yield('js')
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                @if (session('success'))
+                    window.popup.success('{{ session('success') }}')
+                @endif
+                @if (session('info'))
+                    window.popup.info('{{ session('info') }}')
+                @endif
+                @if (session('error'))
+                    window.popup.error('{{ session('error') }}')
+                @endif
+            })
+        </script>
     </div>
 </body>
 

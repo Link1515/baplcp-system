@@ -99,6 +99,8 @@ class EventGroupController extends Controller
         $eventGroup->register_all_price = $validated['registerAllParticipants'];
         $eventGroup->save();
 
+        session()->flash('success', '更新成功');
+
         return redirect()->route('admin.eventGroups.index');
     }
 

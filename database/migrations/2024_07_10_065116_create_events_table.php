@@ -16,10 +16,11 @@ return new class extends Migration {
             $table->string('title');
             $table->string('sub_title');
             $table->integer('price');
-            $table->timestamp('date');
+            $table->timestamp('start_at');
             $table->timestamp('register_start_at');
             $table->timestamp('register_end_at');
-            $table->integer('max_participants');
+            $table->integer('member_participants');
+            $table->integer('non_member_participants');
             $table->boolean('enabled')->default(true);
             $table->timestamps();
         });

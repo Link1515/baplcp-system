@@ -13,133 +13,164 @@
 @section('content')
     <form x-data="{
         form: $form('post', '{{ route('eventGroups.store') }}', {
-            title: '{{ old('title') }}',
-            subTitle: '{{ old('subTitle') }}',
-            eventPrice: '{{ old('eventPrice') }}',
-            eventMaxParticipants: '{{ old('eventMaxParticipants', 18) }}',
-            eventTime: '{{ old('eventTime') }}',
-            eventDates: '{{ old('eventDates') }}',
-            eventStartRegisterDayBefore: '{{ old('eventStartRegisterDayBefore', 6) }}',
-            eventEndRegisterDayBefore: '{{ old('eventEndRegisterDayBefore', 5) }}',
-
+            title: '',
+            subTitle: '',
+            eventPrice: '',
+            eventMemberParticipants: '', // new
+            eventNonMemberParticipants: '', // new
+            eventTime: '',
+            eventDates: '',
+            eventStartRegisterDayBefore: '',
+            eventStartRegisterDayBeforeTime: '', // new
+            eventEndRegisterDayBefore: '',
+            eventEndRegisterDayBeforeTime: '', // new
+    
             canRegisterAllEvent: '{{ old('formSubmitted') }}' ? Boolean({{ old('canRegisterAllEvent') }}) : true,
-            eventGroupPrice: '{{ old('eventGroupPrice') }}',
-            eventGroupMaxParticipants: '{{ old('eventGroupMaxParticipants') }}',
-            eventGroupRegisterStartAt: '{{ old('eventGroupRegisterStartAt') }}',
-            eventGroupRegisterEndAt: '{{ old('eventGroupRegisterEndAt') }}',
+            eventGroupPrice: '',
+            eventGroupMaxParticipants: '',
+            eventGroupRegisterStartAt: '',
+            eventGroupRegisterEndAt: '',
         }),
     }" class="grid gap-4">
         <input type="hidden" name="formSubmitted" value="true">
         @csrf
-        <label for="title" class="flex flex-col gap-1 text-lg">
+        <label class="flex flex-col gap-1 text-lg">
             標題
-            <input id="title" x-model="form.title" type="text" name="title"
+            <input id="title" x-model.fill="form.title" type="text" name="title" value="{{ old('title') }}"
                 class="input @error('title') is-invalid @enderror">
             @error('title')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
         </label>
-        <label for="subTitle" class="flex flex-col gap-1 text-lg">
+        <label class="flex flex-col gap-1 text-lg">
             副標題
-            <input id="subTitle" x-model="form.subTitle" type="text" name="subTitle"
+            <input id="subTitle" x-model.fill="form.subTitle" type="text" name="subTitle" value="{{ old('subTitle') }}"
                 class="input @error('subTitle') is-invalid @enderror">
             @error('subTitle')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
         </label>
-        <label for="eventPrice" class="flex flex-col gap-1 text-lg">
+        <label class="flex flex-col gap-1 text-lg">
             單次費用
-            <input id="eventPrice" x-model="form.eventPrice" type="number" name="eventPrice"
-                class="input @error('eventPrice') is-invalid @enderror">
+            <input id="eventPrice" x-model.fill="form.eventPrice" type="number" name="eventPrice"
+                value="{{ old('eventPrice') }}" class="input @error('eventPrice') is-invalid @enderror">
             @error('eventPrice')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
         </label>
-        <label for="eventMaxParticipants" class="flex flex-col gap-1 text-lg">
-            最大參與人數
-            <input id="eventMaxParticipants" x-model="form.eventMaxParticipants" type="number"
-                name="eventMaxParticipants" class="input @error('eventMaxParticipants') is-invalid @enderror">
-            @error('eventMaxParticipants')
+        <label class="flex flex-col gap-1 text-lg">
+            群內人數
+            <input id="eventMemberParticipants" x-model.fill="form.eventMemberParticipants" type="number"
+                name="eventMemberParticipants" value="{{ old('eventMemberParticipants') }}"
+                class="input @error('eventMemberParticipants') is-invalid @enderror">
+            @error('eventMemberParticipants')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
         </label>
-        <label for="eventTime" class="flex flex-col gap-1 text-lg">
+        <label class="flex flex-col gap-1 text-lg">
+            群外人數
+            <input id="eventNonMemberParticipants" x-model.fill="form.eventNonMemberParticipants" type="number"
+                name="eventNonMemberParticipants" value="{{ old('eventNonMemberParticipants') }}"
+                class="input @error('eventNonMemberParticipants') is-invalid @enderror">
+            @error('eventNonMemberParticipants')
+                <div class="text-red-600">{{ $message }}</div>
+            @enderror
+        </label>
+        <label class="flex flex-col gap-1 text-lg">
             活動開始時間
-            <input id="eventTime" x-model="form.eventTime" type="text" name="eventTime"
-                class="input @error('eventTime') is-invalid @enderror">
+            <input id="eventTime" x-model="form.eventTime" type="text" name="eventTime" value="{{ old('eventTime') }}"
+                data-default="{{ old('eventTime') }}" class="input @error('eventTime') is-invalid @enderror">
             @error('eventTime')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
         </label>
-        <label for="eventDates" class="flex flex-col gap-1 text-lg">
+        <label class="flex flex-col gap-1 text-lg">
             日期 (多選)
-            <input id="eventDates" x-model="form.eventDates" type="text" name="eventDates"
-                class="input @error('eventDates') is-invalid @enderror">
+            <input id="eventDates" x-model.fill="form.eventDates" type="text" name="eventDates"
+                value="{{ old('eventDates') }}" class="input @error('eventDates') is-invalid @enderror">
             @error('eventDates')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
         </label>
-        <label for="eventStartRegisterDayBefore" class="flex flex-col gap-2 text-lg">
+        <label class="flex flex-col gap-2 text-lg">
             開放報名時間
             <div class="flex items-center gap-3">
                 <span class="text-nowrap">每次活動</span>
-                <input id="eventStartRegisterDayBefore" x-model="form.eventStartRegisterDayBefore" type="number"
-                    name="eventStartRegisterDayBefore"
+                <input id="eventStartRegisterDayBefore" x-model.fill="form.eventStartRegisterDayBefore" type="number"
+                    name="eventStartRegisterDayBefore" value="{{ old('eventStartRegisterDayBefore', 6) }}"
                     class="input @error('eventStartRegisterDayBefore') is-invalid @enderror">
-                <span class="text-nowrap">天前</span>
+                <span class="text-nowrap">天前的</span>
+                <input id="eventStartRegisterDayBeforeTime" x-model.fill="form.eventStartRegisterDayBeforeTime"
+                    data-default="{{ old('eventStartRegisterDayBeforeTime', '19:00') }}"
+                    value="{{ old('eventStartRegisterDayBeforeTime', '19:00') }}" type="text"
+                    name="eventStartRegisterDayBeforeTime"
+                    class="input @error('eventStartRegisterDayBeforeTime') is-invalid @enderror">
             </div>
             @error('eventStartRegisterDayBefore')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
+            @error('eventStartRegisterDayBeforeTime')
+                <div class="text-red-600">{{ $message }}</div>
+            @enderror
         </label>
-        <label for="eventEndRegisterDayBefore" class="flex flex-col gap-2 text-lg">
+        <label class="flex flex-col gap-2 text-lg">
             截止報名時間
             <div class="flex items-center gap-3">
                 <span class="text-nowrap">每次活動</span>
-                <input id="eventEndRegisterDayBefore" x-model="form.eventEndRegisterDayBefore" type="number"
-                    name="eventEndRegisterDayBefore" class="input @error('eventEndRegisterDayBefore') is-invalid @enderror">
-                <span class="text-nowrap">天前</span>
+                <input id="eventEndRegisterDayBefore" x-model.fill="form.eventEndRegisterDayBefore" type="number"
+                    name="eventEndRegisterDayBefore" value="{{ old('eventEndRegisterDayBefore', 5) }}"
+                    class="input @error('eventEndRegisterDayBefore') is-invalid @enderror">
+                <span class="text-nowrap">天前的</span>
+                <input id="eventEndRegisterDayBeforeTime" x-model="form.eventEndRegisterDayBeforeTime"
+                    data-default="{{ old('eventEndRegisterDayBeforeTime', '19:00') }}"
+                    value="{{ old('eventEndRegisterDayBeforeTime', '19:00') }}" type="text"
+                    name="eventEndRegisterDayBeforeTime"
+                    class="input @error('eventEndRegisterDayBeforeTime') is-invalid @enderror">
             </div>
             @error('eventEndRegisterDayBefore')
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
+            @error('eventEndRegisterDayBeforeTime')
+                <div class="text-red-600">{{ $message }}</div>
+            @enderror
         </label>
 
-        <label for="canRegisterAllEvent" class="flex items-center gap-2 text-lg">
-            <input x-model="form.canRegisterAllEvent" id="canRegisterAllEvent" value="true" type="checkbox" name="canRegisterAllEvent">
+        <label class="flex items-center gap-2 text-lg">
+            <input x-model="form.canRegisterAllEvent" id="canRegisterAllEvent" value="true" type="checkbox"
+                name="canRegisterAllEvent">
             開放報名季打
         </label>
         <div x-show="form.canRegisterAllEvent" class="flex flex-col gap-4" x-collapse>
-            <label for="eventGroupPrice" class="flex flex-col gap-1 text-lg">
+            <label class="flex flex-col gap-1 text-lg">
                 季打費用
-                <input id="eventGroupPrice" x-model="form.eventGroupPrice" type="number" name="eventGroupPrice"
-                    class="input @error('eventGroupPrice') is-invalid @enderror">
+                <input id="eventGroupPrice" x-model.fill="form.eventGroupPrice" type="number" name="eventGroupPrice"
+                    value="{{ old('eventGroupPrice') }}" class="input @error('eventGroupPrice') is-invalid @enderror">
                 @error('eventGroupPrice')
                     <div class="text-red-600">{{ $message }}</div>
                 @enderror
             </label>
-            <label for="eventGroupMaxParticipants" class="flex flex-col gap-1 text-lg">
+            <label class="flex flex-col gap-1 text-lg">
                 季打名額
-                <input id="eventGroupMaxParticipants" x-model="form.eventGroupMaxParticipants" type="number"
-                    name="eventGroupMaxParticipants"
+                <input id="eventGroupMaxParticipants" x-model.fill="form.eventGroupMaxParticipants" type="number"
+                    name="eventGroupMaxParticipants" value="{{ old('eventGroupMaxParticipants') }}"
                     class="input @error('eventGroupMaxParticipants') is-invalid @enderror">
                 @error('eventGroupMaxParticipants')
                     <div class="text-red-600">{{ $message }}</div>
                 @enderror
             </label>
-            <label for="eventGroupRegisterStartAt" class="flex flex-col gap-1 text-lg">
+            <label class="flex flex-col gap-1 text-lg">
                 季打開放報名時間
-                <input id="eventGroupRegisterStartAt" x-model="form.eventGroupRegisterStartAt" type="text"
-                    name="eventGroupRegisterStartAt"
+                <input id="eventGroupRegisterStartAt" x-model.fill="form.eventGroupRegisterStartAt" type="text"
+                    name="eventGroupRegisterStartAt" value="{{ old('eventGroupRegisterStartAt') }}"
                     class="input @error('eventGroupRegisterStartAt') is-invalid @enderror">
                 @error('eventGroupRegisterStartAt')
                     <div class="text-red-600">{{ $message }}</div>
                 @enderror
             </label>
-            <label for="eventGroupRegisterEndAt" class="flex flex-col gap-1 text-lg">
+            <label class="flex flex-col gap-1 text-lg">
                 季打結束報名時間
-                <input id="eventGroupRegisterEndAt" x-model="form.eventGroupRegisterEndAt" type="text"
-                    name="eventGroupRegisterEndAt"
+                <input id="eventGroupRegisterEndAt" x-model.fill="form.eventGroupRegisterEndAt" type="text"
+                    name="eventGroupRegisterEndAt" value="{{ old('eventGroupRegisterEndAt') }}"
                     class="input @error('eventGroupRegisterEndAt') is-invalid @enderror">
                 @error('eventGroupRegisterEndAt')
                     <div class="text-red-600">{{ $message }}</div>

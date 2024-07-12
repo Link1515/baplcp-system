@@ -41,17 +41,24 @@ class EventGroupController extends Controller
             $events = [];
             foreach ($validated['eventDates'] as $eventDate) {
                 $eventStartAt = Carbon::parse($eventDate)->setTimeFromTimeString($validated['eventTime']);
-                $eventRegisterStartAt = $eventStartAt->copy()->subDays($validated['eventStartRegisterDayBefore']);
-                $eventRegisterEndAt = $eventStartAt->copy()->subDays($validated['eventEndRegisterDayBefore']);
+                $eventRegisterStartAt =
+                    $eventStartAt->copy()
+                        ->subDays($validated['eventStartRegisterDayBefore'])
+                        ->setTimeFromTimeString($validated['eventStartRegisterDayBeforeTime']);
+                $eventRegisterEndAt =
+                    $eventStartAt->copy()
+                        ->subDays($validated['eventEndRegisterDayBefore'])
+                        ->setTimeFromTimeString($validated['eventEndRegisterDayBeforeTime']);
 
                 $events[] = new Event([
                     'title' => $validated['title'],
                     'sub_title' => $eventDate,
                     'price' => $validated['eventPrice'],
-                    'date' => $eventStartAt,
+                    'start_at' => $eventStartAt,
                     'register_start_at' => $eventRegisterStartAt,
                     'register_end_at' => $eventRegisterEndAt,
-                    'max_participants' => $validated['eventMaxParticipants'],
+                    'member_participants' => $validated['eventMemberParticipants'],
+                    'non_member_participants' => $validated['eventNonMemberParticipants'],
                 ]);
             }
 

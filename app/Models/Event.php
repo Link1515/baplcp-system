@@ -14,11 +14,12 @@ class Event extends Model
         'title',
         'sub_title',
         'enabled',
-        'date',
+        'start_at',
         'price',
         'register_start_at',
         'register_end_at',
-        'max_participants',
+        'member_participants',
+        'non_member_participants',
     ];
 
     public function eventGroup()

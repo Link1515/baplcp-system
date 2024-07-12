@@ -14,6 +14,7 @@ class Event extends Model
         'title',
         'sub_title',
         'enabled',
+        'date',
         'price',
         'register_start_at',
         'register_end_at',

@@ -65,6 +65,9 @@ class EventGroupController extends Controller
 
             $eventGroup->events()->saveMany($events);
         }, 5);
+
+        session()->flash('success', '創建成功');
+
         return redirect()->route('admin.eventGroups.index');
     }
 

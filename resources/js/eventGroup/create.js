@@ -19,27 +19,18 @@ flatpickr("#eventTime", {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
-    onReady(selectedDates, dateStr, instance) {
-        setDefaultValue(instance);
-    },
 });
 
 flatpickr("#eventStartRegisterDayBeforeTime", {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
-    onReady(selectedDates, dateStr, instance) {
-        setDefaultValue(instance);
-    },
 });
 
 flatpickr("#eventEndRegisterDayBeforeTime", {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
-    onReady(selectedDates, dateStr, instance) {
-        setDefaultValue(instance);
-    },
 });
 
 const registerEndDateForEventGroupFlatpickr = flatpickr(
@@ -81,10 +72,3 @@ const registerStartDateForEventGroupFlatpickr = flatpickr(
         },
     }
 );
-
-function setDefaultValue(instance) {
-    const defaultValue = instance.element.dataset.default;
-    if (defaultValue) {
-        instance.setDate(defaultValue);
-    }
-}

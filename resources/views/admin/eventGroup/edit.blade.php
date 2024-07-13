@@ -51,7 +51,7 @@
             singlePrice: '',
             memberParticipants: '',
             nonMemberParticipants: '',
-
+    
             canRegisterAllEvent: '',
             registerAllPrice: '',
             registerAllParticipants: '',

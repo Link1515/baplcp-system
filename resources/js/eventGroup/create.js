@@ -19,18 +19,33 @@ flatpickr("#eventTime", {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
+    onChange(selectedDates, dateStr, instance) {
+        if (selectedDates[0]) {
+            limitMinuteZeroOr30(selectedDates[0], instance);
+        }
+    },
 });
 
 flatpickr("#eventStartRegisterDayBeforeTime", {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
+    onChange(selectedDates, dateStr, instance) {
+        if (selectedDates[0]) {
+            limitMinuteZeroOr30(selectedDates[0], instance);
+        }
+    },
 });
 
 flatpickr("#eventEndRegisterDayBeforeTime", {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
+    onChange(selectedDates, dateStr, instance) {
+        if (selectedDates[0]) {
+            limitMinuteZeroOr30(selectedDates[0], instance);
+        }
+    },
 });
 
 const registerEndDateForEventGroupFlatpickr = flatpickr(
@@ -45,6 +60,11 @@ const registerEndDateForEventGroupFlatpickr = flatpickr(
                 to: format(subDays(new Date(), 1), "yyyy-MM-dd"),
             },
         ],
+        onChange(selectedDates, dateStr, instance) {
+            if (selectedDates[0]) {
+                limitMinuteZeroOr30(selectedDates[0], instance);
+            }
+        },
     }
 );
 
@@ -61,6 +81,9 @@ const registerStartDateForEventGroupFlatpickr = flatpickr(
             },
         ],
         onChange(selectedDates, dateStr, instance) {
+            if (selectedDates[0]) {
+                limitMinuteZeroOr30(selectedDates[0], instance);
+            }
             registerEndDateForEventGroupFlatpickr.config.disable = [
                 {
                     from: "1970-01-01",
@@ -72,3 +95,19 @@ const registerStartDateForEventGroupFlatpickr = flatpickr(
         },
     }
 );
+
+function limitMinuteZeroOr30(date, instance) {
+    const minutes = date.getMinutes();
+    const hours = date.getHours();
+
+    if (minutes === 0 || minutes === 30) return;
+
+    if (minutes > 30) {
+        date.setHours(hours + 1);
+        date.setMinutes(0);
+        instance.setDate(date);
+    } else {
+        date.setMinutes(30);
+        instance.setDate(date);
+    }
+}

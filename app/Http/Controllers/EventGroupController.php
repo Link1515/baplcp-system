@@ -14,6 +14,10 @@ class EventGroupController extends Controller
 {
     public function index()
     {
+    }
+
+    public function adminIndex()
+    {
         $eventGroups = EventGroup::all();
         return view('admin.eventGroup.index', compact('eventGroups'));
     }

@@ -22,5 +22,6 @@ Route::get('/login/line/callback', [LoginController::class, 'handleProviderCallb
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::view('/', 'admin.index')->name('index');
-    Route::resource('eventGroups', EventGroupController::class);
+    Route::get('eventGroups', [EventGroupController::class, 'adminIndex'])->name('eventGroups.index');
+    Route::resource('eventGroups', EventGroupController::class)->except(['index', 'show']);
 });

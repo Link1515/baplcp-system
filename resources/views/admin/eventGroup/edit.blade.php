@@ -105,7 +105,7 @@
                 季打開放報名時間
                 <input id="eventGroupRegisterStartAt" x-model.fill="form.eventGroupRegisterStartAt" type="text"
                     name="eventGroupRegisterStartAt"
-                    value="{{ Carbon::parse($eventGroup['register_start_at'])->format('Y-m-d H:i') }}"
+                    value="{{ $eventGroup['register_start_at'] ? Carbon::parse($eventGroup['register_start_at'])->format('Y-m-d H:i') : '' }}"
                     class="input @error('eventGroupRegisterStartAt') is-invalid @enderror">
                 @error('eventGroupRegisterStartAt')
                     <div class="text-red-600">{{ $message }}</div>
@@ -115,7 +115,7 @@
                 季打結束報名時間
                 <input id="eventGroupRegisterEndAt" x-model.fill="form.eventGroupRegisterEndAt" type="text"
                     name="eventGroupRegisterEndAt"
-                    value="{{ Carbon::parse($eventGroup['register_end_at'])->format('Y-m-d H:i') }}"
+                    value="{{ $eventGroup['register_end_at'] ? Carbon::parse($eventGroup['register_end_at'])->format('Y-m-d H:i') : '' }}"
                     class="input @error('eventGroupRegisterEndAt') is-invalid @enderror">
                 @error('eventGroupRegisterEndAt')
                     <div class="text-red-600">{{ $message }}</div>
@@ -124,13 +124,14 @@
         </div>
 
         <div class="grid grid-cols-2 gap-4 mt-6">
-            <button class="btn-submit bg-red-500" type="button">
+            <button
+                @click="deleteGroupEvent('{{ route('admin.eventGroups.destroy', ['eventGroup' => $eventGroup->id]) }}', '{{ route('admin.eventGroups.index') }}')"
+                class="btn-submit bg-red-500" type="button">
                 刪除季打
             </button>
             <button class="btn-submit" :disabled="form.processing">
                 更新季打
             </button>
-
         </div>
     </form>
 @endsection

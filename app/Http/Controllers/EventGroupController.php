@@ -106,6 +106,6 @@ class EventGroupController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        EventGroup::destroy($id);
     }
 }

@@ -16,7 +16,7 @@
     <div class="lg:max-w-xl lg:shadow max-w-3xl mx-auto">
         <header class="min-h-48 place-items-center relative grid mb-8 bg-center bg-cover"
             style="background-image: url('{{ asset('images/background/header.png') }}')">
-            <div class="lg:p-6 p-4 text-white">
+            <div class="lg:p-6 p-4 pt-16 text-white">
                 @if (Route::currentRouteName() !== 'home')
                     <div class="top-4 left-2 absolute flex items-center gap-2">
                         <a href="{{ url()->previous() }}">

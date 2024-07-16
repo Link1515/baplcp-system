@@ -79,7 +79,11 @@ class EventGroupController extends Controller
 
     public function show(string $id)
     {
-        //
+
+        // $events = EventGroup::find($id)->events()->get();
+        $eventGroup = EventGroup::with('events')->find($id);
+        $events = $eventGroup->events;
+        return view('eventGroup.show', compact('eventGroup', 'events'));
     }
 
     public function edit(string $id)

@@ -20,6 +20,8 @@ Route::view('/', 'index')->name('home');
 Route::get('/login/line', [LoginController::class, 'redirectToProvider']);
 Route::get('/login/line/callback', [LoginController::class, 'handleProviderCallback']);
 
+Route::get('/eventGroup', [EventGroupController::class, 'index'])->name('eventGroup.index');
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::view('/', 'admin.index')->name('index');
     Route::get('eventGroups', [EventGroupController::class, 'adminIndex'])->name('eventGroups.index');

@@ -81,14 +81,14 @@
             @if ($memberHasRegistered)
                 <div>
                     已於
-                    {{ Carbon::parse($memberRegistration['updated_at'])->setTimezone('Asia/Taipei')->format('Y-m-d H:i') }}
+                    {{ $memberRegistration->updated_at }}
                     報名活動
                 </div>
             @endif
             @if ($nonMemberHasRegistered)
                 <div>
                     已於
-                    {{ Carbon::parse($nonMemberRegistration['updated_at'])->setTimezone('Asia/Taipei')->format('Y-m-d H:i') }}
+                    {{ $nonMemberRegistration->updated_at }}
                     幫 {{ $nonMemberRegistration['non_member_name'] }}
                     報名活動
                 </div>

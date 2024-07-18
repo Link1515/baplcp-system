@@ -14,9 +14,9 @@ class EventController extends Controller
 
         $registration = EventRegistration::where('user_id', $userId)->where('event_id', $id)->get();
         $memberHasRegistered = $registration->where('is_non_member', 0)->isNotEmpty();
-        $memberRegistration = $memberHasRegistered ? $registration->where('is_non_member', 0)->first()->toArray() : [];
+        $memberRegistration = $memberHasRegistered ? $registration->where('is_non_member', 0)->first() : [];
         $nonMemberHasRegistered = $registration->where('is_non_member', 1)->isNotEmpty();
-        $nonMemberRegistration = $nonMemberHasRegistered ? $registration->where('is_non_member', 1)->first()->toArray() : [];
+        $nonMemberRegistration = $nonMemberHasRegistered ? $registration->where('is_non_member', 1)->first() : [];
 
         $event = Event::with('eventGroup')->find($id);
 

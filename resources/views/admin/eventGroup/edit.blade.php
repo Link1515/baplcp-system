@@ -8,23 +8,23 @@
         if (is_null($tableColumn)) {
             $tableColumn = $formField;
         }
-        return old('formSubmitted') ? old($formField) : $table[$tableColumn];
+        return old('formSubmitted') ? old($formField) : $table->$tableColumn;
     }
 
     $canRegisterAllEventDefaultValule = old('formSubmitted')
         ? (old('canRegisterAllEvent')
             ? 'checked'
             : '')
-        : ($eventGroup['can_register_all_event']
+        : ($eventGroup->can_register_all_event
             ? 'checked'
             : '');
 
-    $eventGroupRegisterStartAtDefaultValue = $eventGroup['register_start_at']
-        ? Carbon::parse($eventGroup['register_start_at'])->format('Y-m-d H:i')
+    $eventGroupRegisterStartAtDefaultValue = $eventGroup->register_start_at
+        ? $eventGroup->register_start_at
         : old('eventGroupRegisterStartAt');
 
-    $eventGroupRegisterEndAtDefaultValue = $eventGroup['register_end_at']
-        ? Carbon::parse($eventGroup['register_end_at'])->format('Y-m-d H:i')
+    $eventGroupRegisterEndAtDefaultValue = $eventGroup->register_end_at
+        ? $eventGroup->register_end_at
         : old('eventGroupRegisterEndAt');
 
     $deleteGroupEventMethod = sprintf(

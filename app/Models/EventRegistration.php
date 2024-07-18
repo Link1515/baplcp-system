@@ -11,7 +11,9 @@ class EventRegistration extends Model
 
     protected $fillable = [
         'user_id',
-        'event_id'
+        'event_id',
+        'is_non_member',
+        'non_member_name',
     ];
 
     public function user()

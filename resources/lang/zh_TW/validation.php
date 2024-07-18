@@ -32,5 +32,8 @@ return [
         'registerAllParticipants' => '季打名額',
         'eventGroupRegisterStartAt' => '季打開放報名時間',
         'eventGroupRegisterEndAt' => '季打結束報名時間',
+        'memberRegister' => '群內報名',
+        'nonMemberRegister' => '群外報名',
+        'nonMemberName' => '群外朋友姓名',
     ],
 ];

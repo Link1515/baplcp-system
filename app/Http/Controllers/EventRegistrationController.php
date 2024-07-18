@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventRegistration\StoreEventRegistrationRequest;
+use App\Jobs\RegisterEvent;
 use App\Models\EventRegistration;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -25,23 +26,7 @@ class EventRegistrationController extends Controller
             return redirect()->back()->with('error', '每人僅限一位群外報名');
         }
 
-        DB::transaction(function () use ($validated, $userId, $memberHasRegistered, $nonMemberHasRegistered) {
-            if (!$memberHasRegistered && $validated['memberRegister']) {
-                EventRegistration::create([
-                    'user_id' => $userId,
-                    'event_id' => $validated['eventId'],
-                ]);
-            }
-
-            if (!$nonMemberHasRegistered && $validated['nonMemberRegister']) {
-                EventRegistration::create([
-                    'user_id' => 1,
-                    'is_non_member' => true,
-                    'non_member_name' => $validated['nonMemberName'],
-                    'event_id' => $validated['eventId'],
-                ]);
-            }
-        });
+        RegisterEvent::dispatch($validated, $userId, $memberHasRegistered, $nonMemberHasRegistered);
 
         return redirect()->route('events.register', ['id' => $validated['eventId']]);
     }

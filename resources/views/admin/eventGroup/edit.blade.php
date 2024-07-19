@@ -38,6 +38,7 @@
     @vite('resources/js/eventGroup/edit.js')
 @endsection
 
+@section('header-back-url', route('admin.eventGroups.index'))
 @section('header')
     <h1 class="mb-2 text-5xl text-center">BAPLCP</h1>
     <h2 class="text-2xl text-center">管理後臺 - 季打</h2>

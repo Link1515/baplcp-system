@@ -13,7 +13,7 @@ class EventRegistrationController extends Controller
     public function store(StoreEventRegistrationRequest $request)
     {
         $validated = $request->validated();
-        $userId = 1;
+        $userId = $request->input('userId') ?? 1;
 
         $registration = EventRegistration::where('user_id', $userId)->where('event_id', $validated['eventId'])->get();
         $memberHasRegistered = $registration->where('is_non_member', 0)->isNotEmpty();

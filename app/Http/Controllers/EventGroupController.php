@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EventGroup;
 use App\Models\Event;
+use App\Models\EventGroupRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -120,5 +121,20 @@ class EventGroupController extends Controller
     public function destroy(string $id)
     {
         EventGroup::destroy($id);
+    }
+
+    public function register(string $id)
+    {
+        $eventGroup = EventGroup::find($id);
+
+        if (!$eventGroup->can_register_all_event) {
+            return redirect()->back();
+        }
+
+        $userId = 1;
+
+        $hasRegistered = EventGroupRegistration::where('user_id', $userId)->where('event_group_id', $id)->exists();
+
+        return view('eventGroup.register', compact('eventGroup', 'hasRegistered'));
     }
 }

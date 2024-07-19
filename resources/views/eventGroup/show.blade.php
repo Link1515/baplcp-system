@@ -8,7 +8,10 @@
 @section('content')
     <div class="grid gap-4">
         @foreach ($events as $event)
-            <a href="{{ route('events.register', ['id' => $event->id]) }}" class="btn">{{ $event->start_at }}</a>
+            <a href="{{ route('events.register', ['event' => $event->id]) }}" class="btn">{{ $event->start_at }}</a>
         @endforeach
+        @if ($eventGroup->can_register_all_event)
+            <a href="{{ route('eventGroups.register', ['eventGroup' => $eventGroup->id]) }}" class="btn">季打報名</a>
+        @endif
     </div>
 @endsection

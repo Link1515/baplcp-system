@@ -27,6 +27,6 @@ class EventRegistrationController extends Controller
 
         RegisterEvent::dispatch($validated, $userId, $memberHasRegistered, $nonMemberHasRegistered);
 
-        return redirect()->route('events.register', ['id' => $validated['eventId']]);
+        return redirect()->route('events.register', ['event' => $validated['eventId']]);
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventGroupController;
+use App\Http\Controllers\EventGroupRegistrationController;
 use App\Http\Controllers\EventRegistrationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -23,7 +24,9 @@ Route::get('/login/line', [LoginController::class, 'redirectToProvider']);
 Route::get('/login/line/callback', [LoginController::class, 'handleProviderCallback']);
 
 Route::resource('eventGroups', EventGroupController::class)->only(['index', 'show']);
-Route::get('events/{id}/register', [EventController::class, 'register'])->name('events.register');
+Route::get('eventGroups/{eventGroup}/register', [EventGroupController::class, 'register'])->name('eventGroups.register');
+Route::get('events/{event}/register', [EventController::class, 'register'])->name('events.register');
+Route::post('eventGroupRegistrations', [EventGroupRegistrationController::class, 'store'])->name('eventGroupRegistrations.store');
 Route::post('eventRegistrations', [EventRegistrationController::class, 'store'])->name('eventRegistrations.store');
 
 Route::prefix('admin')->name('admin.')->group(function () {

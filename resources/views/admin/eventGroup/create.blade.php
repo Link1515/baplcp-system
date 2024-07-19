@@ -106,8 +106,14 @@
             開放報名季打
         </label>
         <div x-show="form.canRegisterAllEvent" class="flex flex-col gap-4" x-collapse>
+
             <x-forms.input field="registerAllPrice" :defaultValue="old('registerAllPrice')" type="number">
                 季打費用
+                <template x-if="form.singlePrice && form.eventDates">
+                    <small>建議費用: <span x-text="form.singlePrice"></span>(單次費用) x <span
+                            x-text="form.eventDates.split(',').length"></span>(次數) = <span
+                            x-text="form.singlePrice * form.eventDates.split(',').length"></span></small>
+                </template>
             </x-forms.input>
             <x-forms.input field="registerAllParticipants" :defaultValue="old('registerAllParticipants')" type="number">
                 季打名額

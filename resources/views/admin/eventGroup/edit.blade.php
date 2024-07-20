@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    use Carbon\Carbon;
+    use Illuminate\Support\Carbon;
 
     function defaultValue($table, $formField, $tableColumn = null)
     {

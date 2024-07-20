@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    use Carbon\Carbon;
+    use Illuminate\Support\Carbon;
     $eventGroup = $event->eventGroup;
 @endphp
 
@@ -42,8 +42,8 @@
             <form class="grid gap-2" x-data="{
                 form: $form('post', '{{ route('eventRegistrations.store') }}', { memberRegister: '', nonMemberRegister: '', nonMemberName: '' })
             }">
-                <input type="hidden" name="formSubmitted" value="true">
                 @csrf
+                <input type="hidden" name="formSubmitted" value="true">
                 <input type="hidden" name="eventId" value="{{ $event->id }}">
                 @if (!$memberHasRegistered)
                     <label>

@@ -4,6 +4,7 @@ import { getCountDownStr } from "../utils";
 
 const submitBtnPlaceholderEl = document.querySelector("#submitBtnPlaceholder");
 const submitBtnEl = document.querySelector("#submitBtn");
+const registraionListEl = document.querySelector("#registraionList");
 
 const registerStartAtStr = document.querySelector("#registerStartAt").innerText;
 const registerStartAt = addSeconds(registerStartAtStr, 1);
@@ -14,10 +15,12 @@ let now;
 let registerStartRemainingLessThanOneHour;
 let registerStarted;
 let registerEnded;
+let timer;
 
-if (submitBtnEl) {
+refreshRegistrationStatus();
+if (!registerEnded) {
     mainIntervalCallback();
-    const timer = setInterval(mainIntervalCallback, 1000);
+    timer = setInterval(mainIntervalCallback, 1000);
 }
 
 function mainIntervalCallback() {
@@ -44,21 +47,29 @@ function checkRegistrationNotStart() {
                 showSubmitButton();
             }
         } else {
-            showSubmitButtonPlacehoder("報名尚未開放");
+            if (submitBtnPlaceholderEl) {
+                showSubmitButtonPlacehoder("報名尚未開放");
+            }
         }
     }
 }
 
 function checkRegistrationStart() {
     if (registerStarted) {
-        showSubmitButton();
+        if (submitBtnEl) {
+            showSubmitButton();
+        }
+        registraionListEl.style.display = "block";
     }
 }
 
 function checkRegistrationEnd() {
     if (registerEnded) {
-        showSubmitButtonPlacehoder("報名已截止");
+        if (submitBtnPlaceholderEl) {
+            showSubmitButtonPlacehoder("報名已截止");
+        }
         clearInterval(timer);
+        registraionListEl.style.display = "block";
     }
 }
 

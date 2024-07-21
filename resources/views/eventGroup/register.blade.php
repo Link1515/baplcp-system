@@ -28,8 +28,8 @@
         </div>
     </div>
 
-    @if ($hasRegistered)
-        <h2 class="py-2 text-xl text-center text-white bg-green-500">已報名</h2>
+    @if ($userHasRegistered)
+        <h2 class="py-2 mb-8 text-xl text-center text-white bg-green-500">已報名</h2>
     @else
         <form class="mb-8 text-lg" x-data="{
             form: $form('post', '{{ route('eventGroupRegistrations.store') }}', {})
@@ -45,4 +45,14 @@
             </button>
         </form>
     @endif
+
+    <div id="registraionList" class="mb-4 text-lg" style="display: none">
+        <h3 class="border-neutral-400 pb-2 mb-4 text-xl text-center border-b">報名清單</h3>
+
+        <ol class=" pl-6 mb-6 list-decimal">
+            @foreach ($memberRegistrations as $memberRegistration)
+                <li>{{ $memberRegistration->user->name }}</li>
+            @endforeach
+        </ol>
+    </div>
 @endsection

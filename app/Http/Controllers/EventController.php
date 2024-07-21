@@ -10,8 +10,11 @@ class EventController extends Controller
 {
     public function register(string $id)
     {
-        $userId = 1;
+        $event = Event::with('eventGroup')->find($id);
+        $memberRegistrations = EventRegistration::with('user')->where('event_id', $id)->where('is_non_member', 0)->get();
+        $nonMemberRegistrations = EventRegistration::with('user')->where('event_id', $id)->where('is_non_member', 1)->get();
 
+        $userId = 1;
         $userRegistration = EventRegistration::select('*')
             ->selectRaw('RANK() OVER (ORDER BY updated_at) as registration_rank')
             ->where('event_id', $id)
@@ -30,9 +33,6 @@ class EventController extends Controller
             ->first();
         $userFriendHasRegistered = !is_null($userFriendRegistration);
 
-        $event = Event::with('eventGroup')->find($id);
-        $memberRegistrations = EventRegistration::with('user')->where('event_id', $id)->where('is_non_member', 0)->get();
-        $nonMemberRegistrations = EventRegistration::with('user')->where('event_id', $id)->where('is_non_member', 1)->get();
 
         return view('event.register', compact('event', 'userHasRegistered', 'userRegistration', 'userFriendHasRegistered', 'userFriendRegistration', 'memberRegistrations', 'nonMemberRegistrations'));
     }

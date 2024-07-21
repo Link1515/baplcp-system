@@ -133,8 +133,9 @@ class EventGroupController extends Controller
 
         $userId = 1;
 
-        $hasRegistered = EventGroupRegistration::where('user_id', $userId)->where('event_group_id', $id)->exists();
+        $userHasRegistered = EventGroupRegistration::where('user_id', $userId)->where('event_group_id', $id)->exists();
+        $memberRegistrations = EventGroupRegistration::with('user')->where('event_group_id', $id)->get();
 
-        return view('eventGroup.register', compact('eventGroup', 'hasRegistered'));
+        return view('eventGroup.register', compact('eventGroup', 'userHasRegistered', 'memberRegistrations'));
     }
 }

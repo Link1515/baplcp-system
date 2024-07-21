@@ -101,7 +101,7 @@
         </div>
     @endif
 
-    <div class="mb-4 text-lg">
+    <div id="registraionList" class="mb-4 text-lg" style="display: none">
         <h3 class="border-neutral-400 pb-2 mb-4 text-xl text-center border-b">報名清單</h3>
         <h4 class="inline-block px-2 py-1 mb-2 text-white bg-blue-600 rounded-full">群內</h4>
         <ol class=" pl-6 mb-6 list-decimal">

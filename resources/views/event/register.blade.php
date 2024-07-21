@@ -47,14 +47,14 @@
                 <input type="hidden" name="formSubmitted" value="true">
                 <input type="hidden" name="eventId" value="{{ $event->id }}">
                 @if (!$memberHasRegistered)
-                    <label class="select-none cursor-pointer">
+                    <label class="cursor-pointer select-none">
                         <input x-model.fill="form.memberRegister" type="checkbox" name="memberRegister" value="true"
                             {{ old('formSubmitted') ? (old('memberRegister') ? 'checked' : '') : '' }} />
                         群內 +1
                     </label>
                 @endif
                 @if (!$nonMemberHasRegistered)
-                    <label class="select-none cursor-pointer">
+                    <label class="cursor-pointer select-none">
                         <input x-model.fill="form.nonMemberRegister" type="checkbox" name="nonMemberRegister" value="true"
                             {{ old('formSubmitted') ? (old('nonMemberRegister') ? 'checked' : '') : '' }} />
                         群外 +1
@@ -67,7 +67,7 @@
                 @endif
 
                 <span id="submitBtnPlaceholder"
-                    class=" h-11 grid items-center text-white mt-6 bg-neutral-500 text-center select-none rounded">
+                    class=" h-11 bg-neutral-500 grid items-center mt-6 text-center text-white rounded select-none">
                 </span>
                 <button id="submitBtn" class="btn-submit mt-6 transition-colors" style="display: none"
                     :disabled="form.processing || (!form.memberRegister && !form.nonMemberRegister)"
@@ -75,7 +75,6 @@
                     立即報名
                 </button>
             </form>
-
         </div>
     @endif
 

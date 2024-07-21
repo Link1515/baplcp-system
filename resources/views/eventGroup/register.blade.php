@@ -4,6 +4,7 @@
 @section('header')
     <h1 class="mb-2 text-5xl text-center">{{ $eventGroup->title }}</h1>
     <h2 class="text-2xl text-center">{{ $eventGroup->sub_title }}</h2>
+    @vite('resources/js/eventGroup/register.js')
 @endsection
 
 @section('content')
@@ -11,11 +12,11 @@
         <h3 class="border-neutral-400 pb-2 mb-2 text-xl text-center border-b">季打資訊</h3>
         <div>
             <span class="font-bold">報名開始時間</span>
-            <span>{{ $eventGroup->register_start_at }}</span>
+            <span id="registerStartAt">{{ $eventGroup->register_start_at }}</span>
         </div>
         <div>
             <span class="font-bold">報名截止時間</span>
-            <span>{{ $eventGroup->register_end_at }}</span>
+            <span id="registerEndAt">{{ $eventGroup->register_end_at }}</span>
         </div>
         <div>
             <span class="font-bold">費用</span>
@@ -35,8 +36,12 @@
         }">
             @csrf
             <input type="hidden" name="eventGroupId" value="{{ $eventGroup->id }}">
-            <button class="btn-submit w-full transition-colors">
-                報名季打
+            <span id="submitBtnPlaceholder"
+                class=" h-11 bg-neutral-500 grid items-center mt-6 text-center text-white rounded select-none">
+            </span>
+            <button id="submitBtn" class="btn-submit mt-6 transition-colors" style="display: none"
+                :disabled="form.processing" :class="form.processing && 'bg-neutral-500'">
+                立即報名
             </button>
         </form>
     @endif

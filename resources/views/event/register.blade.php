@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    @if (!$memberHasRegistered || !$nonMemberHasRegistered)
+    @if (!$userHasRegistered || !$userFriendHasRegistered)
         <div class="mb-8 text-lg">
             <h3 class="border-neutral-400 pb-2 mb-2 text-xl text-center border-b">報名活動</h3>
             <form class="grid gap-2" x-data="{
@@ -46,14 +46,14 @@
                 @csrf
                 <input type="hidden" name="formSubmitted" value="true">
                 <input type="hidden" name="eventId" value="{{ $event->id }}">
-                @if (!$memberHasRegistered)
+                @if (!$userHasRegistered)
                     <label class="cursor-pointer select-none">
                         <input x-model.fill="form.memberRegister" type="checkbox" name="memberRegister" value="true"
                             {{ old('formSubmitted') ? (old('memberRegister') ? 'checked' : '') : '' }} />
                         群內 +1
                     </label>
                 @endif
-                @if (!$nonMemberHasRegistered)
+                @if (!$userFriendHasRegistered)
                     <label class="cursor-pointer select-none">
                         <input x-model.fill="form.nonMemberRegister" type="checkbox" name="nonMemberRegister" value="true"
                             {{ old('formSubmitted') ? (old('nonMemberRegister') ? 'checked' : '') : '' }} />
@@ -78,24 +78,49 @@
         </div>
     @endif
 
-    @if ($memberHasRegistered || $nonMemberHasRegistered)
-        <div class="mb-4 text-lg">
+    @if ($userHasRegistered || $userFriendHasRegistered)
+        <div class="mb-8 text-lg">
             <h3 class="border-neutral-400 pb-2 mb-2 text-xl text-center border-b">報名狀態</h3>
-            @if ($memberHasRegistered)
+            @if ($userHasRegistered)
                 <div>
                     已於
-                    {{ $memberRegistration->updated_at }}
-                    報名活動
+                    {{ $userRegistration->updated_at }}
+                    報名活動，群內排序為
+                    {{ $userRegistration->registration_rank }}
                 </div>
             @endif
-            @if ($nonMemberHasRegistered)
+            @if ($userFriendHasRegistered)
                 <div>
                     已於
-                    {{ $nonMemberRegistration->updated_at }}
-                    幫 {{ $nonMemberRegistration['non_member_name'] }}
-                    報名活動
+                    {{ $userFriendRegistration->updated_at }}
+                    幫 {{ $userFriendRegistration->non_member_name }}
+                    報名活動，群外排序為
+                    {{ $userRegistration->registration_rank }}
                 </div>
             @endif
         </div>
     @endif
+
+    <div class="mb-4 text-lg">
+        <h3 class="border-neutral-400 pb-2 mb-4 text-xl text-center border-b">報名清單</h3>
+        <h4 class="inline-block px-2 py-1 mb-2 text-white bg-blue-600 rounded-full">群內</h4>
+        <ol class=" pl-6 mb-6 list-decimal">
+            @foreach ($memberRegistrations as $memberRegistration)
+                <li>{{ $memberRegistration->user->name }}</li>
+            @endforeach
+        </ol>
+        <h4 class="inline-block px-2 py-1 mb-2 text-white bg-blue-600 rounded-full">群外</h4>
+        <ol class=" pl-6 list-decimal">
+            @foreach ($nonMemberRegistrations as $nonMemberRegistration)
+                <li>
+                    <span>
+                        {{ $nonMemberRegistration->non_member_name }}
+                    </span>
+                    <span>
+                        ({{ $nonMemberRegistration->user->name }} 的朋友)
+                    </span>
+                </li>
+            @endforeach
+        </ol>
+    </div>
 @endsection

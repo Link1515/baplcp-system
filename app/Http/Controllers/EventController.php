@@ -12,14 +12,28 @@ class EventController extends Controller
     {
         $userId = 1;
 
-        $registration = EventRegistration::where('user_id', $userId)->where('event_id', $id)->get();
-        $memberHasRegistered = $registration->where('is_non_member', 0)->isNotEmpty();
-        $memberRegistration = $memberHasRegistered ? $registration->where('is_non_member', 0)->first() : [];
-        $nonMemberHasRegistered = $registration->where('is_non_member', 1)->isNotEmpty();
-        $nonMemberRegistration = $nonMemberHasRegistered ? $registration->where('is_non_member', 1)->first() : [];
+        $userRegistration = EventRegistration::select('*')
+            ->selectRaw('RANK() OVER (ORDER BY updated_at) as registration_rank')
+            ->where('event_id', $id)
+            ->where('user_id', $userId)
+            ->where('is_non_member', 0)
+            ->orderBy('updated_at')
+            ->first();
+        $userHasRegistered = !is_null($userRegistration);
+
+        $userFriendRegistration = EventRegistration::select('*')
+            ->selectRaw('RANK() OVER (ORDER BY updated_at) as registration_rank')
+            ->where('event_id', $id)
+            ->where('user_id', $userId)
+            ->where('is_non_member', 1)
+            ->orderBy('updated_at')
+            ->first();
+        $userFriendHasRegistered = !is_null($userFriendRegistration);
 
         $event = Event::with('eventGroup')->find($id);
+        $memberRegistrations = EventRegistration::with('user')->where('event_id', $id)->where('is_non_member', 0)->get();
+        $nonMemberRegistrations = EventRegistration::with('user')->where('event_id', $id)->where('is_non_member', 1)->get();
 
-        return view('event.register', compact('event', 'memberHasRegistered', 'memberRegistration', 'nonMemberHasRegistered', 'nonMemberRegistration'));
+        return view('event.register', compact('event', 'userHasRegistered', 'userRegistration', 'userFriendHasRegistered', 'userFriendRegistration', 'memberRegistrations', 'nonMemberRegistrations'));
     }
 }

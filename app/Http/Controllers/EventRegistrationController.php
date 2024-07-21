@@ -17,7 +17,7 @@ class EventRegistrationController extends Controller
 
         $event = Event::find($validated['eventId']);
         if (
-            Carbon::now()->lte(Carbon::parse($event->register_start_at))
+            Carbon::now()->lte(Carbon::parse($event->register_start_at)->subSeconds(1))
         ) {
             return redirect()->back()->with('error', '報名未開放');
         }
@@ -41,6 +41,6 @@ class EventRegistrationController extends Controller
 
         RegisterEvent::dispatch($validated, $userId, $memberHasRegistered, $nonMemberHasRegistered);
 
-        return redirect()->route('events.register', ['event' => $validated['eventId']]);
+        return redirect()->route('events.register', ['event' => $validated['eventId']])->with('success', '報名成功');
     }
 }

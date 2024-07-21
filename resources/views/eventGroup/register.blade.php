@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('header-back-url', route('eventGroups.show', ['eventGroup' => $eventGroup->id]))
 @section('header')
     <h1 class="mb-2 text-5xl text-center">{{ $eventGroup->title }}</h1>
     <h2 class="text-2xl text-center">{{ $eventGroup->sub_title }}</h2>
@@ -27,14 +28,14 @@
     </div>
 
     @if ($hasRegistered)
-        <h2 class="text-xl text-center bg-green-500 py-2 text-white">已報名</h2>
+        <h2 class="py-2 text-xl text-center text-white bg-green-500">已報名</h2>
     @else
         <form class="mb-8 text-lg" x-data="{
             form: $form('post', '{{ route('eventGroupRegistrations.store') }}', {})
         }">
             @csrf
             <input type="hidden" name="eventGroupId" value="{{ $eventGroup->id }}">
-            <button class="btn-submit transition-colors w-full">
+            <button class="btn-submit w-full transition-colors">
                 報名季打
             </button>
         </form>

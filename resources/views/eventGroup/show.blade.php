@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('header-back-url', route('eventGroups.index'))
 @section('header')
     <h1 class="mb-2 text-5xl text-center">{{ $eventGroup->title }}</h1>
     <h2 class="text-2xl text-center">{{ $eventGroup->sub_title }}</h2>

@@ -32,7 +32,7 @@ class StoreEventGroupRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'subTitle' => 'required|max:255',
+            'place' => 'required|max:255',
             'singlePrice' => 'required|integer|max:20000|gt:0',
             'memberParticipants' => 'required|integer|max:200|gt:0',
             'nonMemberParticipants' => 'required|integer|max:200|gt:0',

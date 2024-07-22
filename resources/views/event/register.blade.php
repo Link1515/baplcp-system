@@ -5,10 +5,9 @@
     $eventGroup = $event->eventGroup;
 @endphp
 
-@section('header-back-url', route('eventGroups.show', ['eventGroup' => $eventGroup->id]))
+@section('header-back-url', route('events.index'))
 @section('header')
-    <h1 class="mb-2 text-5xl text-center">{{ $eventGroup->title }}</h1>
-    <h2 class="text-2xl text-center">{{ $event->start_at }}</h2>
+    <h1 class="text-3xl text-center">{{ $event->start_at }}</h1>
     @vite('resources/js/event/register.js')
 @endsection
 

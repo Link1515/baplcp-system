@@ -15,18 +15,18 @@
     <form x-data="{
         form: $form('post', '{{ route('admin.eventGroups.store') }}', {
             title: '',
-            subTitle: '',
+            place: '',
             singlePrice: '',
             memberParticipants: '',
             nonMemberParticipants: '',
-    
+
             eventTime: '',
             eventDates: '',
             eventStartRegisterDayBefore: '',
             eventStartRegisterDayBeforeTime: '',
             eventEndRegisterDayBefore: '',
             eventEndRegisterDayBeforeTime: '',
-    
+
             canRegisterAllEvent: '',
             registerAllPrice: '',
             registerAllParticipants: '',
@@ -39,8 +39,8 @@
         <x-forms.input field="title" :defaultValue="old('title')" type="text">
             標題
         </x-forms.input>
-        <x-forms.input field="subTitle" :defaultValue="old('subTitle')" type="text">
-            副標題
+        <x-forms.input field="place" :defaultValue="old('place')" type="text">
+            地點
         </x-forms.input>
         <x-forms.input field="singlePrice" :defaultValue="old('singlePrice')" type="number">
             單次費用

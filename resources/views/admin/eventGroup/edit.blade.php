@@ -48,11 +48,11 @@
     <form x-data="{
         form: $form('put', '{{ route('admin.eventGroups.update', ['eventGroup' => $eventGroup->id]) }}', {
             title: '',
-            subTitle: '',
+            place: '',
             singlePrice: '',
             memberParticipants: '',
             nonMemberParticipants: '',
-    
+
             canRegisterAllEvent: '',
             registerAllPrice: '',
             registerAllParticipants: '',
@@ -65,8 +65,8 @@
         <x-forms.input field="title" :defaultValue="defaultValue(table: $eventGroup, formField: 'title')" type="text">
             標題
         </x-forms.input>
-        <x-forms.input field="subTitle" :defaultValue="defaultValue(table: $eventGroup, formField: 'subTitle', tableColumn: 'sub_title')" type="text">
-            副標題
+        <x-forms.input field="place" :defaultValue="defaultValue(table: $eventGroup, formField: 'place')" type="text">
+            地點
         </x-forms.input>
         <x-forms.input field="singlePrice" :defaultValue="defaultValue(table: $eventGroup, formField: 'singlePrice', tableColumn: 'price')" type="number">
             單次費用

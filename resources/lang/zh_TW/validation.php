@@ -17,7 +17,7 @@ return [
     'eventDates' => ':attribute必須要是合法的格式: "Y-m-d, Y-m-d, ..."',
     'attributes' => [
         'title' => '標題',
-        'subTitle' => '副標題',
+        'place' => '地點',
         'singlePrice' => '單次費用',
         'memberParticipants' => '群內人數',
         'nonMemberParticipants' => '群外人數',

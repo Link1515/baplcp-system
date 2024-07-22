@@ -11,7 +11,7 @@ class EventGroup extends Model
 
     protected $fillable = [
         'title',
-        'sub_title',
+        'place',
         'enabled',
         'price',
         'member_participants',

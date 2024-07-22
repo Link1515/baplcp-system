@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventRegistration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class EventController extends Controller
 {
+    public function index()
+    {
+        $yesterday = Carbon::yesterday();
+
+        $events = Event::where('start_at', '>', $yesterday)->get();
+        return view('event.index', compact('events'));
+    }
+
     public function register(string $id)
     {
         $event = Event::with('eventGroup')->find($id);

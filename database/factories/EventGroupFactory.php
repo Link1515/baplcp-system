@@ -18,7 +18,7 @@ class EventGroupFactory extends Factory
     {
         return [
             'title' => fake()->title(),
-            'sub_title' => fake()->title(),
+            'place' => fake()->title(),
             'price' => fake()->numberBetween(1, 500),
             'member_participants' => fake()->numberBetween(1, 10),
             'non_member_participants' => fake()->numberBetween(1, 10),

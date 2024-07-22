@@ -37,7 +37,7 @@ class EventGroupController extends Controller
         DB::transaction(function () use ($validated) {
             $eventGroup = new EventGroup();
             $eventGroup->title = $validated['title'];
-            $eventGroup->sub_title = $validated['subTitle'];
+            $eventGroup->place = $validated['place'];
             $eventGroup->price = $validated['singlePrice'];
             $eventGroup->member_participants = $validated['memberParticipants'];
             $eventGroup->non_member_participants = $validated['nonMemberParticipants'];
@@ -80,11 +80,6 @@ class EventGroupController extends Controller
 
     public function show(string $id)
     {
-
-        // $events = EventGroup::find($id)->events()->get();
-        $eventGroup = EventGroup::with('events')->find($id);
-        $events = $eventGroup->events;
-        return view('eventGroup.show', compact('eventGroup', 'events'));
     }
 
     public function edit(string $id)
@@ -101,7 +96,7 @@ class EventGroupController extends Controller
         $eventGroup = EventGroup::find($id);
 
         $eventGroup->title = $validated['title'];
-        $eventGroup->sub_title = $validated['subTitle'];
+        $eventGroup->place = $validated['place'];
         $eventGroup->price = $validated['singlePrice'];
         $eventGroup->member_participants = $validated['memberParticipants'];
         $eventGroup->non_member_participants = $validated['nonMemberParticipants'];

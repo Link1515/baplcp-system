@@ -17,7 +17,7 @@
             title: '',
             place: '',
             singlePrice: '',
-            memberParticipants: '',
+            totalParticipants: '',
             nonMemberParticipants: '',
 
             eventTime: '',
@@ -27,7 +27,7 @@
             eventEndRegisterDayBefore: '',
             eventEndRegisterDayBeforeTime: '',
 
-            canRegisterAllEvent: '',
+            canRegisterAllEvents: '',
             registerAllPrice: '',
             registerAllParticipants: '',
             eventGroupRegisterStartAt: '',
@@ -45,8 +45,8 @@
         <x-forms.input field="singlePrice" :defaultValue="old('singlePrice')" type="number">
             單次費用
         </x-forms.input>
-        <x-forms.input field="memberParticipants" :defaultValue="old('memberParticipants')" type="number">
-            群內人數
+        <x-forms.input field="totalParticipants" :defaultValue="old('totalParticipants')" type="number">
+            總人數
         </x-forms.input>
         <x-forms.input field="nonMemberParticipants" :defaultValue="old('nonMemberParticipants')" type="number">
             群外人數
@@ -100,12 +100,12 @@
         </label>
 
         <label class="flex items-center gap-2 text-lg">
-            <input x-model.fill="form.canRegisterAllEvent" id="canRegisterAllEvent" value="true"
-                {{ old('formSubmitted') ? (old('canRegisterAllEvent') ? 'checked' : '') : 'checked' }} type="checkbox"
-                name="canRegisterAllEvent" />
+            <input x-model.fill="form.canRegisterAllEvents" id="canRegisterAllEvents" value="true"
+                {{ old('formSubmitted') ? (old('canRegisterAllEvents') ? 'checked' : '') : 'checked' }} type="checkbox"
+                name="canRegisterAllEvents" />
             開放報名季打
         </label>
-        <div x-show="form.canRegisterAllEvent" class="flex flex-col gap-4" x-collapse>
+        <div x-show="form.canRegisterAllEvents" class="flex flex-col gap-4" x-collapse>
 
             <x-forms.input field="registerAllPrice" :defaultValue="old('registerAllPrice')" type="number">
                 季打費用

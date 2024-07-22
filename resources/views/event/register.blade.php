@@ -27,8 +27,8 @@
             <span>{{ $eventGroup->price }}</span>
         </div>
         <div>
-            <span class="font-bold">群內人數</span>
-            <span>{{ $eventGroup->member_participants }}</span>
+            <span class="font-bold">總人數</span>
+            <span>{{ $eventGroup->total_participants }}</span>
         </div>
         <div>
             <span class="font-bold">群外人數</span>

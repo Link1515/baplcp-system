@@ -15,7 +15,7 @@ class EventGroupController extends Controller
 {
     public function index()
     {
-        $eventGroups = EventGroup::all();
+        $eventGroups = EventGroup::where('can_register_all_events', 1)->get();
         return view('eventGroup.index', compact('eventGroups'));
     }
 
@@ -39,11 +39,11 @@ class EventGroupController extends Controller
             $eventGroup->title = $validated['title'];
             $eventGroup->place = $validated['place'];
             $eventGroup->price = $validated['singlePrice'];
-            $eventGroup->member_participants = $validated['memberParticipants'];
+            $eventGroup->total_participants = $validated['totalParticipants'];
             $eventGroup->non_member_participants = $validated['nonMemberParticipants'];
 
-            $eventGroup->can_register_all_event = $validated['canRegisterAllEvent'];
-            if ($eventGroup->can_register_all_event) {
+            $eventGroup->can_register_all_events = $validated['canRegisterAllEvents'];
+            if ($eventGroup->can_register_all_events) {
                 $eventGroup->register_start_at = $validated['eventGroupRegisterStartAt'];
                 $eventGroup->register_end_at = $validated['eventGroupRegisterEndAt'];
                 $eventGroup->register_all_participants = $validated['registerAllParticipants'];
@@ -98,10 +98,10 @@ class EventGroupController extends Controller
         $eventGroup->title = $validated['title'];
         $eventGroup->place = $validated['place'];
         $eventGroup->price = $validated['singlePrice'];
-        $eventGroup->member_participants = $validated['memberParticipants'];
+        $eventGroup->total_participants = $validated['totalParticipants'];
         $eventGroup->non_member_participants = $validated['nonMemberParticipants'];
 
-        $eventGroup->can_register_all_event = $validated['canRegisterAllEvent'];
+        $eventGroup->can_register_all_events = $validated['canRegisterAllEvents'];
         $eventGroup->register_start_at = $validated['eventGroupRegisterStartAt'];
         $eventGroup->register_end_at = $validated['eventGroupRegisterEndAt'];
         $eventGroup->register_all_participants = $validated['registerAllParticipants'];
@@ -122,7 +122,7 @@ class EventGroupController extends Controller
     {
         $eventGroup = EventGroup::find($id);
 
-        if (!$eventGroup->can_register_all_event) {
+        if (!$eventGroup->can_register_all_events) {
             return redirect()->back();
         }
 

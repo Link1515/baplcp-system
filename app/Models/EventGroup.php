@@ -14,10 +14,10 @@ class EventGroup extends Model
         'place',
         'enabled',
         'price',
-        'member_participants',
+        'total_participants',
         'non_member_participants',
 
-        'can_register_all_event',
+        'can_register_all_events',
         'register_start_at',
         'register_end_at',
         'register_all_participants',

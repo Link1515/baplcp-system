@@ -11,11 +11,11 @@
         return old('formSubmitted') ? old($formField) : $table->$tableColumn;
     }
 
-    $canRegisterAllEventDefaultValule = old('formSubmitted')
-        ? (old('canRegisterAllEvent')
+    $canRegisterAllEventsDefaultValule = old('formSubmitted')
+        ? (old('canRegisterAllEvents')
             ? 'checked'
             : '')
-        : ($eventGroup->can_register_all_event
+        : ($eventGroup->can_register_all_events
             ? 'checked'
             : '');
 
@@ -50,10 +50,10 @@
             title: '',
             place: '',
             singlePrice: '',
-            memberParticipants: '',
+            totalParticipants: '',
             nonMemberParticipants: '',
 
-            canRegisterAllEvent: '',
+            canRegisterAllEvents: '',
             registerAllPrice: '',
             registerAllParticipants: '',
             eventGroupRegisterStartAt: '',
@@ -71,12 +71,8 @@
         <x-forms.input field="singlePrice" :defaultValue="defaultValue(table: $eventGroup, formField: 'singlePrice', tableColumn: 'price')" type="number">
             單次費用
         </x-forms.input>
-        <x-forms.input field="memberParticipants" :defaultValue="defaultValue(
-            table: $eventGroup,
-            formField: 'memberParticipants',
-            tableColumn: 'member_participants',
-        )" type="number">
-            群內人數
+        <x-forms.input field="totalParticipants" :defaultValue="defaultValue(table: $eventGroup, formField: 'totalParticipants', tableColumn: 'total_participants')" type="number">
+            總人數
         </x-forms.input>
         <x-forms.input field="nonMemberParticipants" :defaultValue="defaultValue(
             table: $eventGroup,
@@ -87,12 +83,12 @@
         </x-forms.input>
 
         <label class="flex items-center gap-2 text-lg">
-            <input x-model.fill="form.canRegisterAllEvent" id="canRegisterAllEvent" value="true"
-                {{ $canRegisterAllEventDefaultValule }} type="checkbox" name="canRegisterAllEvent" />
+            <input x-model.fill="form.canRegisterAllEvents" id="canRegisterAllEvents" value="true"
+                {{ $canRegisterAllEventsDefaultValule }} type="checkbox" name="canRegisterAllEvents" />
             開放報名季打
         </label>
 
-        <div x-show="form.canRegisterAllEvent" class="flex flex-col gap-4" x-collapse>
+        <div x-show="form.canRegisterAllEvents" class="flex flex-col gap-4" x-collapse>
             <x-forms.input field="registerAllPrice" :defaultValue="defaultValue(
                 table: $eventGroup,
                 formField: 'registerAllPrice',

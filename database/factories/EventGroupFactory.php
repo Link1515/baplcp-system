@@ -20,9 +20,9 @@ class EventGroupFactory extends Factory
             'title' => fake()->title(),
             'place' => fake()->title(),
             'price' => fake()->numberBetween(1, 500),
-            'member_participants' => fake()->numberBetween(1, 10),
+            'total_participants' => fake()->numberBetween(1, 10),
             'non_member_participants' => fake()->numberBetween(1, 10),
-            'can_register_all_event' => false
+            'can_register_all_events' => false
         ];
     }
 }

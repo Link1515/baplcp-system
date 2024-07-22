@@ -14,7 +14,7 @@ class Event extends Model
         'start_at',
         'register_start_at',
         'register_end_at',
-        'member_participants',
+        'total_participants',
         'non_member_participants',
     ];
 

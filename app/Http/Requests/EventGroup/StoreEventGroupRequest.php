@@ -19,7 +19,7 @@ class StoreEventGroupRequest extends FormRequest
     {
         $this->merge([
             'eventDates' => explode(', ', $this->input('eventDates')),
-            'canRegisterAllEvent' => (bool) $this->input('canRegisterAllEvent'),
+            'canRegisterAllEvents' => (bool) $this->input('canRegisterAllEvents'),
         ]);
     }
 
@@ -34,7 +34,7 @@ class StoreEventGroupRequest extends FormRequest
             'title' => 'required|max:255',
             'place' => 'required|max:255',
             'singlePrice' => 'required|integer|max:20000|gt:0',
-            'memberParticipants' => 'required|integer|max:200|gt:0',
+            'totalParticipants' => 'required|integer|max:200|gt:0',
             'nonMemberParticipants' => 'required|integer|max:200|gt:0',
 
             'eventTime' => 'required|max:255',
@@ -44,11 +44,11 @@ class StoreEventGroupRequest extends FormRequest
             'eventEndRegisterDayBefore' => 'required|integer|lt:eventStartRegisterDayBefore|max:255|gt:0',
             'eventEndRegisterDayBeforeTime' => 'required|max:255',
 
-            'canRegisterAllEvent' => 'boolean|nullable',
-            'eventGroupRegisterStartAt' => 'required_if:canRegisterAllEvent,true|nullable|after:now|max:255',
-            'eventGroupRegisterEndAt' => 'required_if:canRegisterAllEvent,true|nullable|after:eventGroupRegisterStartAt|max:255',
-            'registerAllPrice' => 'required_if:canRegisterAllEvent,true|nullable|integer|max:20000|gt:0',
-            'registerAllParticipants' => 'required_if:canRegisterAllEvent,true|nullable|integer|max:200|gt:0',
+            'canRegisterAllEvents' => 'boolean|nullable',
+            'eventGroupRegisterStartAt' => 'required_if:canRegisterAllEvents,true|nullable|after:now|max:255',
+            'eventGroupRegisterEndAt' => 'required_if:canRegisterAllEvents,true|nullable|after:eventGroupRegisterStartAt|max:255',
+            'registerAllPrice' => 'required_if:canRegisterAllEvents,true|nullable|integer|max:20000|gt:0',
+            'registerAllParticipants' => 'required_if:canRegisterAllEvents,true|nullable|integer|max:200|gt:0',
         ];
     }
 

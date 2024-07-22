@@ -17,19 +17,26 @@
     <div class="lg:max-w-xl lg:shadow max-w-3xl mx-auto">
         <header class="min-h-48 place-items-center relative grid mb-8 bg-center bg-cover"
             style="background-image: url('{{ asset('images/background/header.png') }}')">
-            <div class="lg:p-6 p-4 pt-16 text-white">
-                @if (Route::currentRouteName() !== 'home')
-                    <div class="top-4 left-2 absolute flex items-center gap-2">
-                        <a href=" @yield('header-back-url', url()->previous()) ">
-                            <img src="{{ asset('images/icons/back.svg') }}" class="w-10" alt="back">
-                        </a>
-                        <a href="{{ route('home') }}">
-                            <img src="{{ asset('images/icons/home.svg') }}" class="w-8" alt="home">
-                        </a>
-                    </div>
-                @endif
-                @yield('header')
-            </div>
+            @if (in_array(Route::currentRouteName(), ['register.create']))
+                <div class="lg:p-6 p-4 text-white">
+                    @yield('header')
+                </div>
+            @else
+                <div class="lg:p-6 p-4 pt-16 text-white">
+                    @if (Route::currentRouteName() !== 'home')
+                        <div class="top-4 left-2 absolute flex items-center gap-2">
+                            <a href=" @yield('header-back-url', url()->previous()) ">
+                                <img src="{{ asset('images/icons/back.svg') }}" class="w-10" alt="back">
+                            </a>
+                            <a href="{{ route('home') }}">
+                                <img src="{{ asset('images/icons/home.svg') }}" class="w-8" alt="home">
+                            </a>
+                        </div>
+                    @endif
+                    @yield('header')
+                </div>
+            @endif
+
         </header>
 
         <main class="lg:px-6 px-4 pb-8">

@@ -9,6 +9,7 @@
         font-family: "Heiti TC", "Noto Sans TC", sans-serif;
         font-optical-sizing: auto;
         font-style: normal;
+        @apply text-[#334155];
     }
 
     input {
@@ -26,7 +27,7 @@
     }
 
     .input {
-        @apply border-neutral-500 w-full px-3 py-1.5 border rounded outline-none;
+        @apply w-full px-4 py-3 border rounded-lg outline-none border-[#d3d8e1] transition-all focus:border-primary focus:shadow-[0_0_0_4px_#DDE0FF];
     }
 
     .input.is-invalid {

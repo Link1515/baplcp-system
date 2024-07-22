@@ -17,7 +17,8 @@
         </div>
         <x-register.pagination :steps="3" :current="1" class="mb-4" />
         <div class="mx-auto">
-            <button class="w-60 bg-primary rounded-xl place-items-center grid h-12 font-semibold text-white">會員申請</button>
+            <a href="{{ route('register.create') }}"
+                class="w-60 bg-primary rounded-xl place-items-center grid h-12 font-semibold text-white">會員申請</a>
         </div>
     </div>
 @endsection

@@ -22,6 +22,7 @@ use App\Http\Controllers\Auth\LoginController;
 Route::get('login/line', [LoginController::class, 'redirectToProvider'])->name('login');
 Route::get('login/line/callback', [LoginController::class, 'handleProviderCallback']);
 Route::get('register', [RegisterController::class, 'index'])->name('register');
+Route::get('register/create', [RegisterController::class, 'create'])->name('register.create');
 
 Route::middleware('auth')->group(function () {
 });

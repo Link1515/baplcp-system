@@ -18,6 +18,10 @@
             <span id="registerEndAt">{{ $eventGroup->register_end_at }}</span>
         </div>
         <div>
+            <span class="font-bold">地點</span>
+            <span>{{ $eventGroup->place }}</span>
+        </div>
+        <div>
             <span class="font-bold">費用</span>
             <span>{{ $eventGroup->register_all_price }}</span>
         </div>

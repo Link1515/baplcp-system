@@ -14,6 +14,7 @@ class EventRegistration extends Model
         'event_id',
         'is_non_member',
         'non_member_name',
+        'event_group_id',
     ];
 
     public function user()

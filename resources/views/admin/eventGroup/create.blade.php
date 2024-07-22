@@ -45,7 +45,7 @@
         <x-forms.input field="singlePrice" :defaultValue="old('singlePrice')" type="number">
             單次費用
         </x-forms.input>
-        <x-forms.input field="totalParticipants" :defaultValue="old('totalParticipants')" type="number">
+        <x-forms.input field="totalParticipants" :defaultValue="old('totalParticipants', 18)" type="number">
             總人數
         </x-forms.input>
         <x-forms.input field="nonMemberParticipants" :defaultValue="old('nonMemberParticipants')" type="number">

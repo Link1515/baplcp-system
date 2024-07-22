@@ -18,8 +18,8 @@ let registerEnded;
 let timer;
 
 refreshRegistrationStatus();
+mainIntervalCallback();
 if (!registerEnded) {
-    mainIntervalCallback();
     timer = setInterval(mainIntervalCallback, 1000);
 }
 

@@ -82,19 +82,17 @@
             <h3 class="border-neutral-400 pb-2 mb-2 text-xl text-center border-b">報名狀態</h3>
             @if ($userHasRegistered)
                 <div>
-                    已於
-                    {{ $userRegistration->updated_at }}
-                    報名活動，群內排序為
-                    {{ $userRegistration->registration_rank }}
+                    @if (is_null($userRegistration->event_group_id))
+                        已成功報名
+                    @else
+                        已報名季打
+                    @endif
                 </div>
             @endif
             @if ($userFriendHasRegistered)
                 <div>
-                    已於
-                    {{ $userFriendRegistration->updated_at }}
-                    幫 {{ $userFriendRegistration->non_member_name }}
-                    報名活動，群外排序為
-                    {{ $userRegistration->registration_rank }}
+                    已成功幫 {{ $userFriendRegistration->non_member_name }}
+                    報名活動
                 </div>
             @endif
         </div>
@@ -109,7 +107,7 @@
             @endforeach
         </ol>
         <h4 class="inline-block px-2 py-1 mb-2 text-white bg-blue-600 rounded-full">群外</h4>
-        <ol class=" pl-6 list-decimal">
+        <ol class=" pl-6 mb-6 list-decimal">
             @foreach ($nonMemberRegistrations as $nonMemberRegistration)
                 <li>
                     <span>
@@ -119,6 +117,12 @@
                         ({{ $nonMemberRegistration->user->name }} 的朋友)
                     </span>
                 </li>
+            @endforeach
+        </ol>
+        <h4 class="inline-block px-2 py-1 mb-2 text-white bg-blue-600 rounded-full">季打</h4>
+        <ol class=" pl-6 mb-6 list-decimal">
+            @foreach ($eventGroupRegistrations as $eventGroupRegistration)
+                <li>{{ $eventGroupRegistration->user->name }}</li>
             @endforeach
         </ol>
     </div>

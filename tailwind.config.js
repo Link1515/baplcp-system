@@ -10,7 +10,11 @@ export default {
             center: true,
             padding: "1rem",
         },
-        extend: {},
+        extend: {
+            colors: {
+                primary: "#5768FF",
+            },
+        },
     },
     plugins: [],
 };

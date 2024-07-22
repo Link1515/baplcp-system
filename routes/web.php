@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventGroupController;
 use App\Http\Controllers\EventGroupRegistrationController;
@@ -18,10 +19,14 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::view('/', 'index')->name('home');
+Route::get('login/line', [LoginController::class, 'redirectToProvider'])->name('login');
+Route::get('login/line/callback', [LoginController::class, 'handleProviderCallback']);
+Route::get('register', [RegisterController::class, 'index'])->name('register');
 
-Route::get('/login/line', [LoginController::class, 'redirectToProvider']);
-Route::get('/login/line/callback', [LoginController::class, 'handleProviderCallback']);
+Route::middleware('auth')->group(function () {
+});
+
+Route::view('/', 'index')->name('home');
 
 Route::resource('eventGroups', EventGroupController::class)->only(['index', 'show']);
 Route::get('eventGroups/{eventGroup}/register', [EventGroupController::class, 'register'])->name('eventGroups.register');

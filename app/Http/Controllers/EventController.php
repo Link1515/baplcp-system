@@ -14,10 +14,10 @@ class EventController extends Controller
         $yesterday = Carbon::yesterday();
 
         $events = Event::where('start_at', '>', $yesterday)->orderBy('start_at')->get();
-        return view('event.index', compact('events'));
+        return view('events.index', compact('events'));
     }
 
-    public function register(string $id)
+    public function show(string $id)
     {
         $event = Event::with('eventGroup')->find($id);
         $memberRegistrations = EventRegistration::with('user')
@@ -55,6 +55,6 @@ class EventController extends Controller
         $userFriendHasRegistered = !is_null($userFriendRegistration);
 
 
-        return view('event.register', compact('event', 'userHasRegistered', 'userRegistration', 'userFriendHasRegistered', 'userFriendRegistration', 'memberRegistrations', 'nonMemberRegistrations', 'eventGroupRegistrations'));
+        return view('events.show', compact('event', 'userHasRegistered', 'userRegistration', 'userFriendHasRegistered', 'userFriendRegistration', 'memberRegistrations', 'nonMemberRegistrations', 'eventGroupRegistrations'));
     }
 }

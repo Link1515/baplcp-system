@@ -41,6 +41,6 @@ class EventRegistrationController extends Controller
 
         RegisterEvent::dispatch($validated, $userId, $memberHasRegistered, $nonMemberHasRegistered);
 
-        return redirect()->route('events.register', ['event' => $validated['eventId']])->with('success', '報名成功');
+        return redirect()->route('events.show', ['event' => $validated['eventId']])->with('success', '報名成功');
     }
 }

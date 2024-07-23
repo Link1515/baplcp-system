@@ -16,18 +16,18 @@ class EventGroupController extends Controller
     public function index()
     {
         $eventGroups = EventGroup::where('can_register_all_events', 1)->get();
-        return view('eventGroup.index', compact('eventGroups'));
+        return view('eventGroups.index', compact('eventGroups'));
     }
 
     public function adminIndex()
     {
         $eventGroups = EventGroup::all();
-        return view('admin.eventGroup.index', compact('eventGroups'));
+        return view('admin.eventGroups.index', compact('eventGroups'));
     }
 
     public function create()
     {
-        return view('admin.eventGroup.create');
+        return view('admin.eventGroups.create');
     }
 
     public function store(StoreEventGroupRequest $request)
@@ -80,6 +80,19 @@ class EventGroupController extends Controller
 
     public function show(string $id)
     {
+        $eventGroup = EventGroup::find($id);
+
+        if (!$eventGroup->can_register_all_events) {
+            return redirect()->back();
+        }
+
+        $userId = 1;
+
+        $userHasRegistered = EventGroupRegistration::where('user_id', $userId)->where('event_group_id', $id)->exists();
+        $memberRegistrations = EventGroupRegistration::with('user')->where('event_group_id', $id)->get();
+
+        return view('eventGroups.show', compact('eventGroup', 'userHasRegistered', 'memberRegistrations'));
+
     }
 
     public function edit(string $id)
@@ -87,7 +100,7 @@ class EventGroupController extends Controller
         $eventGroup = EventGroup::with('events')->find($id);
         $events = $eventGroup->events;
 
-        return view('admin.eventGroup.edit', compact('eventGroup', 'events'));
+        return view('admin.eventGroups.edit', compact('eventGroup', 'events'));
     }
 
     public function update(UpdateEventGroupRequest $request, string $id)
@@ -120,17 +133,5 @@ class EventGroupController extends Controller
 
     public function register(string $id)
     {
-        $eventGroup = EventGroup::find($id);
-
-        if (!$eventGroup->can_register_all_events) {
-            return redirect()->back();
-        }
-
-        $userId = 1;
-
-        $userHasRegistered = EventGroupRegistration::where('user_id', $userId)->where('event_group_id', $id)->exists();
-        $memberRegistrations = EventGroupRegistration::with('user')->where('event_group_id', $id)->get();
-
-        return view('eventGroup.register', compact('eventGroup', 'userHasRegistered', 'memberRegistrations'));
     }
 }

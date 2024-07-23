@@ -38,6 +38,6 @@ class EventGroupRegistrationController extends Controller
             'event_group_id' => $validated['eventGroupId']
         ]);
 
-        return redirect()->route('eventGroups.register', ['eventGroup' => $validated['eventGroupId']])->with('success', '報名成功');
+        return redirect()->route('eventGroups.show', ['eventGroup' => $validated['eventGroupId']])->with('success', '報名成功');
     }
 }

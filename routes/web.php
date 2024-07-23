@@ -29,11 +29,10 @@ Route::middleware('auth')->group(function () {
 
 Route::view('/', 'index')->name('home');
 
-Route::resource('eventGroups', EventGroupController::class)->only(['index']);
-Route::get('eventGroups/{eventGroup}/register', [EventGroupController::class, 'register'])->name('eventGroups.register');
+Route::resource('eventGroups', EventGroupController::class)->only(['index', 'show']);
 Route::post('eventGroupRegistrations', [EventGroupRegistrationController::class, 'store'])->name('eventGroupRegistrations.store');
 Route::get('events', [EventController::class, 'index'])->name('events.index');
-Route::get('events/{event}/register', [EventController::class, 'register'])->name('events.register');
+Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 Route::post('eventRegistrations', [EventRegistrationController::class, 'store'])->name('eventRegistrations.store');
 
 Route::prefix('admin')->name('admin.')->group(function () {

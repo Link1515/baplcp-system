@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EventGroup;
 use App\Models\Event;
 use App\Models\EventGroupRegistration;
+use App\Models\EventRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -63,14 +64,17 @@ class EventGroupController extends Controller
                         ->subDays($validated['eventEndRegisterDayBefore'])
                         ->setTimeFromTimeString($validated['eventEndRegisterDayBeforeTime']);
 
-                $events[] = new Event([
+                $events[] = [
+                    'event_group_id' => $eventGroup->id,
                     'start_at' => $eventStartAt,
                     'register_start_at' => $eventRegisterStartAt,
                     'register_end_at' => $eventRegisterEndAt,
-                ]);
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
             }
 
-            $eventGroup->events()->saveMany($events);
+            Event::insert($events);
         }, 5);
 
         session()->flash('success', '創建成功');
@@ -131,7 +135,24 @@ class EventGroupController extends Controller
         EventGroup::destroy($id);
     }
 
-    public function register(string $id)
+    public function compute(string $id)
     {
+        $eventGroupRegistrations = EventGroupRegistration::where('event_group_id', $id)->get();
+        $events = Event::where('event_group_id', $id)->get();
+
+        $registrations = [];
+        foreach ($eventGroupRegistrations as $eventGroupRegistration) {
+            foreach ($events as $event) {
+                $registrations[] = [
+                    'user_id' => $eventGroupRegistration->user->id,
+                    'event_id' => $event->id,
+                    'event_group_id' => $id,
+                    'is_season' => true,
+                ];
+            }
+        }
+        EventRegistration::insert($registrations);
+
+        return 'ok';
     }
 }

@@ -31,7 +31,7 @@ Route::view('/', 'index')->name('home');
 
 Route::get('eventGroups/{eventGroup}/compute', [EventGroupController::class, 'compute']);
 Route::resource('eventGroups', EventGroupController::class)->only(['index', 'show']);
-Route::post('eventGroupRegistrations', [EventGroupRegistrationController::class, 'store'])->name('eventGroupRegistrations.store');
+Route::resource('eventGroupRegistrations', EventGroupRegistrationController::class)->only('store', 'destroy');
 Route::get('events', [EventController::class, 'index'])->name('events.index');
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 Route::post('eventRegistrations', [EventRegistrationController::class, 'store'])->name('eventRegistrations.store');

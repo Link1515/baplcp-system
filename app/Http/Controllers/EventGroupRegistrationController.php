@@ -40,4 +40,9 @@ class EventGroupRegistrationController extends Controller
 
         return redirect()->route('eventGroups.show', ['eventGroup' => $validated['eventGroupId']])->with('success', '報名成功');
     }
+
+    public function destroy(string $id)
+    {
+        EventGroupRegistration::destroy($id);
+    }
 }

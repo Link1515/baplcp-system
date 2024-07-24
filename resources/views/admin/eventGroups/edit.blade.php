@@ -28,7 +28,7 @@
         : old('eventGroupRegisterEndAt');
 
     $deleteGroupEventMethod = sprintf(
-        "deleteGroupEvent('%s', '%s')",
+        "requestDelete('是否確定刪除季打','%s', '%s')",
         route('admin.eventGroups.destroy', ['eventGroup' => $eventGroup->id]),
         route('admin.eventGroups.index'),
     );
@@ -52,7 +52,7 @@
             singlePrice: '',
             totalParticipants: '',
             nonMemberParticipants: '',
-
+    
             canRegisterAllEvents: '',
             registerAllPrice: '',
             registerAllParticipants: '',

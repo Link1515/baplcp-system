@@ -96,11 +96,10 @@ class EventGroupController extends Controller
 
         $userId = 1;
 
-        $userHasRegistered = EventGroupRegistration::where('user_id', $userId)->where('event_group_id', $id)->exists();
+        $userRegistration = EventGroupRegistration::where('user_id', $userId)->where('event_group_id', $id)->first();
         $memberRegistrations = EventGroupRegistration::with('user')->where('event_group_id', $id)->get();
 
-        return view('eventGroups.show', compact('eventGroup', 'userHasRegistered', 'memberRegistrations'));
-
+        return view('eventGroups.show', compact('eventGroup', 'userRegistration', 'memberRegistrations'));
     }
 
     public function edit(string $id)
@@ -160,10 +159,10 @@ class EventGroupController extends Controller
 
         $eventService->insertManyBySeason($id, $passedEventGroupRegistrations->pluck('user_id'));
 
-        $userService->resetSeasonDebuff();
-        if ($passedEventGroupRegistrations->count() === $eventGroup->register_all_participants) {
-            $userService->setSeasonDebuff($passedEventGroupRegistrations->pluck('user_id'));
-        }
+        // $userService->resetSeasonDebuff();
+        // if ($passedEventGroupRegistrations->count() === $eventGroup->register_all_participants) {
+        //     $userService->setSeasonDebuff($passedEventGroupRegistrations->pluck('user_id'));
+        // }
 
         EventGroup::where('id', $id)->update(['is_computed' => true]);
 

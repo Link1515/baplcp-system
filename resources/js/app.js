@@ -40,6 +40,19 @@ window.popup = {
     },
 };
 
+window.requestDelete = function (text, url, redirect = "/") {
+    window.popup.confirm(text, (result) => {
+        if (result.isDenied || result.isDismissed) return;
+        window.axios.delete(url).then(({ status }) => {
+            if (status === 200) {
+                window.popup.success("成功", () => {
+                    window.location.href = redirect;
+                });
+            }
+        });
+    });
+};
+
 Alpine.plugin(Precognition);
 Alpine.plugin(collapse);
 

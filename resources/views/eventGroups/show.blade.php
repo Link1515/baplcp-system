@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@php
+    if ($userRegistration) {
+        $deleteGroupEventRegistrationMethod = sprintf(
+            "requestDelete('是否確定取消報名季打','%s', '%s')",
+            route('eventGroupRegistrations.destroy', ['eventGroupRegistration' => $userRegistration->id]),
+            route('eventGroups.index'),
+        );
+    }
+@endphp
+
 @section('header-back-url', route('eventGroups.index'))
 @section('header')
     <h1 class="text-3xl text-center">{{ $eventGroup->title }}</h1>
@@ -31,8 +41,10 @@
         </div>
     </div>
 
-    @if ($userHasRegistered)
-        <h2 class="py-2 mb-8 text-xl text-center text-white bg-green-500">已報名</h2>
+    @if ($userRegistration)
+        <h2 class="py-2 mb-2 text-xl text-center text-white bg-green-500">已報名</h2>
+        <button x-data @click="{{ $deleteGroupEventRegistrationMethod }}"
+            class="btn-submit mb-8 text-xl bg-red-500">取消報名</button>
     @else
         <form class="mb-8 text-lg" x-data="{
             form: $form('post', '{{ route('eventGroupRegistrations.store') }}', {})

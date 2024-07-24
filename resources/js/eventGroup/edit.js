@@ -66,16 +66,3 @@ function limitMinuteZeroOr30(date, instance) {
         instance.setDate(date);
     }
 }
-
-window.deleteGroupEvent = function (url, redirct) {
-    window.popup.confirm("是否確定刪除季打？", (result) => {
-        if (result.isDenied || result.isDismissed) return;
-        window.axios.delete(url).then(({ status }) => {
-            if (status === 200) {
-                window.popup.success("刪除成功", () => {
-                    window.location.href = redirct;
-                });
-            }
-        });
-    });
-};

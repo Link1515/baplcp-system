@@ -20,7 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'line_id'
+        'line_id',
+        'season_debuff',
     ];
 
     /**

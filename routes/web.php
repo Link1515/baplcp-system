@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
 
 Route::view('/', 'index')->name('home');
 
+Route::get('eventGroups/{eventGroup}/compute', [EventGroupController::class, 'compute']);
 Route::resource('eventGroups', EventGroupController::class)->only(['index', 'show']);
 Route::post('eventGroupRegistrations', [EventGroupRegistrationController::class, 'store'])->name('eventGroupRegistrations.store');
 Route::get('events', [EventController::class, 'index'])->name('events.index');

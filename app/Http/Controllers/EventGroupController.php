@@ -6,6 +6,10 @@ use App\Models\EventGroup;
 use App\Models\Event;
 use App\Models\EventGroupRegistration;
 use App\Models\EventRegistration;
+use App\Models\User;
+use App\Services\EventGroupService;
+use App\Services\EventService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -135,23 +139,33 @@ class EventGroupController extends Controller
         EventGroup::destroy($id);
     }
 
-    public function compute(string $id)
-    {
-        $eventGroupRegistrations = EventGroupRegistration::where('event_group_id', $id)->get();
-        $events = Event::where('event_group_id', $id)->get();
+    public function compute(
+        string $id,
+        EventGroupService $eventGroupService,
+        EventService $eventService,
+        UserService $userService
+    ) {
+        $eventGroup = EventGroup::find($id);
 
-        $registrations = [];
-        foreach ($eventGroupRegistrations as $eventGroupRegistration) {
-            foreach ($events as $event) {
-                $registrations[] = [
-                    'user_id' => $eventGroupRegistration->user->id,
-                    'event_id' => $event->id,
-                    'event_group_id' => $id,
-                    'is_season' => true,
-                ];
-            }
+        if (!$eventGroup->can_register_all_events) {
+            return 'season registration is not open';
         }
-        EventRegistration::insert($registrations);
+
+        if ($eventGroup->is_computed) {
+            return 'already computed!';
+        }
+
+        $passedEventGroupRegistrations = $eventGroupService->computePassedRegistartion($eventGroup);
+        EventGroupRegistration::whereIn('id', $passedEventGroupRegistrations->pluck('id'))->update(['pass' => true]);
+
+        $eventService->insertManyBySeason($id, $passedEventGroupRegistrations->pluck('user_id'));
+
+        $userService->resetSeasonDebuff();
+        if ($passedEventGroupRegistrations->count() === $eventGroup->register_all_participants) {
+            $userService->setSeasonDebuff($passedEventGroupRegistrations->pluck('user_id'));
+        }
+
+        EventGroup::where('id', $id)->update(['is_computed' => true]);
 
         return 'ok';
     }

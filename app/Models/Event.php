@@ -10,7 +10,7 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'event_group_id',
+        'season_id',
         'start_at',
         'register_start_at',
         'register_end_at',
@@ -18,9 +18,9 @@ class Event extends Model
         'non_member_participants',
     ];
 
-    public function eventGroup()
+    public function season()
     {
-        return $this->belongsTo(EventGroup::class);
+        return $this->belongsTo(Season::class);
     }
 
     public function registrations()

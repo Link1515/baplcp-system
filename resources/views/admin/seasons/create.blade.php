@@ -2,10 +2,10 @@
 
 
 @section('js')
-    @vite('resources/js/eventGroup/create.js')
+    @vite('resources/js/season/create.js')
 @endsection
 
-@section('header-back-url', route('admin.eventGroups.index'))
+@section('header-back-url', route('admin.seasons.index'))
 @section('header')
     <h1 class="mb-2 text-5xl text-center">BAPLCP</h1>
     <h2 class="text-2xl text-center">管理後臺 - 季打</h2>
@@ -13,25 +13,25 @@
 
 @section('content')
     <form x-data="{
-        form: $form('post', '{{ route('admin.eventGroups.store') }}', {
+        form: $form('post', '{{ route('admin.seasons.store') }}', {
             title: '',
             place: '',
             singlePrice: '',
             totalParticipants: '',
             nonMemberParticipants: '',
-
+    
             eventTime: '',
             eventDates: '',
             eventStartRegisterDayBefore: '',
             eventStartRegisterDayBeforeTime: '',
             eventEndRegisterDayBefore: '',
             eventEndRegisterDayBeforeTime: '',
-
+    
             canRegisterAllEvents: '',
             registerAllPrice: '',
             registerAllParticipants: '',
-            eventGroupRegisterStartAt: '',
-            eventGroupRegisterEndAt: '',
+            seasonRegisterStartAt: '',
+            seasonRegisterEndAt: '',
         }),
     }" class="grid gap-4">
         @csrf
@@ -118,10 +118,10 @@
             <x-forms.input field="registerAllParticipants" :defaultValue="old('registerAllParticipants')" type="number">
                 季打名額
             </x-forms.input>
-            <x-forms.input field="eventGroupRegisterStartAt" :defaultValue="old('eventGroupRegisterStartAt')" type="text">
+            <x-forms.input field="seasonRegisterStartAt" :defaultValue="old('seasonRegisterStartAt')" type="text">
                 季打開放報名時間
             </x-forms.input>
-            <x-forms.input field="eventGroupRegisterEndAt" :defaultValue="old('eventGroupRegisterEndAt')" type="text">
+            <x-forms.input field="seasonRegisterEndAt" :defaultValue="old('seasonRegisterEndAt')" type="text">
                 季打結束報名時間
             </x-forms.input>
         </div>

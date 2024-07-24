@@ -3,28 +3,25 @@ import { MandarinTraditional } from "flatpickr/dist/l10n/zh-tw";
 import "flatpickr/dist/flatpickr.min.css";
 import { format, subDays } from "date-fns";
 
-const registerEndDateForEventGroupFlatpickr = flatpickr(
-    "#eventGroupRegisterEndAt",
-    {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        locale: MandarinTraditional,
-        disable: [
-            {
-                from: "1970-01-01",
-                to: format(subDays(new Date(), 1), "yyyy-MM-dd"),
-            },
-        ],
-        onChange(selectedDates, dateStr, instance) {
-            if (selectedDates[0]) {
-                limitMinuteZeroOr30(selectedDates[0], instance);
-            }
+const registerEndDateForSeasonFlatpickr = flatpickr("#seasonRegisterEndAt", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    locale: MandarinTraditional,
+    disable: [
+        {
+            from: "1970-01-01",
+            to: format(subDays(new Date(), 1), "yyyy-MM-dd"),
         },
-    }
-);
+    ],
+    onChange(selectedDates, dateStr, instance) {
+        if (selectedDates[0]) {
+            limitMinuteZeroOr30(selectedDates[0], instance);
+        }
+    },
+});
 
-const registerStartDateForEventGroupFlatpickr = flatpickr(
-    "#eventGroupRegisterStartAt",
+const registerStartDateForSeasonFlatpickr = flatpickr(
+    "#seasonRegisterStartAt",
     {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
@@ -39,14 +36,14 @@ const registerStartDateForEventGroupFlatpickr = flatpickr(
             if (selectedDates[0]) {
                 limitMinuteZeroOr30(selectedDates[0], instance);
             }
-            registerEndDateForEventGroupFlatpickr.config.disable = [
+            registerEndDateForSeasonFlatpickr.config.disable = [
                 {
                     from: "1970-01-01",
                     to: dateStr,
                 },
             ];
-            registerEndDateForEventGroupFlatpickr.clear();
-            registerEndDateForEventGroupFlatpickr.redraw();
+            registerEndDateForSeasonFlatpickr.clear();
+            registerEndDateForSeasonFlatpickr.redraw();
         },
     }
 );

@@ -22,7 +22,7 @@ class EventFactory extends Factory
         $registerEndAt = Carbon::instance($startAt)->subDays(5);
 
         return [
-            'event_group_id' => 1,
+            'season_id' => 1,
             'start_at' => $startAt,
             'register_start_at' => $registerStartAt,
             'register_end_at' => $registerEndAt,

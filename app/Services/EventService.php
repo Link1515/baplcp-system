@@ -3,14 +3,14 @@
 namespace App\Services;
 
 use App\Models\Event;
-use App\Models\EventGroup;
+use App\Models\Season;
 use App\Models\EventRegistration;
 
 class EventService
 {
-    public function insertManyBySeason($eventGroupIds, $userIds)
+    public function insertManyBySeason($seasonIds, $userIds)
     {
-        $events = Event::where('event_group_id', $eventGroupIds)->get();
+        $events = Event::where('season_id', $seasonIds)->get();
 
         $registrations = [];
         foreach ($userIds as $userId) {
@@ -18,7 +18,7 @@ class EventService
                 $registrations[] = [
                     'user_id' => $userId,
                     'event_id' => $event->id,
-                    'event_group_id' => $eventGroupIds,
+                    'season_id' => $seasonIds,
                     'is_season' => true,
                     'created_at' => now(),
                     'updated_at' => now(),

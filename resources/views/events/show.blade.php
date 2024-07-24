@@ -2,7 +2,7 @@
 
 @php
     use Illuminate\Support\Carbon;
-    $eventGroup = $event->eventGroup;
+    $season = $event->season;
 @endphp
 
 @section('header-back-url', route('events.index'))
@@ -24,23 +24,23 @@
         </div>
         <div>
             <span class="font-bold">費用</span>
-            <span>{{ $eventGroup->price }}</span>
+            <span>{{ $season->price }}</span>
         </div>
         <div>
             <span class="font-bold">季打人數</span>
             <span>
-                {{ $eventGroupRegistrations->count() }}
+                {{ $seasonRegistrations->count() }}
             </span>
         </div>
         <div>
             <span class="font-bold">群內人數</span>
             <span>
-                {{ $eventGroup->total_participants - $eventGroupRegistrations->count() - $eventGroup->non_member_participants }}
+                {{ $season->total_participants - $seasonRegistrations->count() - $season->non_member_participants }}
             </span>
         </div>
         <div>
             <span class="font-bold">群外人數</span>
-            <span>{{ $eventGroup->non_member_participants }}</span>
+            <span>{{ $season->non_member_participants }}</span>
         </div>
     </div>
 
@@ -90,7 +90,7 @@
             <h3 class="border-neutral-400 pb-2 mb-2 text-xl text-center border-b">報名狀態</h3>
             @if ($userHasRegistered)
                 <div>
-                    @if (is_null($userRegistration->event_group_id))
+                    @if (is_null($userRegistration->season_id))
                         已成功報名
                     @else
                         已報名季打
@@ -129,8 +129,8 @@
         </ol>
         <h4 class="inline-block px-2 py-1 mb-2 text-white bg-blue-600 rounded-full">季打</h4>
         <ol class=" pl-6 mb-6 list-decimal">
-            @foreach ($eventGroupRegistrations as $eventGroupRegistration)
-                <li>{{ $eventGroupRegistration->user->name }}</li>
+            @foreach ($seasonRegistrations as $seasonRegistration)
+                <li>{{ $seasonRegistration->user->name }}</li>
             @endforeach
         </ol>
     </div>

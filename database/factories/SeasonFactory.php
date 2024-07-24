@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EventGroup>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Season>
  */
-class EventGroupFactory extends Factory
+class SeasonFactory extends Factory
 {
     /**
      * Define the model's default state.

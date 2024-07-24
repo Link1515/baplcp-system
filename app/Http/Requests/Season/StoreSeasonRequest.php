@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\EventGroup;
+namespace App\Http\Requests\Season;
 
 use App\Rules\Dates;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateEventGroupRequest extends FormRequest
+class StoreSeasonRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,6 +18,7 @@ class UpdateEventGroupRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
+            'eventDates' => explode(', ', $this->input('eventDates')),
             'canRegisterAllEvents' => (bool) $this->input('canRegisterAllEvents'),
         ]);
     }
@@ -36,9 +37,16 @@ class UpdateEventGroupRequest extends FormRequest
             'totalParticipants' => 'required|integer|max:200|gt:0',
             'nonMemberParticipants' => 'required|integer|max:200|gt:0',
 
+            'eventTime' => 'required|max:255',
+            'eventDates' => ['required', new Dates, 'max:30'],
+            'eventStartRegisterDayBefore' => 'required|integer|max:20|gt:0',
+            'eventStartRegisterDayBeforeTime' => 'required|max:255',
+            'eventEndRegisterDayBefore' => 'required|integer|lt:eventStartRegisterDayBefore|max:255|gt:0',
+            'eventEndRegisterDayBeforeTime' => 'required|max:255',
+
             'canRegisterAllEvents' => 'boolean|nullable',
-            'eventGroupRegisterStartAt' => 'required_if:canRegisterAllEvents,true|nullable|after:now|max:255',
-            'eventGroupRegisterEndAt' => 'required_if:canRegisterAllEvents,true|nullable|after:eventGroupRegisterStartAt|max:255',
+            'seasonRegisterStartAt' => 'required_if:canRegisterAllEvents,true|nullable|after:now|max:255',
+            'seasonRegisterEndAt' => 'required_if:canRegisterAllEvents,true|nullable|after:seasonRegisterStartAt|max:255',
             'registerAllPrice' => 'required_if:canRegisterAllEvents,true|nullable|integer|max:20000|gt:0',
             'registerAllParticipants' => 'required_if:canRegisterAllEvents,true|nullable|integer|max:200|gt:0',
         ];

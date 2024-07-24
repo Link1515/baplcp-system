@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EventGroup extends Model
+class Season extends Model
 {
     use HasFactory;
 
@@ -22,7 +22,7 @@ class EventGroup extends Model
         'register_end_at',
         'register_all_participants',
         'register_all_price',
-        'previous_event_group_id'
+        'previous_season_id'
     ];
 
     public function events()
@@ -30,18 +30,18 @@ class EventGroup extends Model
         return $this->hasMany(Event::class);
     }
 
-    public function registrations()
+    public function seasonRegistrations()
     {
-        return $this->hasMany(EventGroupRegistration::class);
+        return $this->hasMany(SeasonRegistration::class);
     }
 
     public function previous()
     {
-        return $this->belongsTo(EventGroup::class, 'previous_event_group_id');
+        return $this->belongsTo(Season::class, 'previous_season_id');
     }
 
     public function next()
     {
-        return $this->hasOne(EventGroup::class, 'previous_event_group_id');
+        return $this->hasOne(Season::class, 'previous_season_id');
     }
 }

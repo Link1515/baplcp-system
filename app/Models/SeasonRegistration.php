@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EventGroupRegistration extends Model
+class SeasonRegistration extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'event_group_id'
+        'season_id'
     ];
 
     public function user()
@@ -19,8 +19,8 @@ class EventGroupRegistration extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function eventGroup()
+    public function season()
     {
-        return $this->belongsTo(EventGroup::class);
+        return $this->belongsTo(Season::class);
     }
 }

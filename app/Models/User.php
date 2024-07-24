@@ -33,9 +33,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function eventGroupRegistrations()
+    public function seasonRegistrations()
     {
-        return $this->hasMany(EventGroupRegistration::class);
+        return $this->hasMany(SeasonRegistration::class);
     }
 
     public function eventRegistrations()

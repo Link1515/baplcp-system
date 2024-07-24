@@ -19,18 +19,18 @@ class EventController extends Controller
 
     public function show(string $id)
     {
-        $event = Event::with('eventGroup')->find($id);
+        $event = Event::with('season')->find($id);
         $memberRegistrations = EventRegistration::with('user')
             ->where('event_id', $id)
             ->where('is_non_member', 0)
-            ->whereNull('event_group_id')
+            ->whereNull('season_id')
             ->get();
         $nonMemberRegistrations = EventRegistration::with('user')
             ->where('event_id', $id)
             ->where('is_non_member', 1)
-            ->whereNull('event_group_id')
+            ->whereNull('season_id')
             ->get();
-        $eventGroupRegistrations = EventRegistration::with('user')
+        $seasonRegistrations = EventRegistration::with('user')
             ->where('event_id', $id)
             ->where('is_season', 1)
             ->get();
@@ -54,6 +54,6 @@ class EventController extends Controller
         $userFriendHasRegistered = !is_null($userFriendRegistration);
 
 
-        return view('events.show', compact('event', 'userHasRegistered', 'userRegistration', 'userFriendHasRegistered', 'userFriendRegistration', 'memberRegistrations', 'nonMemberRegistrations', 'eventGroupRegistrations'));
+        return view('events.show', compact('event', 'userHasRegistered', 'userRegistration', 'userFriendHasRegistered', 'userFriendRegistration', 'memberRegistrations', 'nonMemberRegistrations', 'seasonRegistrations'));
     }
 }

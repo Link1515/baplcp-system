@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\EventGroupRegistration;
+namespace App\Http\Requests\SeasonRegistration;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEventGroupRegistrationRequest extends FormRequest
+class StoreSeasonRegistrationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class StoreEventGroupRegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'eventGroupId' => 'required|integer',
+            'seasonId' => 'required|integer',
         ];
     }
 }

@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\EventGroupController;
-use App\Http\Controllers\EventGroupRegistrationController;
+use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\SeasonRegistrationController;
 use App\Http\Controllers\EventRegistrationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -29,15 +29,15 @@ Route::middleware('auth')->group(function () {
 
 Route::view('/', 'index')->name('home');
 
-Route::get('eventGroups/{eventGroup}/compute', [EventGroupController::class, 'compute']);
-Route::resource('eventGroups', EventGroupController::class)->only(['index', 'show']);
-Route::resource('eventGroupRegistrations', EventGroupRegistrationController::class)->only('store', 'destroy');
+Route::get('seasons/{season}/compute', [SeasonController::class, 'compute']);
+Route::resource('seasons', SeasonController::class)->only(['index', 'show']);
+Route::resource('seasonRegistrations', SeasonRegistrationController::class)->only('store', 'destroy');
 Route::get('events', [EventController::class, 'index'])->name('events.index');
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 Route::post('eventRegistrations', [EventRegistrationController::class, 'store'])->name('eventRegistrations.store');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::view('/', 'admin.index')->name('index');
-    Route::get('eventGroups', [EventGroupController::class, 'adminIndex'])->name('eventGroups.index');
-    Route::resource('eventGroups', EventGroupController::class)->except(['index', 'show']);
+    Route::get('seasons', [SeasonController::class, 'adminIndex'])->name('seasons.index');
+    Route::resource('seasons', SeasonController::class)->except(['index', 'show']);
 });

@@ -27,8 +27,16 @@
             <span>{{ $eventGroup->price }}</span>
         </div>
         <div>
-            <span class="font-bold">總人數</span>
-            <span>{{ $eventGroup->total_participants }}</span>
+            <span class="font-bold">季打人數</span>
+            <span>
+                {{ $eventGroupRegistrations->count() }}
+            </span>
+        </div>
+        <div>
+            <span class="font-bold">群內人數</span>
+            <span>
+                {{ $eventGroup->total_participants - $eventGroupRegistrations->count() - $eventGroup->non_member_participants }}
+            </span>
         </div>
         <div>
             <span class="font-bold">群外人數</span>

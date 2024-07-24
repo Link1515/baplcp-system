@@ -32,8 +32,7 @@ class EventController extends Controller
             ->get();
         $eventGroupRegistrations = EventRegistration::with('user')
             ->where('event_id', $id)
-            ->where('is_non_member', 0)
-            ->where('event_group_id', $event->eventGroup->id)
+            ->where('is_season', 1)
             ->get();
 
         $userId = 1;

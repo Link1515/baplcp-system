@@ -13,7 +13,7 @@
 @section('header-back-url', route('seasons.index'))
 @section('header')
     <h1 class="text-3xl text-center">{{ $season->title }}</h1>
-    @vite('resources/js/season/register.js')
+    @vite('resources/js/season/show.js')
 @endsection
 
 @section('content')

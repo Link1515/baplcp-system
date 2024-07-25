@@ -8,7 +8,7 @@
 @section('header-back-url', route('events.index'))
 @section('header')
     <h1 class="text-3xl text-center">{{ $event->start_at }}</h1>
-    @vite('resources/js/event/register.js')
+    @vite('resources/js/event/show.js')
 @endsection
 
 @section('content')

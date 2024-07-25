@@ -39,5 +39,6 @@ Route::post('eventRegistrations', [EventRegistrationController::class, 'store'])
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::view('/', 'admin.index')->name('index');
     Route::get('seasons', [SeasonController::class, 'adminIndex'])->name('seasons.index');
+    Route::get('seasons/{season}/options', [SeasonController::class, 'options'])->name('seasons.options');
     Route::resource('seasons', SeasonController::class)->except(['index', 'show']);
 });

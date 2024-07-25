@@ -30,6 +30,11 @@ class SeasonController extends Controller
         return view('admin.seasons.index', compact('seasons'));
     }
 
+    public function options($id)
+    {
+        return view('admin.seasons.options', compact('id'));
+    }
+
     public function create()
     {
         return view('admin.seasons.create');

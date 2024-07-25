@@ -30,11 +30,12 @@
         <h2 class="title mb-3 text-xl font-semibold">活動資訊</h2>
         <div class="grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-[#696F8C] mb-3">
             <span>報名開始時間 :</span>
-            <span id="registerStartAt" class="text-[#101840] font-medium">{{ $event->register_start_at }}</span>
+            <span id="registerStartAt" class="text-[#101840] font-medium"
+                data-datetime="{{ $event->register_start_at }}"></span>
             <span>報名截止時間 :</span>
-            <span id="registerEndAt" class="text-[#101840] font-medium">{{ $event->register_end_at }}</span>
-            <span>報名時間 :</span>
-            <span id="registerEndAt" class="text-[#101840] font-medium">{{ $event->start_at }}</span>
+            <span id="registerEndAt" class="text-[#101840] font-medium" data-datetime="{{ $event->register_end_at }}"></span>
+            <span>活動時間 :</span>
+            <span id="startAt" class="text-[#101840] font-medium" data-datetime="{{ $event->start_at }}"></span>
             <span>活動地點 :</span>
             <span class="text-[#101840] font-medium">{{ $season->place }}</span>
             <span>單次費用 :</span>

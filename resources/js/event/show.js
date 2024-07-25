@@ -1,19 +1,24 @@
-import {
-    differenceInHours,
-    differenceInSeconds,
-    addSeconds,
-    differenceInMinutes,
-} from "date-fns";
-import { getCountDownStr } from "../utils";
+import { differenceInSeconds, addSeconds, differenceInMinutes } from "date-fns";
+import { getCountDownStr, getChineseDatetimeStr } from "../utils";
 
 const submitBtnPlaceholderEl = document.querySelector("#submitBtnPlaceholder");
 const submitBtnEl = document.querySelector("#submitBtn");
 const registraionListEl = document.querySelector("#registraionList");
 
-const registerStartAtStr = document.querySelector("#registerStartAt").innerText;
+const registerStartAtEl = document.querySelector("#registerStartAt");
+const registerStartAtStr = registerStartAtEl.dataset.datetime;
 const registerStartAt = addSeconds(registerStartAtStr, 1);
-const registerEndAtStr = document.querySelector("#registerEndAt").innerText;
+registerStartAtEl.innerText = getChineseDatetimeStr(registerStartAt);
+
+const registerEndAtEl = document.querySelector("#registerEndAt");
+const registerEndAtStr = registerEndAtEl.dataset.datetime;
 const registerEndAt = new Date(registerEndAtStr);
+registerEndAtEl.innerText = getChineseDatetimeStr(registerEndAt);
+
+const startAtEl = document.querySelector("#startAt");
+const startAtStr = startAtEl.dataset.datetime;
+const startAt = new Date(startAtStr);
+startAtEl.innerText = getChineseDatetimeStr(startAt);
 
 let now;
 let registerStartRemainingLessThanTenMinutes;

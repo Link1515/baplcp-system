@@ -3,7 +3,7 @@ import { getCountDownStr, getChineseDatetimeStr } from "../utils";
 
 const submitBtnPlaceholderEl = document.querySelector("#submitBtnPlaceholder");
 const submitBtnEl = document.querySelector("#submitBtn");
-const registraionListEl = document.querySelector("#registraionList");
+// const registraionListEl = document.querySelector("#registraionList");
 
 const registerStartAtEl = document.querySelector("#registerStartAt");
 const registerStartAtStr = registerStartAtEl.dataset.datetime;
@@ -70,7 +70,7 @@ function checkRegistrationStart() {
         if (submitBtnEl) {
             showSubmitButton();
         }
-        registraionListEl.style.display = "block";
+        // registraionListEl.style.display = "block";
     }
 }
 
@@ -80,7 +80,7 @@ function checkRegistrationEnd() {
             showSubmitButtonPlacehoder("報名已截止");
         }
         clearInterval(timer);
-        registraionListEl.style.display = "block";
+        // registraionListEl.style.display = "block";
     }
 }
 

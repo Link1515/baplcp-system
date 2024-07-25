@@ -49,13 +49,19 @@
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 @if (session('success'))
-                    window.popup.success('{{ session('success') }}')
+                    window.popup.success({
+                        text: '{{ session('success') }}'
+                    })
                 @endif
                 @if (session('info'))
-                    window.popup.info('{{ session('info') }}')
+                    window.popup.info({
+                        text: '{{ session('info') }}'
+                    })
                 @endif
                 @if (session('error'))
-                    window.popup.error('{{ session('error') }}')
+                    window.popup.error({
+                        text: '{{ session('error') }}'
+                    })
                 @endif
             })
         </script>

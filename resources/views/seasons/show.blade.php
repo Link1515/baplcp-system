@@ -44,7 +44,7 @@
     @if ($userRegistration)
         <h2 class="py-2 mb-2 text-xl text-center text-white bg-green-500">已報名</h2>
         <button x-data @click="{{ $deleteGroupEventRegistrationMethod }}"
-            class="btn-submit mb-8 text-xl bg-red-500">取消報名</button>
+            class="btn-primary mb-8 text-xl bg-red-500">取消報名</button>
     @else
         <form class="mb-8 text-lg" x-data="{
             form: $form('post', '{{ route('seasonRegistrations.store') }}', {})
@@ -54,7 +54,7 @@
             <span id="submitBtnPlaceholder"
                 class=" h-11 bg-neutral-500 grid items-center mt-6 text-center text-white rounded select-none">
             </span>
-            <button id="submitBtn" class="btn-submit mt-6 transition-colors" style="display: none"
+            <button id="submitBtn" class="btn-primary mt-6 transition-colors" style="display: none"
                 :disabled="form.processing" :class="form.processing && 'bg-neutral-500'">
                 立即報名
             </button>

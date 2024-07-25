@@ -25,8 +25,8 @@
                 <div class="lg:p-6 p-4 pt-16 text-white">
                     @if (Route::currentRouteName() !== 'home')
                         <div class="top-4 left-2 absolute flex items-center gap-2">
-                            <a href=" @yield('header-back-url', url()->previous()) ">
-                                <img src="{{ asset('images/icons/back.svg') }}" class="w-10" alt="back">
+                            <a href="@yield('header-back-url', url()->previous())">
+                                <img src="{{ asset('images/icons/back.svg') }}" class="w-4" alt="back">
                             </a>
                             <a href="{{ route('home') }}">
                                 <img src="{{ asset('images/icons/home.svg') }}" class="w-8" alt="home">
@@ -45,26 +45,6 @@
 
         @vite('resources/js/app.js')
         @yield('js')
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                @if (session('success'))
-                    window.popup.success({
-                        text: '{{ session('success') }}'
-                    })
-                @endif
-                @if (session('info'))
-                    window.popup.info({
-                        text: '{{ session('info') }}'
-                    })
-                @endif
-                @if (session('error'))
-                    window.popup.error({
-                        text: '{{ session('error') }}'
-                    })
-                @endif
-            })
-        </script>
     </div>
 </body>
 

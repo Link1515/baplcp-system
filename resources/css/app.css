@@ -15,6 +15,10 @@
     input {
         @apply outline-none;
     }
+
+    input[type="checkbox"] {
+        @apply accent-primary;
+    }
 }
 
 @layer components {
@@ -22,8 +26,12 @@
         @apply border-neutral-500 place-items-center grid h-10 text-center border rounded;
     }
 
-    .btn-submit {
-        @apply h-11 place-items-center grid w-full text-white bg-blue-800 rounded;
+    .btn-primary {
+        @apply place-items-center bg-primary rounded-xl grid w-full h-12 font-semibold text-white;
+    }
+
+    .title {
+        @apply text-[#101840];
     }
 
     .input {

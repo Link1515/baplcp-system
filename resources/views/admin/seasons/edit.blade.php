@@ -106,10 +106,10 @@
         </div>
 
         <div class="grid grid-cols-2 gap-4 mt-6">
-            <button @click="{{ $deleteGroupEventMethod }}" class="btn-submit bg-red-500" type="button">
+            <button @click="{{ $deleteGroupEventMethod }}" class="btn-primary bg-red-500" type="button">
                 刪除季打
             </button>
-            <button class="btn-submit" :disabled="form.processing">
+            <button class="btn-primary" :disabled="form.processing">
                 更新季打
             </button>
         </div>

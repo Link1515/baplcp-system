@@ -1,5 +1,9 @@
-import { differenceInHours, differenceInSeconds, addSeconds } from "date-fns";
-
+import {
+    differenceInHours,
+    differenceInSeconds,
+    addSeconds,
+    differenceInMinutes,
+} from "date-fns";
 import { getCountDownStr } from "../utils";
 
 const submitBtnPlaceholderEl = document.querySelector("#submitBtnPlaceholder");
@@ -12,7 +16,7 @@ const registerEndAtStr = document.querySelector("#registerEndAt").innerText;
 const registerEndAt = new Date(registerEndAtStr);
 
 let now;
-let registerStartRemainingLessThanOneHour;
+let registerStartRemainingLessThanTenMinutes;
 let registerStarted;
 let registerEnded;
 let timer;
@@ -32,17 +36,19 @@ function mainIntervalCallback() {
 
 function refreshRegistrationStatus() {
     now = new Date();
-    registerStartRemainingLessThanOneHour =
-        differenceInHours(registerStartAt, now) <= 0;
+    registerStartRemainingLessThanTenMinutes =
+        differenceInMinutes(registerStartAt, now) <= 10;
     registerStarted = differenceInSeconds(registerStartAt, now) <= 0;
     registerEnded = differenceInSeconds(registerEndAt, now) <= 0;
 }
 
 function checkRegistrationNotStart() {
     if (!registerStarted) {
-        if (registerStartRemainingLessThanOneHour) {
-            // remaining time is less than one hour
-            submitBtnPlaceholderEl.innerText = getCountDownStr(registerStartAt);
+        if (registerStartRemainingLessThanTenMinutes) {
+            // remaining time is less than 10 minutes
+            submitBtnPlaceholderEl.innerText = `將於 ${getCountDownStr(
+                registerStartAt
+            )}後開放報名`;
             if (registerStarted) {
                 showSubmitButton();
             }

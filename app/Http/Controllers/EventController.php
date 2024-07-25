@@ -53,7 +53,6 @@ class EventController extends Controller
             ->first();
         $userFriendHasRegistered = !is_null($userFriendRegistration);
 
-
         return view('events.show', compact('event', 'userHasRegistered', 'userRegistration', 'userFriendHasRegistered', 'userFriendRegistration', 'memberRegistrations', 'nonMemberRegistrations', 'seasonRegistrations'));
     }
 }

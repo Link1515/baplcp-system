@@ -126,7 +126,7 @@
             </x-forms.input>
         </div>
 
-        <button class="btn-submit mt-6" :disabled="form.processing">
+        <button class="btn-primary mt-6" :disabled="form.processing">
             建立季打
         </button>
     </form>

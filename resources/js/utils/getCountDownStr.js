@@ -16,22 +16,16 @@ export const getCountDownStr = (from, to = new Date()) => {
     const seconds = differenceInSeconds(from, to) % 60;
 
     if (days > 0) {
-        return (
-            days +
-            ":" +
-            hours +
-            ":" +
-            minutes.toString().padStart(2, "0") +
-            ":" +
-            seconds.toString().padStart(2, "0")
-        );
+        return `${days} 天 ${hours} 小時 ${minutes + 1} 分鐘`;
     }
 
-    return (
-        hours +
-        ":" +
-        minutes.toString().padStart(2, "0") +
-        ":" +
-        seconds.toString().padStart(2, "0")
-    );
+    if (hours > 0) {
+        return `${hours} 小時 ${minutes + 1} 分鐘`;
+    }
+
+    if (minutes > 0) {
+        return `${minutes + 1} 分鐘`;
+    }
+
+    return `${seconds} 秒`;
 };

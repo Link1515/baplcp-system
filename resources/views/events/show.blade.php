@@ -71,19 +71,19 @@
 
         @if ($userHasRegistered)
             <div>
-                @if (is_null($userRegistration->is_season))
+                @if ($userRegistration->is_season)
                     <h3 class="flex items-center gap-1 mb-3">
                         <div>
-                            <img src="/images/icons/check.svg" alt="check">
+                            <img src="{{ asset('images/icons/check.svg') }}" alt="check">
                         </div>
-                        已成功報名
+                        已報名季打
                     </h3>
                 @else
                     <h3 class="flex items-center gap-1 mb-3">
                         <div>
-                            <img src="/images/icons/check.svg" alt="check">
+                            <img src="{{ asset('images/icons/check.svg') }}" alt="check">
                         </div>
-                        已報名季打
+                        已成功報名
                     </h3>
                 @endif
             </div>
@@ -91,7 +91,7 @@
         @if ($userFriendHasRegistered)
             <h3 class="flex items-center gap-1 mb-3">
                 <div>
-                    <img src="/images/icons/check.svg" alt="check">
+                    <img src="{{ asset('images/icons/check.svg') }}" alt="check">
                 </div>
                 已成功幫{{ $userFriendRegistration->non_member_name }}報名
             </h3>

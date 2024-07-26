@@ -26,7 +26,7 @@
                     @if (Route::currentRouteName() !== 'home')
                         <div class="top-4 left-2 absolute flex items-center gap-2">
                             <a href="@yield('header-back-url', url()->previous())">
-                                <img src="{{ asset('images/icons/back.svg') }}" class="w-4" alt="back">
+                                <img src="{{ asset('images/icons/back.svg') }}" alt="back">
                             </a>
                             <a href="{{ route('home') }}">
                                 <img src="{{ asset('images/icons/home.svg') }}" class="w-8" alt="home">

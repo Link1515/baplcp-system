@@ -33,10 +33,15 @@ class RegisterEvent implements ShouldQueue
 
         DB::transaction(function () use ($data, $userId, $memberHasRegistered, $nonMemberHasRegistered) {
             if (!$memberHasRegistered && $data['memberRegister']) {
-                EventRegistration::create([
-                    'user_id' => $userId,
-                    'event_id' => $data['eventId'],
-                ]);
+                $oldRegistration = EventRegistration::withTrashed()->where('user_id', $userId)->where('event_id', $data['eventId'])->first();
+                if ($oldRegistration) {
+                    $oldRegistration->restore();
+                } else {
+                    EventRegistration::create([
+                        'user_id' => $userId,
+                        'event_id' => $data['eventId'],
+                    ]);
+                }
             }
 
             if (!$nonMemberHasRegistered && $data['nonMemberRegister']) {

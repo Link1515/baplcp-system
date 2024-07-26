@@ -8,7 +8,7 @@
 @section('js')
     @vite('resources/js/event/show.js')
 
-    <script defer>
+    <script>
         @if (session('success'))
             document.addEventListener('DOMContentLoaded', () => {
                 window.popup.success({
@@ -17,6 +17,28 @@
                 })
             })
         @endif
+
+        function cancelRegistration({
+            registrationId,
+            name,
+            isSeason = false
+        }) {
+            window.popup.confirm({
+                title: `您確定要幫${name}取消報名？`,
+                text: '一旦按下取消報名則會讓排序後面的人遞補，若想再次報名，需重新排隊。',
+                confirmButtonText: '取消報名',
+                callback: function(result) {
+                    if (result.isDenied || result.isDismissed) return;
+                    window.axios.delete(`/eventRegistrations/${registrationId}`).then(function({
+                        status
+                    }) {
+                        if (status === 200) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            })
+        }
     </script>
 @endsection
 
@@ -76,14 +98,32 @@
                         <div>
                             <img src="{{ asset('images/icons/check.svg') }}" alt="check">
                         </div>
-                        已報名季打
+                        <span class="mr-auto">已報名季打</span>
+                        <button x-data
+                            @click="cancelRegistration({
+                            registrationId: {{ $userRegistration->id }},
+                            name: '自己',
+                        })"
+                            class="text-[#6B6B6B] flex gap-1 items-center">
+                            我要請假
+                            <img src="{{ asset('images/icons/next.svg') }}" alt="next">
+                        </button>
                     </h3>
                 @else
                     <h3 class="flex items-center gap-1 mb-3">
                         <div>
                             <img src="{{ asset('images/icons/check.svg') }}" alt="check">
                         </div>
-                        已成功報名
+                        <span class="mr-auto">已成功報名</span>
+                        <button x-data
+                            @click="cancelRegistration({
+                            registrationId: {{ $userRegistration->id }},
+                            name: '自己',
+                        })"
+                            class="text-[#6B6B6B] flex gap-1 items-center">
+                            我要取消報名
+                            <img src="{{ asset('images/icons/next.svg') }}" alt="next">
+                        </button>
                     </h3>
                 @endif
             </div>
@@ -93,7 +133,18 @@
                 <div>
                     <img src="{{ asset('images/icons/check.svg') }}" alt="check">
                 </div>
-                已成功幫{{ $userFriendRegistration->non_member_name }}報名
+                <span class="mr-auto">
+                    已成功幫{{ $userFriendRegistration->non_member_name }}報名
+                </span>
+                <button x-data
+                    @click="cancelRegistration({
+                            registrationId: {{ $userFriendRegistration->id }},
+                            name: '{{ $userFriendRegistration->non_member_name }}',
+                        })"
+                    class="text-[#6B6B6B] flex gap-1 items-center">
+                    我要取消報名
+                    <img src="{{ asset('images/icons/next.svg') }}" alt="next">
+                </button>
             </h3>
         @endif
 
@@ -125,7 +176,8 @@
                 </div>
             @endif
 
-            <div class="fixed bottom-0 left-0 w-full px-4 py-3 shadow-[0_-1px_3px_0_rgba(194,194,194,0.45)] text-base">
+            <div
+                class="fixed bottom-0 left-0 w-full px-4 py-3 h-[72px] shadow-[0_-1px_3px_0_rgba(194,194,194,0.45)] text-base bg-white">
                 @if ($userHasRegistered && $userFriendHasRegistered)
                     <span class="bg-disabled grid items-center h-12 text-center text-white rounded select-none">
                         已報名

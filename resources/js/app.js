@@ -7,13 +7,18 @@ import Swal from "sweetalert2";
 window.Alpine = Alpine;
 
 window.popup = {
-    success({ title = "成功", text, callback }) {
+    success({
+        title = "成功",
+        text,
+        confirmButtonText = "我知道了",
+        callback,
+    }) {
         Swal.fire({
             title,
             imageUrl: "/images/icons/success.svg",
             imageWidth: 40,
             text,
-            confirmButtonText: "確定",
+            confirmButtonText,
             confirmButtonColor: "#5768FF",
             customClass: {
                 popup: "!rounded-2xl !mt-6",
@@ -31,7 +36,7 @@ window.popup = {
         Swal.fire({
             title,
             text,
-            confirmButtonText: "確定",
+            confirmButtonText: "我知道了",
             confirmButtonColor: "#5768FF",
             customClass: {
                 popup: "!rounded-2xl !mt-6",
@@ -63,21 +68,32 @@ window.popup = {
             },
         });
     },
-    confirm({ title, text, confirmButtonText = "確定", callback }) {
+    confirm({
+        title,
+        text,
+        confirmButtonText = "我知道了",
+        cancelButtonText = "我再想想",
+        callback,
+    }) {
         Swal.fire({
             title,
             imageUrl: "/images/icons/info.svg",
             text,
             confirmButtonText,
             confirmButtonColor: "#5768FF",
+            showCancelButton: "true",
+            cancelButtonText,
+            cancelButtonColor: "#ffffff",
             customClass: {
                 popup: "!rounded-2xl !mt-6",
                 title: "!text-left !text-xl",
                 image: "!my-0 !mt-6 !mx-6",
                 htmlContainer: "!text-[#64748B] !text-sm !text-left",
-                actions: "!w-full !px-6",
+                actions: "!w-full !px-6 !grid !grid-cols-2 !gap-2",
                 confirmButton:
-                    "!w-full !font-semibold !m-0 !rounded-xl !h-[50px]",
+                    "!w-full !font-semibold !m-0 !rounded-xl !h-[50px] !order-1",
+                cancelButton:
+                    "!w-full !font-semibold !m-0 !rounded-xl !border !border-solid !border-primary !h-[50px] text-primary",
                 container: "!bg-[#264573] !bg-opacity-50",
             },
         }).then(callback);

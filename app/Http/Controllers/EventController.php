@@ -23,12 +23,11 @@ class EventController extends Controller
         $memberRegistrations = EventRegistration::with('user')
             ->where('event_id', $id)
             ->where('is_non_member', 0)
-            ->whereNull('season_id')
+            ->where('is_season', 0)
             ->get();
         $nonMemberRegistrations = EventRegistration::with('user')
             ->where('event_id', $id)
             ->where('is_non_member', 1)
-            ->whereNull('season_id')
             ->get();
         $seasonRegistrations = EventRegistration::with('user')
             ->where('event_id', $id)

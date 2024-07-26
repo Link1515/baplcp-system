@@ -34,7 +34,7 @@ Route::resource('seasons', SeasonController::class)->only(['index', 'show']);
 Route::resource('seasonRegistrations', SeasonRegistrationController::class)->only('store', 'destroy');
 Route::get('events', [EventController::class, 'index'])->name('events.index');
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
-Route::post('eventRegistrations', [EventRegistrationController::class, 'store'])->name('eventRegistrations.store');
+Route::resource('eventRegistrations', EventRegistrationController::class)->only('store', 'destroy');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::view('/', 'admin.index')->name('index');

@@ -13,8 +13,9 @@
 </head>
 
 <body>
-    <div class="lg:max-w-xl lg:shadow max-w-3xl min-h-screen mx-auto">
-        <header class="flex items-center gap-2 h-12 px-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.05)]">
+    <div class="lg:max-w-xl lg:shadow max-w-3xl min-h-screen pt-12 mx-auto pb-[72px]">
+        <header
+            class="flex items-center gap-2 h-12 px-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.05)] fixed top-0 left-0 w-full bg-white">
             <a href="@yield('header-back-url', url()->previous())" class="place-items-center grid w-6 h-6 mr-auto">
                 <img src="{{ asset('images/icons/back.svg') }}" alt="back">
             </a>

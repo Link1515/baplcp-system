@@ -28,9 +28,8 @@ class EventRegistrationController extends Controller
 
         $userId = $request->input('userId') ?? 1;
 
-        $registration = EventRegistration::where('user_id', $userId)->where('event_id', $validated['eventId'])->get();
-        $memberHasRegistered = $registration->where('is_non_member', 0)->isNotEmpty();
-        $nonMemberHasRegistered = $registration->where('is_non_member', 1)->isNotEmpty();
+        $memberHasRegistered = EventRegistration::where('user_id', $userId)->where('event_id', $validated['eventId'])->where('is_non_member', 0)->exists();
+        $nonMemberHasRegistered = EventRegistration::where('user_id', $userId)->where('event_id', $validated['eventId'])->where('is_non_member', 1)->exists();
 
         if ($memberHasRegistered && $validated['memberRegister']) {
             return redirect()->back()->with('error', '已報名此活動');
@@ -42,5 +41,15 @@ class EventRegistrationController extends Controller
         RegisterEvent::dispatch($validated, $userId, $memberHasRegistered, $nonMemberHasRegistered);
 
         return redirect()->route('events.show', ['event' => $validated['eventId']])->with('success', true);
+    }
+
+    public function destroy($id)
+    {
+        $eventRegistration = EventRegistration::find($id);
+        if ($eventRegistration->is_non_member) {
+            $eventRegistration->forceDelete();
+        } else {
+            $eventRegistration->delete();
+        }
     }
 }

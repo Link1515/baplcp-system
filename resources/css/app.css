@@ -39,6 +39,6 @@
     }
 
     .input.is-invalid {
-        @apply border-red-600;
+        @apply border-error;
     }
 }

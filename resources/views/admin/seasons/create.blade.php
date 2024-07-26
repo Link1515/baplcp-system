@@ -72,10 +72,10 @@
                     class="input @error('eventStartRegisterDayBeforeTime') is-invalid @enderror">
             </div>
             @error('eventStartRegisterDayBefore')
-                <div class="text-red-600">{{ $message }}</div>
+                <div class="text-error">{{ $message }}</div>
             @enderror
             @error('eventStartRegisterDayBeforeTime')
-                <div class="text-red-600">{{ $message }}</div>
+                <div class="text-error">{{ $message }}</div>
             @enderror
         </label>
         <label class="flex flex-col gap-2 text-lg">
@@ -92,10 +92,10 @@
                     class="input @error('eventEndRegisterDayBeforeTime') is-invalid @enderror">
             </div>
             @error('eventEndRegisterDayBefore')
-                <div class="text-red-600">{{ $message }}</div>
+                <div class="text-error">{{ $message }}</div>
             @enderror
             @error('eventEndRegisterDayBeforeTime')
-                <div class="text-red-600">{{ $message }}</div>
+                <div class="text-error">{{ $message }}</div>
             @enderror
         </label>
 

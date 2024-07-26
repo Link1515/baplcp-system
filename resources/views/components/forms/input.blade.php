@@ -4,6 +4,6 @@
         type="{{ $type }}" name="{{ $field }}" value="{{ $defaultValue }}"
         class="input @error($field) is-invalid @enderror">
     @error($field)
-        <div class="text-red-600">{{ $message }}</div>
+        <div class="text-error">{{ $message }}</div>
     @enderror
 </label>

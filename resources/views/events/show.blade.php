@@ -44,7 +44,7 @@
         <div class="grid h-20 grid-cols-3 gap-3">
             <div class="flex flex-col items-center bg-[#f7f8fe] rounded-xl justify-center">
                 <span class="text-primary mb-1 text-2xl font-semibold">
-                    {{ $season->register_all_participants }}
+                    {{ $season->register_all_participants ?? 0 }}
                 </span>
                 <span class="font-medium text-[13px] text-[#696F8C]">本週季打</span>
             </div>
@@ -104,25 +104,22 @@
             <input type="hidden" name="formSubmitted" value="true">
             <input type="hidden" name="eventId" value="{{ $event->id }}">
             @if (!$userHasRegistered)
-                <label class="flex items-center gap-1 cursor-pointer select-none">
-                    <input x-model.fill="form.memberRegister" type="checkbox" name="memberRegister" value="true"
-                        {{ old('formSubmitted') ? (old('memberRegister') ? 'checked' : '') : '' }} />
+                <x-forms.checkbox field="memberRegister" value="true" :checked="old('formSubmitted') ? (old('memberRegister') ? 'checked' : '') : ''">
                     群內 +1
-                </label>
+                </x-forms.checkbox>
             @endif
             @if (!$userFriendHasRegistered)
-                <label class="flex items-center gap-1 cursor-pointer select-none">
-                    <input x-model.fill="form.nonMemberRegister" type="checkbox" name="nonMemberRegister" value="true"
-                        {{ old('formSubmitted') ? (old('nonMemberRegister') ? 'checked' : '') : '' }} />
+                <x-forms.checkbox field="nonMemberRegister" value="true" :checked="old('formSubmitted') ? (old('nonMemberRegister') ? 'checked' : '') : ''">
                     群外 +1
-                </label>
-                <div x-show="form.nonMemberRegister" x-collapse style="display: none" x-init="$el.style.display = ''">
+                </x-forms.checkbox>
+                <div x-show="form.nonMemberRegister" class="ml-6" x-collapse style="display: none"
+                    x-init="$el.style.display = ''">
                     <label class="flex flex-col gap-1">
                         <input x-model.fill="form.nonMemberName" @keydown.enter.prevent type="text" name="nonMemberName"
                             value="{{ old('nonMemberName') }}" class="input @error('nonMemberName') is-invalid @enderror"
                             placeholder="群外朋友姓名">
                         @error('nonMemberName')
-                            <div class="text-red-600">{{ $message }}</div>
+                            <div class="text-error">{{ $message }}</div>
                         @enderror
                     </label>
                 </div>

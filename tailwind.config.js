@@ -14,6 +14,7 @@ export default {
             colors: {
                 primary: "#5768FF",
                 disabled: "#B3B3B3",
+                error: "#FC4B4F",
             },
         },
     },

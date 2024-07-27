@@ -26,8 +26,7 @@ window.popup = {
                 image: "!my-0 !mt-6 !mx-6",
                 htmlContainer: "!text-[#64748B] !text-sm !text-left",
                 actions: "!w-full !px-6",
-                confirmButton:
-                    "!w-full !font-semibold !m-0 !rounded-xl !h-[50px]",
+                confirmButton: '!btn-primary !m-0',
                 container: "!bg-[#264573] !bg-opacity-50",
             },
         }).then(callback);
@@ -43,8 +42,7 @@ window.popup = {
                 title: "!text-left !text-xl",
                 htmlContainer: "!text-[#64748B] !text-sm !text-left",
                 actions: "!w-full !px-6",
-                confirmButton:
-                    "!w-full !font-semibold !m-0 !rounded-xl !h-[50px]",
+                confirmButton: "!btn-primary !m-0",
                 container: "!bg-[#264573] !bg-opacity-50",
             },
         });
@@ -62,8 +60,7 @@ window.popup = {
                 image: "!my-0 !mt-6 !mx-6",
                 htmlContainer: "!text-[#64748B] !text-sm !text-left",
                 actions: "!w-full !px-6",
-                confirmButton:
-                    "!w-full !font-semibold !m-0 !rounded-xl !h-[50px]",
+                confirmButton: "!btn-primary !m-0",
                 container: "!bg-[#264573] !bg-opacity-50",
             },
         });
@@ -90,10 +87,8 @@ window.popup = {
                 image: "!my-0 !mt-6 !mx-6",
                 htmlContainer: "!text-[#64748B] !text-sm !text-left",
                 actions: "!w-full !px-6 !grid !grid-cols-2 !gap-2",
-                confirmButton:
-                    "!w-full !font-semibold !m-0 !rounded-xl !h-[50px] !order-1",
-                cancelButton:
-                    "!w-full !font-semibold !m-0 !rounded-xl !border !border-solid !border-primary !h-[50px] text-primary",
+                confirmButton: "!btn-primary !m-0 !order-1",
+                cancelButton: "!btn-outline-primary !m-0",
                 container: "!bg-[#264573] !bg-opacity-50",
             },
         }).then(callback);

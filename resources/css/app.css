@@ -30,6 +30,10 @@
         @apply place-items-center bg-primary rounded-xl grid w-full h-12 font-semibold text-white;
     }
 
+    .btn-outline-primary {
+        @apply rounded-xl border-primary text-primary w-full h-12 font-semibold bg-white border border-solid;
+    }
+
     .title {
         @apply text-[#101840];
     }

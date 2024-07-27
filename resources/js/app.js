@@ -52,9 +52,9 @@ window.popup = {
     error({ title = "錯誤", text }) {
         Swal.fire({
             title,
-            imageUrl: "/images/icons/info.svg",
+            imageUrl: "/images/icons/warning.svg",
             text,
-            confirmButtonText: "確定",
+            confirmButtonText: "我知道了",
             confirmButtonColor: "#5768FF",
             customClass: {
                 popup: "!rounded-2xl !mt-6",

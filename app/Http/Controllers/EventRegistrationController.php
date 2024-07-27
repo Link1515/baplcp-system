@@ -45,7 +45,15 @@ class EventRegistrationController extends Controller
 
     public function destroy($id)
     {
-        $eventRegistration = EventRegistration::find($id);
+        $eventRegistration = EventRegistration::with('event')->find($id);
+        $event = $eventRegistration->event;
+
+        if (
+            Carbon::now()->gt(Carbon::parse($event->register_end_at))
+        ) {
+            return response(['title' => '已超過請假時間', 'text' => '已超過請假時間，若有緊急事件需要請假，請自行私訊管理員。'], 403);
+        }
+
         if ($eventRegistration->is_non_member) {
             $eventRegistration->forceDelete();
         } else {
@@ -54,5 +62,10 @@ class EventRegistrationController extends Controller
             }
             $eventRegistration->delete();
         }
+
+        return response([
+            'title' => $eventRegistration->is_season ? '您已成功請假' : '您已取消報名',
+            'text' => '若想再次報名，請重新按下立即報名並重新排隊。'
+        ], 200);
     }
 }

@@ -26,19 +26,37 @@
                 confirmButtonText: isSeason ? '確定請假' : '取消報名',
                 callback: async function(result) {
                     if (result.isDenied || result.isDismissed) return;
-                    const {
-                        status
-                    } = await window.axios.delete(`/eventRegistrations/${registrationId}`);
+                    try {
+                        const {
+                            data
+                        } = await window.axios.delete(`/eventRegistrations/${registrationId}`);
 
-                    if (status === 200) {
                         window.popup.success({
-                            title: isSeason ? '您已成功請假' : '您已取消報名',
-                            text: '若想再次報名，請重新按下立即報名並重新排隊。',
+                            title: data.title,
+                            text: data.text,
                             callback: () => {
                                 window.location.reload();
                             }
                         })
+                    } catch (error) {
+                        if (error instanceof axios.AxiosError) {
+                            const response = error.response
+                            window.popup.error({
+                                title: response.data.title,
+                                text: response.data.text,
+                                callback: () => {
+                                    window.location.reload();
+                                }
+                            })
+                            return
+                        }
+
+                        window.popup.error({
+                            title: '伺服器忙線中',
+                            text: '伺服器目前忙線中，請稍後重試',
+                        })
                     }
+
                 }
             })
         }
@@ -187,7 +205,7 @@
                     </span>
                 @else
                     <span id="submitBtnPlaceholder"
-                        class="bg-disabled grid items-center h-12 text-center text-white rounded select-none">
+                        class="bg-disabled rounded-2xl grid items-center h-12 text-center text-white select-none">
                     </span>
                     <button id="submitBtn" class="btn-primary transition-colors" style="display: none"
                         :disabled="form.processing || (!form.memberRegister && !form.nonMemberRegister)"

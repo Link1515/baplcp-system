@@ -10,12 +10,9 @@
 
     <script>
         @if (session('success'))
-            document.addEventListener('DOMContentLoaded', () => {
-                window.popup.success({
-                    title: '已為您報名',
-                    text: '感謝您的報名，報名結果將於本週五通知'
-                })
-            })
+            document.addEventListener('DOMContentLoaded', () =>
+                window.alerts.registerSuccessAlert()
+            )
         @endif
 
         function cancelRegistration({
@@ -24,18 +21,24 @@
             isSeason = false
         }) {
             window.popup.confirm({
-                title: `您確定要幫${name}取消報名？`,
-                text: '一旦按下取消報名則會讓排序後面的人遞補，若想再次報名，需重新排隊。',
-                confirmButtonText: '取消報名',
-                callback: function(result) {
+                title: isSeason ? '您確定要請假？' : `您確定要幫${name}取消報名？`,
+                text: isSeason ? '一旦按下確定請假則會取消季打優先卡位權利，若想再次報名，需重新排隊。' : '一旦按下取消報名則會讓排序後面的人遞補，若想再次報名，需重新排隊。',
+                confirmButtonText: isSeason ? '確定請假' : '取消報名',
+                callback: async function(result) {
                     if (result.isDenied || result.isDismissed) return;
-                    window.axios.delete(`/eventRegistrations/${registrationId}`).then(function({
+                    const {
                         status
-                    }) {
-                        if (status === 200) {
-                            window.location.reload();
-                        }
-                    });
+                    } = await window.axios.delete(`/eventRegistrations/${registrationId}`);
+
+                    if (status === 200) {
+                        window.popup.success({
+                            title: isSeason ? '您已成功請假' : '您已取消報名',
+                            text: '若想再次報名，請重新按下立即報名並重新排隊。',
+                            callback: () => {
+                                window.location.reload();
+                            }
+                        })
+                    }
                 }
             })
         }
@@ -102,7 +105,7 @@
                         <button x-data
                             @click="cancelRegistration({
                             registrationId: {{ $userRegistration->id }},
-                            name: '自己',
+                            isSeason: true
                         })"
                             class="text-[#6B6B6B] flex gap-1 items-center">
                             我要請假

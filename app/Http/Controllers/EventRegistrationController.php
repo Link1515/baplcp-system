@@ -49,6 +49,9 @@ class EventRegistrationController extends Controller
         if ($eventRegistration->is_non_member) {
             $eventRegistration->forceDelete();
         } else {
+            if ($eventRegistration->is_season) {
+                $eventRegistration->update(['is_season' => 0]);
+            }
             $eventRegistration->delete();
         }
     }

@@ -1,5 +1,5 @@
-import { differenceInSeconds, addSeconds, differenceInMinutes } from "date-fns";
-import { getCountDownStr, getChineseDatetimeStr } from "../utils";
+import { differenceInSeconds, addSeconds, differenceInMinutes, subDays } from "date-fns";
+import { getCountDownStr, getChineseDatetimeStr, getChineseWeek } from "../utils";
 
 const submitBtnPlaceholderEl = document.querySelector("#submitBtnPlaceholder");
 const submitBtnEl = document.querySelector("#submitBtn");
@@ -94,3 +94,20 @@ function showSubmitButtonPlacehoder(text) {
     submitBtnPlaceholderEl.style.display = "grid";
     submitBtnEl.style.display = "none";
 }
+
+/**
+ * ======
+ * alerts
+ * ======
+ */
+
+
+const alertDay = getChineseWeek(subDays(startAtStr, 2).getDay());
+window.alerts = {
+    registerSuccessAlert: () => {
+        window.popup.success({
+            title: '已為您報名',
+            text: `感謝您的報名，報名結果將於${alertDay}通知`
+        })
+    }
+} 

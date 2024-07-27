@@ -1,65 +1,119 @@
-@extends('layouts.app')
+@extends('layouts.appNew')
 
-@php
-    if ($userRegistration) {
-        $deleteGroupEventRegistrationMethod = sprintf(
-            "requestDelete('是否確定取消報名季打','%s', '%s')",
-            route('seasonRegistrations.destroy', ['seasonRegistration' => $userRegistration->id]),
-            route('seasons.index'),
-        );
-    }
-@endphp
-
-@section('header-back-url', route('seasons.index'))
-@section('header')
-    <h1 class="text-3xl text-center">{{ $season->title }}</h1>
+@section('js')
     @vite('resources/js/season/show.js')
+
+    <script>
+        @if (session('success'))
+            document.addEventListener('DOMContentLoaded', () =>
+                window.popup.success({
+                    title: '您已報名季打',
+                    text: '請注意，若報名人數超過上限，將於報名截止後進行抽籤，請靜候報名結果及繳費通知',
+                })
+            )
+        @endif
+
+        function cancelRegistration(registrationId) {
+            window.popup.confirm({
+                title: '您確定要取消報名？',
+                text: '取消報名後，可於此頁在報名時間內重新報名，謝謝!',
+                confirmButtonText: '確定取消',
+                callback: async function(result) {
+                    if (result.isDenied || result.isDismissed) return;
+                    try {
+                        const {
+                            data
+                        } = await window.axios.delete(`/seasonRegistrations/${registrationId}`);
+
+                        window.popup.success({
+                            title: data.title,
+                            text: data.text,
+                            callback: () => {
+                                window.location.reload();
+                            }
+                        })
+                    } catch (error) {
+                        if (error instanceof axios.AxiosError) {
+                            const response = error.response
+                            window.popup.error({
+                                title: response.data.title,
+                                text: response.data.text,
+                                callback: () => {
+                                    window.location.reload();
+                                }
+                            })
+                            return
+                        }
+
+                        window.popup.error({
+                            title: '伺服器忙線中',
+                            text: '伺服器目前忙線中，請稍後重試',
+                        })
+                    }
+
+                }
+            })
+        }
+    </script>
 @endsection
 
+@section('header-back-url', route('seasons.index'))
+
 @section('content')
-    <div class="mb-4 text-lg">
-        <h3 class="border-neutral-400 pb-2 mb-2 text-xl text-center border-b">季打資訊</h3>
-        <div>
-            <span class="font-bold">報名開始時間</span>
-            <span id="registerStartAt">{{ $season->register_start_at }}</span>
+    <div class="p-4 pb-6 text-sm">
+        <h2 class="title mb-3 text-xl font-semibold">季打資訊</h2>
+        <div class="grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-[#696F8C] mb-3">
+            <span>報名開始時間 :</span>
+            <span id="registerStartAt" class="text-[#101840] font-medium"
+                data-datetime="{{ $season->register_start_at }}"></span>
+            <span>報名截止時間 :</span>
+            <span id="registerEndAt" class="text-[#101840] font-medium" data-datetime="{{ $season->register_end_at }}"></span>
+            <span>季打時間 :</span>
+            <span class="text-[#101840] font-medium">{{ $seasonRangeStr }}
+                <span id="startAtTime" data-datetime="{{ $firstEventDate }}"></span>
+            </span>
+            <span>活動地點 :</span>
+            <span class="text-[#101840] font-medium">{{ $season->place }}</span>
+            <span>單季費用 :</span>
+            <span class="text-[#101840] font-medium">${{ number_format($season->register_all_price) }}</span>
         </div>
-        <div>
-            <span class="font-bold">報名截止時間</span>
-            <span id="registerEndAt">{{ $season->register_end_at }}</span>
-        </div>
-        <div>
-            <span class="font-bold">地點</span>
-            <span>{{ $season->place }}</span>
-        </div>
-        <div>
-            <span class="font-bold">費用</span>
-            <span>{{ $season->register_all_price }}</span>
-        </div>
-        <div>
-            <span class="font-bold">人數</span>
-            <span>{{ $season->register_all_participants }}</span>
+        <div class="flex flex-col items-center h-20 bg-[#f7f8fe] rounded-xl justify-center">
+            <span class="text-primary mb-1 text-2xl font-semibold">
+                {{ $season->register_all_participants ?? 0 }}
+            </span>
+            <span class="font-medium text-[13px] text-[#696F8C]">本季季打名額</span>
         </div>
     </div>
 
-    @if ($userRegistration)
-        <h2 class="py-2 mb-2 text-xl text-center text-white bg-green-500">已報名</h2>
-        <button x-data @click="{{ $deleteGroupEventRegistrationMethod }}"
-            class="btn-primary mb-8 text-xl bg-red-500">取消報名</button>
-    @else
-        <form class="mb-8 text-lg" x-data="{
-            form: $form('post', '{{ route('seasonRegistrations.store') }}', {})
-        }">
-            @csrf
-            <input type="hidden" name="seasonId" value="{{ $season->id }}">
-            <span id="submitBtnPlaceholder"
-                class=" h-11 bg-neutral-500 grid items-center mt-6 text-center text-white rounded select-none">
-            </span>
-            <button id="submitBtn" class="btn-primary mt-6 transition-colors" style="display: none"
-                :disabled="form.processing" :class="form.processing && 'bg-neutral-500'">
-                立即報名
-            </button>
-        </form>
-    @endif
+    <form class="text-lg" x-data="{
+        form: $form('post', '{{ route('seasonRegistrations.store') }}', {})
+    }">
+        @csrf
+        <input type="hidden" name="seasonId" value="{{ $season->id }}">
+        <div
+            class="absolute bottom-0 left-0 w-full px-4 py-3 h-[72px] shadow-[0_-1px_3px_0_rgba(194,194,194,0.45)] text-base bg-white">
+            @if ($userRegistration)
+                <button @click="cancelRegistration({{ $userRegistration->id }})" type="button"
+                    class="btn-outline-primary transition-colors">
+                    取消報名
+                </button>
+            @else
+                <span id="submitBtnPlaceholder"
+                    class=" bg-disabled rounded-2xl grid items-center h-12 text-center text-white select-none">
+                </span>
+                <button id="submitBtn" class="btn-primary transition-colors" style="display: none"
+                    :disabled="form.processing" :class="form.processing && 'bg-neutral-500'">
+                    立即報名
+                </button>
+            @endif
+        </div>
+    </form>
+
+    <div class="bg-[#F6F6F6] h-2"></div>
+
+    <div class="px-4 py-6 text-sm">
+
+    </div>
 
     <div id="registraionList" class="mb-4 text-lg" style="display: none">
         <h3 class="border-neutral-400 pb-2 mb-4 text-xl text-center border-b">報名清單</h3>

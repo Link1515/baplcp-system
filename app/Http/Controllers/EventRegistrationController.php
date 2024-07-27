@@ -51,7 +51,10 @@ class EventRegistrationController extends Controller
         if (
             Carbon::now()->gt(Carbon::parse($event->register_end_at))
         ) {
-            return response(['title' => '已超過請假時間', 'text' => '已超過請假時間，若有緊急事件需要請假，請自行私訊管理員。'], 403);
+            if ($eventRegistration->is_season) {
+                return response(['title' => '已超過請假時間', 'text' => '已超過請假時間，若有緊急事件需要請假，請自行私訊管理員。'], 403);
+            }
+            return response(['title' => '已超過取消報名時間', 'text' => '已超過取消報名時間，若有緊急事件需要取消報名，請自行私訊管理員。'], 403);
         }
 
         if ($eventRegistration->is_non_member) {

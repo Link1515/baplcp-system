@@ -43,6 +43,20 @@ class SeasonRegistrationController extends Controller
 
     public function destroy(string $id)
     {
+
+        $seasonRegistration = SeasonRegistration::with('season')->find($id);
+        $season = $seasonRegistration->season;
+
         SeasonRegistration::destroy($id);
+
+        if (
+            Carbon::now()->gt(Carbon::parse($season->register_end_at))
+        ) {
+            return response(['title' => '已超過取消報名時間', 'text' => '已超過取消報名時間，若有緊急事件需要取消報名，請自行私訊管理員。'], 403);
+        }
+        return response([
+            'title' => '您已成功取消',
+            'text' => '若想再次報名，可於此頁在報名時間內重新報名，謝謝!'
+        ], 200);
     }
 }

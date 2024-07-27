@@ -94,6 +94,12 @@ class SeasonController extends Controller
     public function show(string $id)
     {
         $season = Season::find($id);
+        $events = Event::where('season_id', $id)->orderBy('start_at')->get();
+        $firstEventDate = $events->first()->start_at;
+        $lastEventDate = $events->last()->start_at;
+        $seasonStartMonth = Carbon::parse($firstEventDate)->month;
+        $seasonEndMonth = Carbon::parse($lastEventDate)->month;
+        $seasonRangeStr = str_pad($seasonStartMonth, 2, '0', STR_PAD_LEFT) . ' 月 ~ ' . str_pad($seasonEndMonth, 2, '0', STR_PAD_LEFT) . ' 月';
 
         if (!$season->can_register_all_events) {
             return redirect()->back();
@@ -104,7 +110,7 @@ class SeasonController extends Controller
         $userRegistration = SeasonRegistration::where('user_id', $userId)->where('season_id', $id)->first();
         $memberRegistrations = SeasonRegistration::with('user')->where('season_id', $id)->get();
 
-        return view('seasons.show', compact('season', 'userRegistration', 'memberRegistrations'));
+        return view('seasons.show', compact('season', 'seasonRangeStr', 'firstEventDate', 'userRegistration', 'memberRegistrations'));
     }
 
     public function edit(string $id)

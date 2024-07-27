@@ -82,7 +82,7 @@
             <span>活動地點 :</span>
             <span class="text-[#101840] font-medium">{{ $season->place }}</span>
             <span>單次費用 :</span>
-            <span class="text-[#101840] font-medium">$ {{ $season->price }}</span>
+            <span class="text-[#101840] font-medium">${{ $season->price }}</span>
         </div>
         <div class="grid h-20 grid-cols-3 gap-3">
             <div class="flex flex-col items-center bg-[#f7f8fe] rounded-xl justify-center">
@@ -198,7 +198,7 @@
             @endif
 
             <div
-                class="fixed bottom-0 left-0 w-full px-4 py-3 h-[72px] shadow-[0_-1px_3px_0_rgba(194,194,194,0.45)] text-base bg-white">
+                class="absolute bottom-0 left-0 w-full px-4 py-3 h-[72px] shadow-[0_-1px_3px_0_rgba(194,194,194,0.45)] text-base bg-white">
                 @if ($userHasRegistered && $userFriendHasRegistered)
                     <span class="bg-disabled grid items-center h-12 text-center text-white rounded select-none">
                         已報名

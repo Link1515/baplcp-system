@@ -1,18 +1,28 @@
-import { differenceInHours, differenceInSeconds, addSeconds } from "date-fns";
-
-import { getCountDownStr } from "../utils";
+import { differenceInMinutes, differenceInSeconds, addSeconds } from "date-fns";
+import { getCountDownStr, getChineseDatetimeStr, getChineseWeek } from "../utils";
 
 const submitBtnPlaceholderEl = document.querySelector("#submitBtnPlaceholder");
 const submitBtnEl = document.querySelector("#submitBtn");
 const registraionListEl = document.querySelector("#registraionList");
 
-const registerStartAtStr = document.querySelector("#registerStartAt").innerText;
+const registerStartAtEl = document.querySelector("#registerStartAt");
+const registerStartAtStr = registerStartAtEl.dataset.datetime;
 const registerStartAt = addSeconds(registerStartAtStr, 1);
-const registerEndAtStr = document.querySelector("#registerEndAt").innerText;
+registerStartAtEl.innerText = getChineseDatetimeStr(registerStartAt);
+
+const registerEndAtEl = document.querySelector("#registerEndAt");
+const registerEndAtStr = registerEndAtEl.dataset.datetime;
 const registerEndAt = new Date(registerEndAtStr);
+registerEndAtEl.innerText = getChineseDatetimeStr(registerEndAt);
+
+const startAtTimeEl = document.querySelector("#startAtTime");
+const startAtTimeStr = startAtTimeEl.dataset.datetime;
+const startAtTime = new Date(startAtTimeStr);
+startAtTimeEl.innerText = 
+    `${getChineseWeek(startAtTime.getDay())} ${startAtTime.getHours().toString().padStart(2, '0')}:${startAtTime.getMinutes().toString().padStart(2, '0')}`
 
 let now;
-let registerStartRemainingLessThanOneHour;
+let registerStartRemainingLessThanTenMinutes;
 let registerStarted;
 let registerEnded;
 let timer;
@@ -32,17 +42,19 @@ function mainIntervalCallback() {
 
 function refreshRegistrationStatus() {
     now = new Date();
-    registerStartRemainingLessThanOneHour =
-        differenceInHours(registerStartAt, now) <= 0;
+    registerStartRemainingLessThanTenMinutes =
+        differenceInMinutes(registerStartAt, now) <= 10;
     registerStarted = differenceInSeconds(registerStartAt, now) <= 0;
     registerEnded = differenceInSeconds(registerEndAt, now) <= 0;
 }
 
 function checkRegistrationNotStart() {
     if (!registerStarted) {
-        if (registerStartRemainingLessThanOneHour) {
-            // remaining time is less than one hour
-            submitBtnPlaceholderEl.innerText = getCountDownStr(registerStartAt);
+        if (registerStartRemainingLessThanTenMinutes) {
+            // remaining time is less than ten minutes
+            submitBtnPlaceholderEl.innerText = `將於 ${getCountDownStr(
+                registerStartAt
+            )}後開放報名`;
             if (registerStarted) {
                 showSubmitButton();
             }

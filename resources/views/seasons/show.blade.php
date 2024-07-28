@@ -111,16 +111,16 @@
 
     <div class="bg-[#F6F6F6] h-2"></div>
 
-    <div class="px-4 py-6 text-sm">
+    <div id="registraionList" class="px-4 py-6" style="display: none">
+        <h2 class="title mb-3 text-xl font-semibold">報名清單</h2>
 
-    </div>
-
-    <div id="registraionList" class="mb-4 text-lg" style="display: none">
-        <h3 class="border-neutral-400 pb-2 mb-4 text-xl text-center border-b">報名清單</h3>
-
-        <ol class=" pl-6 mb-6 list-decimal">
-            @foreach ($memberRegistrations as $memberRegistration)
-                <li>{{ $memberRegistration->user->name }}</li>
+        <ol class="text-[15px]">
+            @foreach ($memberRegistrations as $index => $memberRegistration)
+                <li class=" flex items-center gap-3">
+                    <span class=" font-bold">{{ $index + 1 }}</span>
+                    <div class=" bg-slate-300 w-10 h-10 rounded-full"></div>
+                    <span class=" font-medium">{{ $memberRegistration->user->name }}</span>
+                </li>
             @endforeach
         </ol>
     </div>

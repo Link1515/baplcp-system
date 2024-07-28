@@ -31,7 +31,7 @@
     }
 
     .btn-outline-primary {
-        @apply rounded-xl border-primary text-primary w-full h-12 font-semibold bg-white border border-solid;
+        @apply rounded-xl border-primary text-primary place-items-center grid w-full h-12 font-semibold bg-white border border-solid;
     }
 
     .title {

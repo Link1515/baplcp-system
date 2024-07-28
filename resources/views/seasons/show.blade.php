@@ -92,15 +92,15 @@
         <input type="hidden" name="seasonId" value="{{ $season->id }}">
         <div
             class="absolute bottom-0 left-0 w-full px-4 py-3 h-[72px] shadow-[0_-1px_3px_0_rgba(194,194,194,0.45)] text-base bg-white">
+            <span id="submitBtnPlaceholder"
+                class=" bg-disabled rounded-2xl grid items-center h-12 text-center text-white select-none">
+            </span>
             @if ($userRegistration)
-                <button @click="cancelRegistration({{ $userRegistration->id }})" type="button"
-                    class="btn-outline-primary transition-colors">
+                <button id="submitBtn" @click="cancelRegistration({{ $userRegistration->id }})" type="button"
+                    class="btn-outline-primary transition-colors" style="display: none">
                     取消報名
                 </button>
             @else
-                <span id="submitBtnPlaceholder"
-                    class=" bg-disabled rounded-2xl grid items-center h-12 text-center text-white select-none">
-                </span>
                 <button id="submitBtn" class="btn-primary transition-colors" style="display: none"
                     :disabled="form.processing" :class="form.processing && 'bg-neutral-500'">
                     立即報名

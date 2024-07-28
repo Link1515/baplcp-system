@@ -61,7 +61,7 @@
 
 @section('content')
     <div class="pb-[72px]">
-        <div class="p-4 pb-6 text-sm">
+        <div class="p-4 pb-6 text-[15px]">
             <h2 class="title mb-3 text-xl font-semibold">季打資訊</h2>
             <div class="grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-[#696F8C] mb-3">
                 <span class="text-nowrap">報名開始時間 :</span>

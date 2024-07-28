@@ -70,7 +70,7 @@
 
 @section('content')
     <div class="pb-[72px]">
-        <div class="p-4 pb-6 text-sm">
+        <div class="p-4 pb-6 text-[15px]">
             <h2 class="title mb-3 text-xl font-semibold">活動資訊</h2>
             <div class="grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-[#696F8C] mb-3">
                 <span class="text-nowrap">報名開始時間 :</span>
@@ -108,7 +108,7 @@
 
         <div class="bg-[#F6F6F6] h-2"></div>
 
-        <div class="px-4 py-6 text-sm">
+        <div class="px-4 py-6 text-[15px]">
             <div class="flex mb-3">
                 <h2 class="title text-xl font-semibold">報名活動</h2>
                 <span class=" text-[13px] py-1 px-2 bg-[#f7f8fe] font-semibold text-primary">可預填</span>
@@ -171,7 +171,7 @@
                 </h3>
             @endif
 
-            <form class="grid gap-3 text-sm" x-data="{
+            <form class="grid gap-3 text-[15px]" x-data="{
                 form: $form('post', '{{ route('eventRegistrations.store') }}', { memberRegister: '', nonMemberRegister: '', nonMemberName: '' })
             }">
                 @csrf

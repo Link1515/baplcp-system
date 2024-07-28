@@ -5,12 +5,12 @@
 @section('content')
     <div x-data="{ tab: 'member' }">
         <div class="h-80 p-4 pb-10 bg-cover" style="background-image: url('{{ asset('images/background/ranking.jpg') }}')">
-            <div class="w-52 bg-opacity-30 grid h-10 grid-cols-2 p-1 mx-auto mb-8 font-semibold text-center bg-white rounded-full"
-                style="display: none" x-init="$el.style.display = ''">
-                <button @click="tab = 'member'" class="transition-colors rounded-full"
-                    :class="tab === 'member' ? 'bg-white text-primary' : 'text-white'">群內榜</button>
-                <button @click="tab = 'nonMember'" class="transition-colors rounded-full"
-                    :class="tab === 'nonMember' ? 'bg-white text-primary' : 'text-white'">群外榜</button>
+            <div
+                class="w-52 bg-opacity-30 grid h-10 grid-cols-2 p-1 mx-auto mb-8 font-semibold text-center bg-white rounded-full">
+                <button @click="tab = 'member'" class="text-white transition-colors rounded-full"
+                    :class="tab === 'member' && '!bg-white !text-primary'">群內榜</button>
+                <button @click="tab = 'nonMember'" class="text-white transition-colors rounded-full"
+                    :class="tab === 'nonMember' && '!bg-white !text-primary'">群外榜</button>
             </div>
 
             <div class=" grid grid-cols-3 gap-5">

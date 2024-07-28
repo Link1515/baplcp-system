@@ -57,7 +57,7 @@ class SeasonController extends Controller
                 $season->register_start_at = $validated['seasonRegisterStartAt'];
                 $season->register_end_at = $validated['seasonRegisterEndAt'];
                 $season->register_all_participants = $validated['registerAllParticipants'];
-                $season->register_all_price = $validated['registerAllParticipants'];
+                $season->register_all_price = $validated['registerAllPrice'];
             }
             $season->save();
 

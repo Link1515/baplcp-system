@@ -64,10 +64,10 @@
         <div class="p-4 pb-6 text-sm">
             <h2 class="title mb-3 text-xl font-semibold">季打資訊</h2>
             <div class="grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-[#696F8C] mb-3">
-                <span>報名開始時間 :</span>
+                <span class="text-nowrap">報名開始時間 :</span>
                 <span id="registerStartAt" class="text-[#101840] font-medium"
                     data-datetime="{{ $season->register_start_at }}"></span>
-                <span>報名截止時間 :</span>
+                <span class="text-nowrap">報名截止時間 :</span>
                 <span id="registerEndAt" class="text-[#101840] font-medium"
                     data-datetime="{{ $season->register_end_at }}"></span>
                 <span>季打時間 :</span>

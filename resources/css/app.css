@@ -39,7 +39,7 @@
     }
 
     .input {
-        @apply w-full px-4 py-3 border rounded-lg outline-none border-[#d3d8e1] transition-all focus:border-primary focus:shadow-[0_0_0_4px_#DDE0FF];
+        @apply w-full px-4 py-3 border rounded-lg outline-none border-[#d3d8e1] transition-all focus:border-primary focus:shadow-[0_0_0_4px_#DDE0FF] bg-white;
     }
 
     .input.is-invalid {

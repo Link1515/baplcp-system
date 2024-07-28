@@ -32,8 +32,8 @@ Route::view('/', 'index')->name('home');
 Route::get('seasons/{season}/compute', [SeasonController::class, 'compute']);
 Route::resource('seasons', SeasonController::class)->only(['index', 'show']);
 Route::resource('seasonRegistrations', SeasonRegistrationController::class)->only('store', 'destroy');
-Route::get('events', [EventController::class, 'index'])->name('events.index');
-Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
+Route::resource('events', EventController::class)->only(['index', 'show']);
+Route::get('events/{event}/registrations', [EventController::class, 'showRegistrations'])->name('events.showRegistrations');
 Route::resource('eventRegistrations', EventRegistrationController::class)->only('store', 'destroy');
 
 Route::prefix('admin')->name('admin.')->group(function () {

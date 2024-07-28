@@ -54,4 +54,9 @@ class EventController extends Controller
 
         return view('events.show', compact('event', 'userHasRegistered', 'userRegistration', 'userFriendHasRegistered', 'userFriendRegistration', 'memberRegistrations', 'nonMemberRegistrations', 'seasonRegistrations'));
     }
+
+    public function showRegistrations(string $id)
+    {
+        return view('events.registrations');
+    }
 }

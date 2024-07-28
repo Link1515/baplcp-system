@@ -198,7 +198,7 @@
             @endif
 
             <div
-                class="absolute bottom-0 left-0 w-full px-4 py-3 h-[72px] shadow-[0_-1px_3px_0_rgba(194,194,194,0.45)] text-base bg-white">
+                class="fixed md:absolute bottom-0 left-0 w-full px-4 py-3 h-[72px] shadow-[0_-1px_3px_0_rgba(194,194,194,0.45)] text-base bg-white">
                 @if ($userHasRegistered && $userFriendHasRegistered)
                     <span class="bg-disabled grid items-center h-12 text-center text-white rounded select-none">
                         已報名

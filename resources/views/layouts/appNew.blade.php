@@ -16,11 +16,11 @@
     <div class="lg:shadow relative max-w-xl min-h-screen pt-12 mx-auto">
         <header
             class="flex items-center z-40 gap-2 h-12 px-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.05)] fixed md:absolute top-0 left-0 w-full bg-white">
-            <a href="@yield('header-back-url', url()->previous())" class="place-items-center grid w-6 h-6 mr-auto">
+            <a href="@yield('header-back-url', url()->previous())" class="place-items-center grid w-6 h-6 mr-auto rounded-full">
                 <img src="{{ asset('images/icons/back.svg') }}" alt="back">
             </a>
             @yield('header-items')
-            <button class="place-items-center grid w-6 h-6">
+            <button class="place-items-center grid w-6 h-6 rounded-full">
                 <img src="{{ asset('images/icons/burger.svg') }}" alt="burger">
             </button>
         </header>

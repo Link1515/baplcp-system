@@ -12,7 +12,7 @@
         @apply text-[#334155];
     }
 
-    input {
+    input, button, a {
         @apply outline-none;
     }
 

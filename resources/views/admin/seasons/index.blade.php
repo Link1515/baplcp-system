@@ -11,6 +11,7 @@
         @foreach ($seasons as $season)
             <a href="{{ route('admin.seasons.options', ['season' => $season->id]) }}" class="btn">{{ $season->title }}</a>
         @endforeach
+        <a href="{{ route('admin.seasons.archive') }}" class="btn">過往季打</a>
         <a href="{{ route('admin.seasons.create') }}" class="btn">+</a>
     </div>
 @endsection

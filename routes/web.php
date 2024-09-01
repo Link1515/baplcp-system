@@ -39,6 +39,7 @@ Route::resource('eventRegistrations', EventRegistrationController::class)->only(
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::view('/', 'admin.index')->name('index');
     Route::get('seasons', [SeasonController::class, 'adminIndex'])->name('seasons.index');
+    Route::get('seasons/archive', [SeasonController::class, 'archive'])->name('seasons.archive');
     Route::get('seasons/{season}/options', [SeasonController::class, 'options'])->name('seasons.options');
     Route::resource('seasons', SeasonController::class)->except(['index', 'show']);
 });

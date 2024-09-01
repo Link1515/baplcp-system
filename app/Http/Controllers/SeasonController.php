@@ -34,8 +34,31 @@ class SeasonController extends Controller
 
     public function adminIndex()
     {
-        $seasons = Season::all();
+        $today = Carbon::today();
+        $seasons = Season::whereHas('events', function ($query) use ($today) {
+            $query->where('start_at', '>=', $today);
+        })->get();
         return view('admin.seasons.index', compact('seasons'));
+    }
+
+    public function archive()
+    {
+        $seasons = Season::with([
+            'events' => function ($query) {
+                $query->orderBy('start_at')->take(1);
+            }
+        ])->get();
+
+        $seasonsGroupByYear = [];
+        foreach ($seasons as $season) {
+            $year = Carbon::parse($season->events->first()->start_at)->year;
+            if (!array_key_exists($year, $seasonsGroupByYear)) {
+                $seasonsGroupByYear[$year] = [];
+            }
+            $seasonsGroupByYear[$year] = $season->get();
+        }
+
+        return view('admin.seasons.archive', compact('seasonsGroupByYear'));
     }
 
     public function options($id)

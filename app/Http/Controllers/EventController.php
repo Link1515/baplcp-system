@@ -14,6 +14,11 @@ class EventController extends Controller
         $yesterday = Carbon::yesterday();
 
         $events = Event::where('start_at', '>', $yesterday)->orderBy('start_at')->get();
+
+        if (count($events) === 0) {
+            return redirect()->back()->with('info', '目前尚無活動');
+        }
+
         return view('events.index', compact('events'));
     }
 

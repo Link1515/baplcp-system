@@ -39,6 +39,12 @@
                         text: '{{ session('error') }}'
                     })
                 @endif
+
+                @if (session('info'))
+                    window.popup.info({
+                        text: '{{ session('info') }}'
+                    })
+                @endif
             })
         </script>
     </div>

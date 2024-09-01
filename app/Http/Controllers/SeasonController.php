@@ -20,7 +20,15 @@ class SeasonController extends Controller
 {
     public function index()
     {
-        $seasons = Season::where('can_register_all_events', 1)->get();
+        $today = Carbon::today();
+        $seasons = Season::whereHas('events', function ($query) use ($today) {
+            $query->where('start_at', '>=', $today);
+        })->get();
+
+        if ($seasons->count() === 0) {
+            return redirect()->back()->with('info', '目前尚無季打');
+        }
+
         return view('seasons.index', compact('seasons'));
     }
 
@@ -74,12 +82,12 @@ class SeasonController extends Controller
                         ->setTimeFromTimeString($validated['eventEndRegisterDayBeforeTime']);
 
                 $events[] = [
-                    'season_id' => $season->id,
-                    'start_at' => $eventStartAt,
+                    'season_id'         => $season->id,
+                    'start_at'          => $eventStartAt,
                     'register_start_at' => $eventRegisterStartAt,
-                    'register_end_at' => $eventRegisterEndAt,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    'register_end_at'   => $eventRegisterEndAt,
+                    'created_at'        => now(),
+                    'updated_at'        => now(),
                 ];
             }
 

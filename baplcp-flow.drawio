@@ -1,0 +1,94 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36" version="24.7.8">
+  <diagram name="Page-1" id="0XBZ99DkKHLuDaB8OGPi">
+    <mxGraphModel dx="696" dy="1506" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="NaRe3tdf_yCLMeiooozx-2" value="管理員創建季打流程" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="44.5" y="-7" width="126" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-4" target="NaRe3tdf_yCLMeiooozx-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-4" value="管理&lt;span style=&quot;background-color: initial;&quot;&gt;後台&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="44.5" y="64" width="93" height="37" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-7" target="NaRe3tdf_yCLMeiooozx-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-7" value="季打管理" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="184" y="64" width="88" height="37" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-9" target="NaRe3tdf_yCLMeiooozx-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-9" value="創建季打" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="321" y="64" width="93" height="37" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-11" target="NaRe3tdf_yCLMeiooozx-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-11" target="NaRe3tdf_yCLMeiooozx-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-11" value="產生季打 (Season) 與 活動 (Events)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="464" y="54" width="119" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-13" target="NaRe3tdf_yCLMeiooozx-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-13" value="產生季打報名排程&lt;div&gt;- 開放報名前 5 分鐘訊息提醒&lt;/div&gt;&lt;div&gt;- 報名結果計算結果並訊息提醒&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="646" y="-18" width="212" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-14" target="NaRe3tdf_yCLMeiooozx-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-14" value="產生活動報名排程&lt;div&gt;&lt;div&gt;- 開放報名前 5 分鐘訊息提醒&lt;/div&gt;&lt;div&gt;-&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;報名結果計算結果並訊息提醒&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- 活動開始前一天提醒&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;spacing=16;align=left;" vertex="1" parent="1">
+          <mxGeometry x="646" y="107" width="213" height="91" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-19" value="季打" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="654.5" y="-48" width="42" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-20" value="臨打" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="654.5" y="75" width="42" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-21" target="NaRe3tdf_yCLMeiooozx-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-21" value="開放報名" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="923" y="-2.5" width="88" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-24" target="NaRe3tdf_yCLMeiooozx-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-24" value="截止報名" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1062" y="-2.5" width="88" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-27" value="計算結果並通知&lt;div&gt;- 報名成功的用戶加入當季所有活動&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;spacing=16;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1215" y="-14.5" width="222" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-34" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-30" target="NaRe3tdf_yCLMeiooozx-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-30" value="開放報名" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="917" y="130" width="88" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-37" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-32" target="NaRe3tdf_yCLMeiooozx-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-32" value="截止報名" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1062" y="130" width="88" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-39" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="NaRe3tdf_yCLMeiooozx-36" target="NaRe3tdf_yCLMeiooozx-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-36" value="&lt;span style=&quot;text-align: left;&quot;&gt;計算結果並通知&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1207" y="130" width="121" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="NaRe3tdf_yCLMeiooozx-38" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;活動開始前一日通知&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1388" y="130" width="136" height="45" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

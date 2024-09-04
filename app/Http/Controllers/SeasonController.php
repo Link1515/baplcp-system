@@ -199,8 +199,6 @@ class SeasonController extends Controller
         $passedSeasonRegistrations = $seasonService->computePassedRegistartion($season);
         SeasonRegistration::whereIn('id', $passedSeasonRegistrations->pluck('id'))->update(['pass' => true]);
 
-        $eventService->insertManyBySeason($id, $passedSeasonRegistrations->pluck('user_id'));
-
         // $userService->resetSeasonDebuff();
         // if ($passedSeasonRegistrations->count() === $season->register_all_participants) {
         //     $userService->setSeasonDebuff($passedSeasonRegistrations->pluck('user_id'));

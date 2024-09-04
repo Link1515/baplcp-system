@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Models\SeasonRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -25,6 +26,7 @@ class EventController extends Controller
     public function show(string $id)
     {
         $event = Event::with('season')->find($id);
+        $season = $event->season;
         $memberRegistrations = EventRegistration::with('user')
             ->where('event_id', $id)
             ->where('is_non_member', 0)
@@ -34,9 +36,9 @@ class EventController extends Controller
             ->where('event_id', $id)
             ->where('is_non_member', 1)
             ->get();
-        $seasonRegistrations = EventRegistration::with('user')
-            ->where('event_id', $id)
-            ->where('is_season', 1)
+        $seasonRegistrations = SeasonRegistration::with('user')
+            ->where('pass', 1)
+            ->where('season_id', $season->id)
             ->get();
 
         $userId = 1;

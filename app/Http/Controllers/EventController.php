@@ -5,11 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventRegistration;
 use App\Models\SeasonRegistration;
+use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class EventController extends Controller
 {
+    private readonly UserService $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function index()
     {
         $yesterday = Carbon::yesterday();
@@ -42,13 +51,10 @@ class EventController extends Controller
             ->get();
 
         $userId = 1;
-        $userRegistration = EventRegistration::where('event_id', $id)
-            ->where('user_id', $userId)
-            ->where('is_non_member', 0)
-            ->orderBy('updated_at')
-            ->first();
-
-        $userHasRegistered = !is_null($userRegistration);
+        $user = User::find($userId);
+        $userRegistration =
+            $this->userService->getUserRegistration($userId, $id, $season->id);
+        $userHasRegistered = !is_null($userRegistration['type']);
 
         $userFriendRegistration = EventRegistration::select('*')
             ->selectRaw('RANK() OVER (ORDER BY updated_at) as registration_rank')
@@ -59,7 +65,16 @@ class EventController extends Controller
             ->first();
         $userFriendHasRegistered = !is_null($userFriendRegistration);
 
-        return view('events.show', compact('event', 'userHasRegistered', 'userRegistration', 'userFriendHasRegistered', 'userFriendRegistration', 'memberRegistrations', 'nonMemberRegistrations', 'seasonRegistrations'));
+        return view('events.show', compact(
+            'event',
+            'userHasRegistered',
+            'userRegistration',
+            'userFriendHasRegistered',
+            'userFriendRegistration',
+            'memberRegistrations',
+            'nonMemberRegistrations',
+            'seasonRegistrations'
+        ));
     }
 
     public function showRegistrations(string $id)

@@ -116,7 +116,7 @@
 
             @if ($userHasRegistered)
                 <div>
-                    @if ($userRegistration->is_season)
+                    @if ($userRegistration['type'] === 'season')
                         <h3 class="flex items-center gap-1 mb-3">
                             <div>
                                 <img src="{{ asset('images/icons/check.svg') }}" alt="check">
@@ -124,7 +124,7 @@
                             <span class="mr-auto">已報名季打</span>
                             <button x-data
                                 @click="cancelRegistration({
-                            registrationId: {{ $userRegistration->id }},
+                            registrationId: {{ $userRegistration['data']->id }},
                             isSeason: true
                         })"
                                 class="text-[#6B6B6B] flex gap-1 items-center">
@@ -140,7 +140,7 @@
                             <span class="mr-auto">已成功報名</span>
                             <button x-data
                                 @click="cancelRegistration({
-                            registrationId: {{ $userRegistration->id }},
+                            registrationId: {{ $userRegistration['data']->id }},
                             name: '自己',
                         })"
                                 class="text-[#6B6B6B] flex gap-1 items-center">

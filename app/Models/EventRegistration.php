@@ -16,7 +16,6 @@ class EventRegistration extends Model
         'event_id',
         'is_non_member',
         'non_member_name',
-        'is_season',
         'season_id',
     ];
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\SeasonLeaveController;
 use App\Http\Controllers\SeasonRegistrationController;
 use App\Http\Controllers\EventRegistrationController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,8 @@ Route::view('/', 'index')->name('home');
 Route::get('seasons/{season}/compute', [SeasonController::class, 'compute']);
 Route::resource('seasons', SeasonController::class)->only(['index', 'show']);
 Route::resource('seasonRegistrations', SeasonRegistrationController::class)->only('store', 'destroy');
+Route::post('seasonLeave', [SeasonLeaveController::class, 'store']);
+
 Route::resource('events', EventController::class)->only(['index', 'show']);
 Route::get('events/{event}/registrations', [EventController::class, 'showRegistrations'])->name('events.showRegistrations');
 Route::resource('eventRegistrations', EventRegistrationController::class)->only('store', 'destroy');

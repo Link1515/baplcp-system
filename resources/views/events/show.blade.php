@@ -15,15 +15,14 @@
             )
         @endif
 
-        function cancelRegistration({
+        function cancelEventRegistration({
             registrationId,
             name,
-            isSeason = false
         }) {
             window.popup.confirm({
-                title: isSeason ? '您確定要請假？' : `您確定要幫${name}取消報名？`,
-                text: isSeason ? '一旦按下確定請假則會取消季打優先卡位權利，若想再次報名，需重新排隊。' : '一旦按下取消報名則會讓排序後面的人遞補，若想再次報名，需重新排隊。',
-                confirmButtonText: isSeason ? '確定請假' : '取消報名',
+                title: `您確定要幫${name}取消報名？`,
+                text: '一旦按下取消報名則會讓排序後面的人遞補，若想再次報名，需重新排隊。',
+                confirmButtonText: '取消報名',
                 callback: async function(result) {
                     if (result.isDenied || result.isDismissed) return;
                     try {
@@ -39,6 +38,54 @@
                             }
                         })
                     } catch (error) {
+                        if (error instanceof axios.AxiosError) {
+                            const response = error.response
+                            window.popup.error({
+                                title: response.data.title,
+                                text: response.data.text,
+                                callback: () => {
+                                    window.location.reload();
+                                }
+                            })
+                            return
+                        }
+
+                        window.popup.error({
+                            title: '伺服器忙線中',
+                            text: '伺服器目前忙線中，請稍後重試',
+                        })
+                    }
+                }
+            })
+        }
+
+        function seasonLeaveEvent({
+            seasonId,
+            eventId,
+        }) {
+            window.popup.confirm({
+                title: '您確定要請假？',
+                text: '一旦按下確定請假則會取消季打優先卡位權利，若想再次報名，需重新排隊。',
+                confirmButtonText: '確定請假',
+                callback: async function(result) {
+                    if (result.isDenied || result.isDismissed) return;
+                    try {
+                        const {
+                            data
+                        } = await window.axios.post(`/seasonLeave`, {
+                            seasonId,
+                            eventId
+                        });
+
+                        window.popup.success({
+                            title: data.title,
+                            text: data.text,
+                            callback: () => {
+                                window.location.reload();
+                            }
+                        })
+                    } catch (error) {
+                        console.log(error)
                         if (error instanceof axios.AxiosError) {
                             const response = error.response
                             window.popup.error({
@@ -123,10 +170,10 @@
                             </div>
                             <span class="mr-auto">已報名季打</span>
                             <button x-data
-                                @click="cancelRegistration({
-                            registrationId: {{ $userRegistration['data']->id }},
-                            isSeason: true
-                        })"
+                                @click="seasonLeaveEvent({
+                                    seasonId: {{ $season->id }},
+                                    eventId: {{ $event->id }}
+                                })"
                                 class="text-[#6B6B6B] flex gap-1 items-center">
                                 我要請假
                                 <img src="{{ asset('images/icons/next.svg') }}" alt="next">
@@ -139,10 +186,10 @@
                             </div>
                             <span class="mr-auto">已成功報名</span>
                             <button x-data
-                                @click="cancelRegistration({
-                            registrationId: {{ $userRegistration['data']->id }},
-                            name: '自己',
-                        })"
+                                @click="cancelEventRegistration({
+                                    registrationId: {{ $userRegistration['data']->id }},
+                                    name: '自己',
+                                })"
                                 class="text-[#6B6B6B] flex gap-1 items-center">
                                 我要取消報名
                                 <img src="{{ asset('images/icons/next.svg') }}" alt="next">
@@ -160,7 +207,7 @@
                         已成功幫{{ $userFriendRegistration->non_member_name }}報名
                     </span>
                     <button x-data
-                        @click="cancelRegistration({
+                        @click="cancelEventRegistration({
                             registrationId: {{ $userFriendRegistration->id }},
                             name: '{{ $userFriendRegistration->non_member_name }}',
                         })"

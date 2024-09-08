@@ -51,24 +51,18 @@ class EventRegistrationController extends Controller
         if (
             Carbon::now()->gt(Carbon::parse($event->register_end_at))
         ) {
-            if ($eventRegistration->is_season) {
-                return response(['title' => '已超過請假時間', 'text' => '已超過請假時間，若有緊急事件需要請假，請自行私訊管理員。'], 403);
-            }
             return response(['title' => '已超過取消報名時間', 'text' => '已超過取消報名時間，若有緊急事件需要取消報名，請自行私訊管理員。'], 403);
         }
 
         if ($eventRegistration->is_non_member) {
             $eventRegistration->forceDelete();
         } else {
-            if ($eventRegistration->is_season) {
-                $eventRegistration->update(['is_season' => 0]);
-            }
             $eventRegistration->delete();
         }
 
         return response([
-            'title' => $eventRegistration->is_season ? '您已成功請假' : '您已取消報名',
-            'text' => '若想再次報名，請重新按下立即報名並重新排隊。'
+            'title' => '您已取消報名',
+            'text'  => '若想再次報名，請重新按下立即報名並重新排隊。'
         ], 200);
     }
 }

@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\SeasonLeaveController;
+use App\Http\Controllers\SeasonRegistrationController;
+use App\Http\Controllers\EventRegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::resource('seasonRegistrations', SeasonRegistrationController::class)->only('store', 'destroy');
+Route::post('seasonLeave', [SeasonLeaveController::class, 'store']);
+Route::resource('eventRegistrations', EventRegistrationController::class)->only('store', 'destroy');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('seasons', SeasonController::class)->except(['index', 'show']);
 });

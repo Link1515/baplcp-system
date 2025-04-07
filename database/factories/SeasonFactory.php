@@ -21,7 +21,6 @@ class SeasonFactory extends Factory
             'place' => fake()->title(),
             'price' => fake()->numberBetween(1, 500),
             'total_participants' => fake()->numberBetween(1, 10),
-            'non_member_participants' => fake()->numberBetween(1, 10),
             'can_register_all_events' => false
         ];
     }

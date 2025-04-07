@@ -35,9 +35,9 @@ class StoreSeasonRequest extends FormRequest
             'place' => 'required|max:255',
             'singlePrice' => 'required|integer|max:20000|gt:0',
             'totalParticipants' => 'required|integer|max:200|gt:0',
-            'nonMemberParticipants' => 'required|integer|max:200|gt:0',
 
-            'eventTime' => 'required|max:255',
+            'eventStartAt' => 'required|max:255',
+            'eventEndAt' => 'required|max:255',
             'eventDates' => ['required', new Dates, 'max:30'],
             'eventStartRegisterDayBefore' => 'required|integer|max:20|gt:0',
             'eventStartRegisterDayBeforeTime' => 'required|max:255',

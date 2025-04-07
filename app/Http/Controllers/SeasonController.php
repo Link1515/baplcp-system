@@ -20,16 +20,10 @@ class SeasonController extends Controller
 {
     public function index()
     {
-        $today = Carbon::today();
-        $seasons = Season::whereHas('events', function ($query) use ($today) {
-            $query->where('start_at', '>=', $today);
+        $seasons = Season::whereHas('events', function ($query) {
+            $query->where('start_at', '>=', Carbon::today());
         })->get();
-
-        if ($seasons->count() === 0) {
-            return redirect()->back()->with('info', '目前尚無季打');
-        }
-
-        return view('seasons.index', compact('seasons'));
+        return response()->json($seasons);
     }
 
     public function adminIndex()
@@ -81,8 +75,9 @@ class SeasonController extends Controller
             $season->place = $validated['place'];
             $season->price = $validated['singlePrice'];
             $season->total_participants = $validated['totalParticipants'];
-            $season->non_member_participants = $validated['nonMemberParticipants'];
 
+            $season->event_start_at = $validated['eventStartAt'];
+            $season->event_end_at = $validated['eventEndAt'];
             $season->can_register_all_events = $validated['canRegisterAllEvents'];
             if ($season->can_register_all_events) {
                 $season->register_start_at = $validated['seasonRegisterStartAt'];
@@ -94,7 +89,7 @@ class SeasonController extends Controller
 
             $events = [];
             foreach ($validated['eventDates'] as $eventDate) {
-                $eventStartAt = Carbon::parse($eventDate)->setTimeFromTimeString($validated['eventTime']);
+                $eventStartAt = Carbon::parse($eventDate)->setTimeFromTimeString($validated['eventStartAt']);
                 $eventRegisterStartAt =
                     $eventStartAt->copy()
                         ->subDays($validated['eventStartRegisterDayBefore'])
@@ -161,8 +156,9 @@ class SeasonController extends Controller
         $season->place = $validated['place'];
         $season->price = $validated['singlePrice'];
         $season->total_participants = $validated['totalParticipants'];
-        $season->non_member_participants = $validated['nonMemberParticipants'];
 
+        $season->event_start_at = $validated['eventStartAt'];
+        $season->event_end_at = $validated['eventEndAt'];
         $season->can_register_all_events = $validated['canRegisterAllEvents'];
         $season->register_start_at = $validated['seasonRegisterStartAt'];
         $season->register_end_at = $validated['seasonRegisterEndAt'];

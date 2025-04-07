@@ -15,7 +15,6 @@ class Event extends Model
         'register_start_at',
         'register_end_at',
         'total_participants',
-        'non_member_participants',
     ];
 
     public function season()

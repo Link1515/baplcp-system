@@ -15,8 +15,9 @@ class Season extends Model
         'enabled',
         'price',
         'total_participants',
-        'non_member_participants',
 
+        'event_start_at',
+        'event_end_at',
         'can_register_all_events',
         'register_start_at',
         'register_end_at',

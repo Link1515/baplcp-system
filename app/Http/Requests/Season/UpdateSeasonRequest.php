@@ -34,8 +34,9 @@ class UpdateSeasonRequest extends FormRequest
             'place' => 'required|max:255',
             'singlePrice' => 'required|integer|max:20000|gt:0',
             'totalParticipants' => 'required|integer|max:200|gt:0',
-            'nonMemberParticipants' => 'required|integer|max:200|gt:0',
 
+            'eventStartAt' => 'required|max:255',
+            'eventEndAt' => 'required|max:255',
             'canRegisterAllEvents' => 'boolean|nullable',
             'seasonRegisterStartAt' => 'required_if:canRegisterAllEvents,true|nullable|after:now|max:255',
             'seasonRegisterEndAt' => 'required_if:canRegisterAllEvents,true|nullable|after:seasonRegisterStartAt|max:255',

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Season;
+use App\Http\Requests\Season\StoreSeasonRequest;
+use App\Http\Requests\Season\UpdateSeasonRequest;
 use App\Models\Event;
-use App\Models\SeasonRegistration;
 use App\Models\EventRegistration;
+use App\Models\Season;
+use App\Models\SeasonRegistration;
 use App\Models\User;
-use App\Services\SeasonService;
 use App\Services\EventService;
+use App\Services\SeasonService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\Season\StoreSeasonRequest;
-use App\Http\Requests\Season\UpdateSeasonRequest;
 
 class SeasonController extends Controller
 {
@@ -22,13 +22,26 @@ class SeasonController extends Controller
     {
         $seasons = Season::whereHas('events', function ($query) {
             $query->where('start_at', '>=', Carbon::today());
-        })->get();
-        return response()->json($seasons);
+        })
+        ->withCount('seasonRegistrations')
+        ->get();
+
+        $data = $seasons->map(function ($season) {
+            return [
+                'id'                          => $season->id,
+                'title'                       => $season->title,
+                'place'                       => $season->place,
+                'seasonParticipantsRemaining' => $season->register_all_participants - $season->season_registrations_count,
+                'eventStartAt'                => $season->event_start_at,
+                'eventEndAt'                  => $season->event_end_at,
+            ];
+        });
+        return response()->json($data);
     }
 
     public function adminIndex()
     {
-        $today = Carbon::today();
+        $today   = Carbon::today();
         $seasons = Season::whereHas('events', function ($query) use ($today) {
             $query->where('start_at', '>=', $today);
         })->get();
@@ -70,32 +83,30 @@ class SeasonController extends Controller
         $validated = $request->validated();
 
         DB::transaction(function () use ($validated) {
-            $season = new Season();
-            $season->title = $validated['title'];
-            $season->place = $validated['place'];
-            $season->price = $validated['singlePrice'];
+            $season                     = new Season();
+            $season->title              = $validated['title'];
+            $season->place              = $validated['place'];
+            $season->price              = $validated['singlePrice'];
             $season->total_participants = $validated['totalParticipants'];
 
-            $season->event_start_at = $validated['eventStartAt'];
-            $season->event_end_at = $validated['eventEndAt'];
+            $season->event_start_at          = $validated['eventStartAt'];
+            $season->event_end_at            = $validated['eventEndAt'];
             $season->can_register_all_events = $validated['canRegisterAllEvents'];
             if ($season->can_register_all_events) {
-                $season->register_start_at = $validated['seasonRegisterStartAt'];
-                $season->register_end_at = $validated['seasonRegisterEndAt'];
+                $season->register_start_at         = $validated['seasonRegisterStartAt'];
+                $season->register_end_at           = $validated['seasonRegisterEndAt'];
                 $season->register_all_participants = $validated['registerAllParticipants'];
-                $season->register_all_price = $validated['registerAllPrice'];
+                $season->register_all_price        = $validated['registerAllPrice'];
             }
             $season->save();
 
             $events = [];
             foreach ($validated['eventDates'] as $eventDate) {
-                $eventStartAt = Carbon::parse($eventDate)->setTimeFromTimeString($validated['eventStartAt']);
-                $eventRegisterStartAt =
-                    $eventStartAt->copy()
+                $eventStartAt         = Carbon::parse($eventDate)->setTimeFromTimeString($validated['eventStartAt']);
+                $eventRegisterStartAt = $eventStartAt->copy()
                         ->subDays($validated['eventStartRegisterDayBefore'])
                         ->setTimeFromTimeString($validated['eventStartRegisterDayBeforeTime']);
-                $eventRegisterEndAt =
-                    $eventStartAt->copy()
+                $eventRegisterEndAt = $eventStartAt->copy()
                         ->subDays($validated['eventEndRegisterDayBefore'])
                         ->setTimeFromTimeString($validated['eventEndRegisterDayBeforeTime']);
 
@@ -119,13 +130,13 @@ class SeasonController extends Controller
 
     public function show(string $id)
     {
-        $season = Season::find($id);
-        $events = Event::where('season_id', $id)->orderBy('start_at')->get();
-        $firstEventDate = $events->first()->start_at;
-        $lastEventDate = $events->last()->start_at;
+        $season           = Season::find($id);
+        $events           = Event::where('season_id', $id)->orderBy('start_at')->get();
+        $firstEventDate   = $events->first()->start_at;
+        $lastEventDate    = $events->last()->start_at;
         $seasonStartMonth = Carbon::parse($firstEventDate)->month;
-        $seasonEndMonth = Carbon::parse($lastEventDate)->month;
-        $seasonRangeStr = str_pad($seasonStartMonth, 2, '0', STR_PAD_LEFT) . ' 月 ~ ' . str_pad($seasonEndMonth, 2, '0', STR_PAD_LEFT) . ' 月';
+        $seasonEndMonth   = Carbon::parse($lastEventDate)->month;
+        $seasonRangeStr   = str_pad($seasonStartMonth, 2, '0', STR_PAD_LEFT) . ' 月 ~ ' . str_pad($seasonEndMonth, 2, '0', STR_PAD_LEFT) . ' 月';
 
         if (!$season->can_register_all_events) {
             return redirect()->back();
@@ -133,7 +144,7 @@ class SeasonController extends Controller
 
         $userId = 1;
 
-        $userRegistration = SeasonRegistration::where('user_id', $userId)->where('season_id', $id)->first();
+        $userRegistration    = SeasonRegistration::where('user_id', $userId)->where('season_id', $id)->first();
         $memberRegistrations = SeasonRegistration::with('user')->where('season_id', $id)->get();
 
         return view('seasons.show', compact('season', 'seasonRangeStr', 'firstEventDate', 'userRegistration', 'memberRegistrations'));
@@ -150,20 +161,20 @@ class SeasonController extends Controller
     public function update(UpdateSeasonRequest $request, string $id)
     {
         $validated = $request->validated();
-        $season = Season::find($id);
+        $season    = Season::find($id);
 
-        $season->title = $validated['title'];
-        $season->place = $validated['place'];
-        $season->price = $validated['singlePrice'];
+        $season->title              = $validated['title'];
+        $season->place              = $validated['place'];
+        $season->price              = $validated['singlePrice'];
         $season->total_participants = $validated['totalParticipants'];
 
-        $season->event_start_at = $validated['eventStartAt'];
-        $season->event_end_at = $validated['eventEndAt'];
-        $season->can_register_all_events = $validated['canRegisterAllEvents'];
-        $season->register_start_at = $validated['seasonRegisterStartAt'];
-        $season->register_end_at = $validated['seasonRegisterEndAt'];
+        $season->event_start_at            = $validated['eventStartAt'];
+        $season->event_end_at              = $validated['eventEndAt'];
+        $season->can_register_all_events   = $validated['canRegisterAllEvents'];
+        $season->register_start_at         = $validated['seasonRegisterStartAt'];
+        $season->register_end_at           = $validated['seasonRegisterEndAt'];
         $season->register_all_participants = $validated['registerAllParticipants'];
-        $season->register_all_price = $validated['registerAllParticipants'];
+        $season->register_all_price        = $validated['registerAllParticipants'];
         $season->save();
 
         session()->flash('success', '更新成功');

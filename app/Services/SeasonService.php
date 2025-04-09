@@ -2,11 +2,134 @@
 
 namespace App\Services;
 
+use App\Models\Event;
 use App\Models\Season;
 use App\Models\SeasonRegistration;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SeasonService
 {
+    public function getSeasonsAfterToday()
+    {
+        $seasons = Season::whereHas('events', function ($query) {
+            $query->where('start_at', '>=', Carbon::today());
+        })
+        ->withCount('seasonRegistrations')
+        ->get();
+
+        $filteredSeasons = $seasons->map(function ($season) {
+            return [
+                'id'                          => $season->id,
+                'title'                       => $season->title,
+                'place'                       => $season->place,
+                'seasonParticipantsRemaining' => $season->register_all_participants - $season->season_registrations_count,
+                'eventStartAt'                => $season->event_start_at,
+                'eventEndAt'                  => $season->event_end_at,
+            ];
+        });
+
+        return $filteredSeasons;
+    }
+
+    public function getArchiveSeasons()
+    {
+        $seasons = Season::with([
+            'events' => function ($query) {
+                $query->orderBy('start_at')->take(1);
+            }
+        ])->get();
+
+        $seasonsGroupByYear = [];
+        foreach ($seasons as $season) {
+            $firstEvent = $season->events->first();
+            if (empty($firstEvent)) {
+                continue;
+            }
+
+            $year = Carbon::parse($firstEvent->start_at)->year;
+            if (!array_key_exists($year, $seasonsGroupByYear)) {
+                $seasonsGroupByYear[$year] = [];
+            }
+            $seasonsGroupByYear[$year] = $season->get();
+        }
+
+        return $seasonsGroupByYear;
+    }
+
+    public function createSeasonWithEvents(array $validatedData)
+    {
+        $season                     = new Season();
+        $season->title              = $validatedData['title'];
+        $season->place              = $validatedData['place'];
+        $season->price              = $validatedData['singlePrice'];
+        $season->total_participants = $validatedData['totalParticipants'];
+
+        $season->event_start_at          = $validatedData['eventStartAt'];
+        $season->event_end_at            = $validatedData['eventEndAt'];
+        $season->can_register_all_events = $validatedData['canRegisterAllEvents'];
+
+        if ($season->can_register_all_events) {
+            $season->register_start_at         = $validatedData['seasonRegisterStartAt'];
+            $season->register_end_at           = $validatedData['seasonRegisterEndAt'];
+            $season->register_all_participants = $validatedData['registerAllParticipants'];
+            $season->register_all_price        = $validatedData['registerAllPrice'];
+        }
+
+        $events = $this->prepareEvents($season, $validatedData);
+
+        DB::transaction(function () use ($season, $events) {
+            $season->save();
+            Event::insert($events);
+        });
+
+        return $season;
+    }
+
+    private function prepareEvents(Season $season, array $validatedData): array
+    {
+        $events = [];
+        foreach ($validatedData['eventDates'] as $eventDate) {
+            $eventStartAt         = Carbon::parse($eventDate)->setTimeFromTimeString($validatedData['eventStartAt']);
+            $eventRegisterStartAt = $eventStartAt->copy()
+                ->subDays($validatedData['eventStartRegisterDayBefore'])
+                ->setTimeFromTimeString($validatedData['eventStartRegisterDayBeforeTime']);
+            $eventRegisterEndAt = $eventStartAt->copy()
+                ->subDays($validatedData['eventEndRegisterDayBefore'])
+                ->setTimeFromTimeString($validatedData['eventEndRegisterDayBeforeTime']);
+
+            $events[] = [
+                'season_id'         => $season->id,
+                'start_at'          => $eventStartAt,
+                'register_start_at' => $eventRegisterStartAt,
+                'register_end_at'   => $eventRegisterEndAt,
+                'created_at'        => now(),
+                'updated_at'        => now(),
+            ];
+        }
+
+        return $events;
+    }
+
+    public function updateSeason(string $id, array $validatedData)
+    {
+        $season = Season::find($id);
+
+        $season->title              = $validatedData['title'];
+        $season->place              = $validatedData['place'];
+        $season->price              = $validatedData['singlePrice'];
+        $season->total_participants = $validatedData['totalParticipants'];
+
+        $season->event_start_at            = $validatedData['eventStartAt'];
+        $season->event_end_at              = $validatedData['eventEndAt'];
+        $season->can_register_all_events   = $validatedData['canRegisterAllEvents'];
+        $season->register_start_at         = $validatedData['seasonRegisterStartAt'];
+        $season->register_end_at           = $validatedData['seasonRegisterEndAt'];
+        $season->register_all_participants = $validatedData['registerAllParticipants'];
+        $season->register_all_price        = $validatedData['registerAllParticipants'];
+        $season->save();
+    }
+
     public function computePassedRegistartion(Season $season)
     {
         $allSeasonRegistrations = SeasonRegistration::with('user')
@@ -17,8 +140,7 @@ class SeasonService
             return $allSeasonRegistrations;
         }
 
-        $prioritySeasonRegistrations =
-            SeasonRegistration::where('season_id', $season->id)
+        $prioritySeasonRegistrations = SeasonRegistration::where('season_id', $season->id)
                 ->whereHas('user', function ($query) {
                     $query->where('season_debuff', 0);
                 })->get();
@@ -31,9 +153,8 @@ class SeasonService
             return $prioritySeasonRegistrations->random($season->register_all_participants);
         }
 
-        $combinedRegistrations = $prioritySeasonRegistrations;
-        $secondarySeasonRegistrations =
-            SeasonRegistration::where('season_id', $season->id)
+        $combinedRegistrations        = $prioritySeasonRegistrations;
+        $secondarySeasonRegistrations = SeasonRegistration::where('season_id', $season->id)
                 ->whereHas('user', function ($query) {
                     $query->where('season_debuff', 1);
                 })->get();

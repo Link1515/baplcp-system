@@ -81,9 +81,9 @@ class SeasonController extends Controller
     public function store(StoreSeasonRequest $request)
     {
         $validated = $request->validated();
+        $season    = new Season();
 
-        DB::transaction(function () use ($validated) {
-            $season                     = new Season();
+        DB::transaction(function () use ($validated, $season) {
             $season->title              = $validated['title'];
             $season->place              = $validated['place'];
             $season->price              = $validated['singlePrice'];
@@ -121,11 +121,9 @@ class SeasonController extends Controller
             }
 
             Event::insert($events);
-        }, 5);
+        });
 
-        session()->flash('success', '創建成功');
-
-        return redirect()->route('admin.seasons.index');
+        return response()->json($season);
     }
 
     public function show(string $id)

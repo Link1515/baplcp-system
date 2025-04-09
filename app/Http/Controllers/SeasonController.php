@@ -171,11 +171,11 @@ class SeasonController extends Controller
         $season = Season::find($id);
 
         if (!$season->can_register_all_events) {
-            return 'season registration is not open';
+            return response()->json(['message' => 'season registration is not open'], 400);
         }
 
         if ($season->is_computed) {
-            return 'already computed!';
+            return response()->json(['message' => 'already computed!'], 400);
         }
 
         $passedSeasonRegistrations = $seasonService->computePassedRegistartion($season);
@@ -188,6 +188,6 @@ class SeasonController extends Controller
 
         Season::where('id', $id)->update(['is_computed' => true]);
 
-        return 'ok';
+        return response()->noContent();
     }
 }

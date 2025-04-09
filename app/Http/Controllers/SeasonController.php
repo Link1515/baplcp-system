@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NotFoundException;
 use App\Http\Requests\Season\StoreSeasonRequest;
 use App\Http\Requests\Season\UpdateSeasonRequest;
-use App\Models\Event;
 use App\Models\Season;
 use App\Models\SeasonRegistration;
 use App\Services\EventService;
 use App\Services\SeasonService;
 use App\Services\UserService;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 
 class SeasonController extends Controller
 {
@@ -43,24 +42,14 @@ class SeasonController extends Controller
 
     public function show(string $id)
     {
-        $season           = Season::find($id);
-        $events           = Event::where('season_id', $id)->orderBy('start_at')->get();
-        $firstEventDate   = $events->first()->start_at;
-        $lastEventDate    = $events->last()->start_at;
-        $seasonStartMonth = Carbon::parse($firstEventDate)->month;
-        $seasonEndMonth   = Carbon::parse($lastEventDate)->month;
-        $seasonRangeStr   = str_pad($seasonStartMonth, 2, '0', STR_PAD_LEFT) . ' 月 ~ ' . str_pad($seasonEndMonth, 2, '0', STR_PAD_LEFT) . ' 月';
-
-        if (!$season->can_register_all_events) {
-            return redirect()->back();
+        try {
+            $seasonStatus = $this->seasonService->showSeasonStatus($id);
+            return response()->json($seasonStatus);
+        } catch (NotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
-
-        $userId = 1;
-
-        $userRegistration    = SeasonRegistration::where('user_id', $userId)->where('season_id', $id)->first();
-        $memberRegistrations = SeasonRegistration::with('user')->where('season_id', $id)->get();
-
-        return view('seasons.show', compact('season', 'seasonRangeStr', 'firstEventDate', 'userRegistration', 'memberRegistrations'));
     }
 
     public function update(UpdateSeasonRequest $request, string $id)
@@ -82,7 +71,7 @@ class SeasonController extends Controller
         $season = Season::find($id);
 
         if (!$season->can_register_all_events) {
-            return response()->json(['message' => 'season registration is not open'], 400);
+            return response()->json(['message' => 'season registration is not allowed'], 400);
         }
 
         if ($season->is_computed) {

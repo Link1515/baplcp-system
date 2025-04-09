@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\NotFoundException;
 use App\Models\Event;
 use App\Models\Season;
 use App\Models\SeasonRegistration;
@@ -128,6 +129,38 @@ class SeasonService
         $season->register_all_participants = $validatedData['registerAllParticipants'];
         $season->register_all_price        = $validatedData['registerAllParticipants'];
         $season->save();
+    }
+
+    public function showSeasonStatus(string $id)
+    {
+        $season = Season::find($id);
+        if (!$season) {
+            throw new NotFoundException('season not found');
+        }
+
+        $events           = Event::where('season_id', $season->id)->orderBy('start_at')->get();
+        $firstEventDate   = $events->first()->start_at;
+        $lastEventDate    = $events->last()->start_at;
+        $seasonStartMonth = Carbon::parse($firstEventDate)->month;
+        $seasonEndMonth   = Carbon::parse($lastEventDate)->month;
+        $seasonRangeStr   = str_pad($seasonStartMonth, 2, '0', STR_PAD_LEFT) . ' 月 ~ ' . str_pad($seasonEndMonth, 2, '0', STR_PAD_LEFT) . ' 月';
+
+        if (!$season->can_register_all_events) {
+            throw new \Exception('season registration is not allowed');
+        }
+
+        // TODO 目前暫時寫死
+        $userId = 1;
+
+        $userRegistration    = SeasonRegistration::where('user_id', $userId)->where('season_id', $season->id)->first();
+        $memberRegistrations = SeasonRegistration::with('user')->where('season_id', $season->id)->get();
+
+        return [
+            'season'              => $season,
+            'seasonRangeStr'      => $seasonRangeStr,
+            'userRegistration'    => $userRegistration,
+            'memberRegistrations' => $memberRegistrations
+        ];
     }
 
     public function computePassedRegistartion(Season $season)

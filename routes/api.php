@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SeasonLeaveController;
 use App\Http\Controllers\SeasonRegistrationController;
-use App\Http\Controllers\EventRegistrationController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +20,8 @@ use App\Http\Controllers\EventRegistrationController;
 
 Route::get('seasons', [SeasonController::class, 'index']);
 Route::get('seasons/archive', [SeasonController::class, 'archive']);
+Route::get('seasons/{season}', [SeasonController::class, 'show']);
+
 Route::resource('seasonRegistrations', SeasonRegistrationController::class)->only('store', 'destroy');
 Route::post('seasonLeave', [SeasonLeaveController::class, 'store']);
 Route::resource('eventRegistrations', EventRegistrationController::class)->only('store', 'destroy');

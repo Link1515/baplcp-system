@@ -25,6 +25,6 @@ Route::post('seasonLeave', [SeasonLeaveController::class, 'store']);
 Route::resource('eventRegistrations', EventRegistrationController::class)->only('store', 'destroy');
 
 Route::prefix('admin')->name('admin.')->group(function () {
+    Route::post('seasons', [SeasonController::class, 'store']);
     Route::put('seasons/{season}', [SeasonController::class, 'update']);
-    Route::resource('seasons', SeasonController::class)->except(['index', 'show']);
 });

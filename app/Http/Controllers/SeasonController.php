@@ -159,6 +159,7 @@ class SeasonController extends Controller
     public function destroy(string $id)
     {
         Season::destroy($id);
+        return response()->noContent();
     }
 
     public function compute(

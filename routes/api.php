@@ -27,4 +27,5 @@ Route::resource('eventRegistrations', EventRegistrationController::class)->only(
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('seasons', [SeasonController::class, 'store']);
     Route::put('seasons/{season}', [SeasonController::class, 'update']);
+    Route::delete('seasons/{season}', [SeasonController::class, 'destroy']);
 });

@@ -153,9 +153,7 @@ class SeasonController extends Controller
         $season->register_all_price        = $validated['registerAllParticipants'];
         $season->save();
 
-        session()->flash('success', '更新成功');
-
-        return redirect()->route('admin.seasons.index');
+        return response()->noContent();
     }
 
     public function destroy(string $id)

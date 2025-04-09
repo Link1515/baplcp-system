@@ -48,16 +48,18 @@ class SeasonController extends Controller
             return response()->json($seasonStatus);
         } catch (NotFoundException|BadRequestException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     public function update(UpdateSeasonRequest $request, string $id)
     {
         $validatedData = $request->validated();
-        $this->seasonService->updateSeason($id, $validatedData);
-        return response()->noContent();
+        try {
+            $this->seasonService->updateSeason($id, $validatedData);
+            return response()->noContent();
+        } catch (NotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        }
     }
 
     public function destroy(string $id)

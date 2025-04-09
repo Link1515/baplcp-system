@@ -115,6 +115,9 @@ class SeasonService
     public function updateSeason(string $id, array $validatedData)
     {
         $season = Season::find($id);
+        if (!$season) {
+            throw new NotFoundException('season not found');
+        }
 
         $season->title              = $validatedData['title'];
         $season->place              = $validatedData['place'];

@@ -146,7 +146,7 @@ class SeasonService
         $seasonRangeStr   = str_pad($seasonStartMonth, 2, '0', STR_PAD_LEFT) . ' 月 ~ ' . str_pad($seasonEndMonth, 2, '0', STR_PAD_LEFT) . ' 月';
 
         if (!$season->can_register_all_events) {
-            throw new \Exception('season registration is not allowed');
+            throw new BadRequestException('season registration is not allowed');
         }
 
         // TODO 目前暫時寫死

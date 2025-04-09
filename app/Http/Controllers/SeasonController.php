@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\BadRequestException;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\Season\StoreSeasonRequest;
 use App\Http\Requests\Season\UpdateSeasonRequest;
@@ -45,10 +46,10 @@ class SeasonController extends Controller
         try {
             $seasonStatus = $this->seasonService->showSeasonStatus($id);
             return response()->json($seasonStatus);
-        } catch (NotFoundException $e) {
+        } catch (NotFoundException|BadRequestException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+            return response()->json(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -19,6 +19,7 @@ use App\Http\Controllers\EventRegistrationController;
 */
 
 Route::get('seasons', [SeasonController::class, 'index']);
+Route::get('seasons/archive', [SeasonController::class, 'archive']);
 Route::resource('seasonRegistrations', SeasonRegistrationController::class)->only('store', 'destroy');
 Route::post('seasonLeave', [SeasonLeaveController::class, 'store']);
 Route::resource('eventRegistrations', EventRegistrationController::class)->only('store', 'destroy');

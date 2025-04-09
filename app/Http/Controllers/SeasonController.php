@@ -49,14 +49,19 @@ class SeasonController extends Controller
 
         $seasonsGroupByYear = [];
         foreach ($seasons as $season) {
-            $year = Carbon::parse($season->events->first()->start_at)->year;
+            $firstEvent = $season->events->first();
+            if (empty($firstEvent)) {
+                continue;
+            }
+
+            $year = Carbon::parse($firstEvent->start_at)->year;
             if (!array_key_exists($year, $seasonsGroupByYear)) {
                 $seasonsGroupByYear[$year] = [];
             }
             $seasonsGroupByYear[$year] = $season->get();
         }
 
-        return view('admin.seasons.archive', compact('seasonsGroupByYear'));
+        return response()->json($seasonsGroupByYear);
     }
 
     public function store(StoreSeasonRequest $request)

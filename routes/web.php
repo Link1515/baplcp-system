@@ -31,7 +31,6 @@ Route::middleware('auth')->group(function () {
 Route::view('/', 'index')->name('home');
 
 Route::get('seasons/{season}/compute', [SeasonController::class, 'compute']);
-Route::resource('seasons', SeasonController::class)->only(['index', 'show']);
 Route::resource('seasonRegistrations', SeasonRegistrationController::class)->only('store', 'destroy');
 Route::post('seasonLeave', [SeasonLeaveController::class, 'store']);
 
@@ -41,8 +40,6 @@ Route::resource('eventRegistrations', EventRegistrationController::class)->only(
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::view('/', 'admin.index')->name('index');
-    Route::get('seasons', [SeasonController::class, 'adminIndex'])->name('seasons.index');
     Route::get('seasons/archive', [SeasonController::class, 'archive'])->name('seasons.archive');
-    Route::get('seasons/{season}/options', [SeasonController::class, 'options'])->name('seasons.options');
     Route::resource('seasons', SeasonController::class)->except(['index', 'show']);
 });

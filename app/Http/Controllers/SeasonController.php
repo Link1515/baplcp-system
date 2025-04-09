@@ -39,15 +39,6 @@ class SeasonController extends Controller
         return response()->json($data);
     }
 
-    public function adminIndex()
-    {
-        $today   = Carbon::today();
-        $seasons = Season::whereHas('events', function ($query) use ($today) {
-            $query->where('start_at', '>=', $today);
-        })->get();
-        return view('admin.seasons.index', compact('seasons'));
-    }
-
     public function archive()
     {
         $seasons = Season::with([
@@ -66,16 +57,6 @@ class SeasonController extends Controller
         }
 
         return view('admin.seasons.archive', compact('seasonsGroupByYear'));
-    }
-
-    public function options($id)
-    {
-        return view('admin.seasons.options', compact('id'));
-    }
-
-    public function create()
-    {
-        return view('admin.seasons.create');
     }
 
     public function store(StoreSeasonRequest $request)
@@ -146,14 +127,6 @@ class SeasonController extends Controller
         $memberRegistrations = SeasonRegistration::with('user')->where('season_id', $id)->get();
 
         return view('seasons.show', compact('season', 'seasonRangeStr', 'firstEventDate', 'userRegistration', 'memberRegistrations'));
-    }
-
-    public function edit(string $id)
-    {
-        $season = Season::with('events')->find($id);
-        $events = $season->events;
-
-        return view('admin.seasons.edit', compact('season', 'events'));
     }
 
     public function update(UpdateSeasonRequest $request, string $id)
